@@ -6,9 +6,10 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/LSV2/Scenes/SampleScene.unity
+    path: Assets/LSV2/Scenes/Start.unity
     guid: 9fc0d4010bbf28b4594072e72b8655ab
   m_configObjects:
+    Unity.XR.PICO.LivePreview.Settings: {fileID: 11400000, guid: 758a100b98f451a449b4a943f138b52c, type: 2}
     Unity.XR.PXR.Settings: {fileID: 11400000, guid: 1e95cbbb9253096498e37244f70e8771, type: 2}
     com.unity.xr.management.loader_settings: {fileID: 11400000, guid: 96b415f9cc0082b429b758fe31f14694, type: 2}
     com.unity.xr.openxr.settings4: {fileID: 11400000, guid: c5d66ca8f4cc9154ba2bc8fec573fc3f, type: 2}

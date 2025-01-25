@@ -83,6 +83,15 @@
       "dependencies": {},
       "url": "https://packages.unity.com"
     },
+    "com.unity.pico.livepreview": {
+      "version": "file:Unity Live Preview Plugin-1.0.4-20241205",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {
+        "com.unity.xr.management": "4.0.0",
+        "com.unity.xr.interaction.toolkit": "2.0.0"
+      }
+    },
     "com.unity.settings-manager": {
       "version": "2.0.1",
       "depth": 2,
@@ -211,9 +220,9 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.xr.picoxr": {
-      "version": "file:C:/Users/admin/Downloads/PICO Unity Integration SDK-3.0.5-20241105 (1)",
+      "version": "file:PICO Unity Integration SDK-3.0.5-20241105",
       "depth": 0,
-      "source": "local",
+      "source": "embedded",
       "dependencies": {
         "com.unity.xr.management": "4.0.0",
         "com.unity.xr.interaction.toolkit": "2.0.0",
