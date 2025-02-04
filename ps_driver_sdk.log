@@ -4101,3 +4101,201 @@
 [2025-01-31 19:19:55.285] [PSS] [error] [7088|16572]transport_client_tcp3.cpp:210 HandleReceiveDataResult: receive error= 1236, msg= 由本地系统中止网络连接。
 [2025-01-31 19:19:55.285] [PSS] [error] [7088|16572]transport_client_tcp3.cpp:157 HandleAsyncError: error code: 1236, this= 0x1b385c98230
 [2025-01-31 19:19:55.285] [PSS] [error] [7088|16572]transport_client_tcp3.cpp:102 ReceiveDataLoop: "not connected", !running_, this= 0x1b385c98230
+[2025-02-03 18:40:44.161] [PSS] [info] ***********  Log Begin **********
+[2025-02-03 18:40:44.161] [PSS] [info] process id= 15668
+[2025-02-03 18:40:44.161] [PSS] [debug] [15668|11720]streaming_driver_interface_impl.cpp:19 StreamingDriverInterfaceImpl: callback= 0x235e28137a0, this= 0x2367b89af30
+[2025-02-03 18:40:44.161] [PSS] [error] [15668|11720]streaming_driver_interface_impl.cpp:115 SetTrackingOrigin: streaming not started, this= 0x2367b89af30
+[2025-02-03 18:40:44.161] [PSS] [info] [15668|11720]streaming_driver_interface_impl.cpp:24 ConnectToService: connect to service, client_id= BYOZPluZFyRS34TU, this= 0x2367b89af30
+[2025-02-03 18:40:44.161] [PSS] [info] [15668|11720]streaming_client_impl.cpp:25 ConnectToService: client_id= BYOZPluZFyRS34TU, name= 3D Engine, desp= StreamingSceneRender, this= 0x236ebd6eed0
+[2025-02-03 18:40:44.161] [PSS] [debug] [15668|22556]streaming_client_impl.cpp:137 InvokeConnectToService: connect to service through the network, port= 54000, this= 0x236ebd6eed0
+[2025-02-03 18:40:44.161] [PSS] [debug] [15668|22556]transport_client_tcp3.cpp:34 Start: buffer size(send\recv): 2097152\2097152, this= 0x2367b37e270
+[2025-02-03 18:40:44.161] [PSS] [info] [15668|22556]transport_client_tcp3.cpp:59 Start: server= 127.0.0.1:54000, local=0.0.0.0:0, this= 0x2367b37e270
+[2025-02-03 18:40:44.161] [PSS] [info] [15668|25384]streaming_client_impl.cpp:62 NotifyConnectResult: network connect to service result= 0, this= 0x236ebd6eed0
+[2025-02-03 18:40:44.161] [PSS] [debug] [15668|25384]transport_client_tcp3.cpp:136 HandleConnect: local= 127.0.0.1:64807, this= 0x2367b37e270
+[2025-02-03 18:40:44.161] [PSS] [debug] [15668|22556]streaming_client_impl.cpp:150 InvokeConnectToServiceByRpc: begin to connect to service by rpc, this= 0x236ebd6eed0
+[2025-02-03 18:40:44.161] [PSS] [info] [15668|22556]rpc.cpp:81 Start: start, request id begin from 4552, this= 0x235e4152390
+[2025-02-03 18:40:44.162] [PSS] [debug] [15668|22556]streaming_client_impl.cpp:171 InvokeConnectToServiceByRpc: connecting to service success, client_id= BYOZPluZFyRS34TU, this= 0x236ebd6eed0
+[2025-02-03 18:40:44.164] [PSS] [info] [15668|22556]streaming_client_impl.cpp:238 HandleConnectToServiceResp: connect response {result { description: "Success" } client_id: "BYOZPluZFyRS34TU" service_id: "xre_MDBqsv2Q" service_version: "2.2.1.9"}, this= 0x236ebd6eed0
+[2025-02-03 18:40:44.164] [PSS] [info] [15668|22556]streaming_driver_interface_impl.cpp:326 NotifyClientConnectResult: client connected, client_id= BYOZPluZFyRS34TU, service_version= 2.2.1.9, this= 0x2367b89af30
+[2025-02-03 18:40:44.227] [PSS] [info] [15668|11720]streaming_driver_interface_impl.cpp:34 DisconnectFromService: disconnect from service, client_id= BYOZPluZFyRS34TU, this= 0x2367b89af30
+[2025-02-03 18:40:44.227] [PSS] [info] [15668|11720]streaming_client_impl.cpp:37 DisconnectFromService: disconnect from service, this= 0x236ebd6eed0
+[2025-02-03 18:40:44.227] [PSS] [debug] [15668|22556]streaming_client_impl.cpp:175 InvokeDisconnectFromService: disconnect from service, this= 0x236ebd6eed0
+[2025-02-03 18:40:44.227] [PSS] [debug] [15668|22556]streaming_client_impl.cpp:253 HandleDisconnectFromServiceResp: disconnect response {}, this= 0x236ebd6eed0
+[2025-02-03 18:40:44.227] [PSS] [debug] [15668|22556]transport_client_tcp3.cpp:79 Stop: called, this= 0x2367b37e270
+[2025-02-03 18:40:44.227] [PSS] [debug] [15668|22556]transport_client_tcp3.cpp:79 Stop: called, this= 0x2367b37e270
+[2025-02-03 18:40:44.227] [PSS] [debug] [15668|22556]streaming_client_impl.cpp:194 InvokeDisconnectFromService: disconnect from service, {client_id: "BYOZPluZFyRS34TU"}, this= 0x236ebd6eed0
+[2025-02-03 18:40:44.227] [PSS] [info] [15668|11720]streaming_client_impl.cpp:44 DisconnectFromService: disconnect from service completed, this= 0x236ebd6eed0
+[2025-02-03 18:40:44.227] [PSS] [debug] [15668|25384]transport_client_tcp3.cpp:190 operator (): close socket
+[2025-02-03 18:40:44.228] [PSS] [error] [15668|25384]transport_client_tcp3.cpp:210 HandleReceiveDataResult: receive error= 1236, msg= 由本地系统中止网络连接。
+[2025-02-03 18:40:44.228] [PSS] [error] [15668|25384]transport_client_tcp3.cpp:157 HandleAsyncError: error code: 1236, this= 0x2367b37e270
+[2025-02-03 18:40:44.228] [PSS] [error] [15668|25384]transport_client_tcp3.cpp:102 ReceiveDataLoop: "not connected", !running_, this= 0x2367b37e270
+[2025-02-03 19:59:18.843] [PSS] [debug] [15668|11720]streaming_driver_interface_impl.cpp:19 StreamingDriverInterfaceImpl: callback= 0x236efc67c90, this= 0x236054c4860
+[2025-02-03 19:59:18.844] [PSS] [error] [15668|11720]streaming_driver_interface_impl.cpp:115 SetTrackingOrigin: streaming not started, this= 0x236054c4860
+[2025-02-03 19:59:18.844] [PSS] [info] [15668|11720]streaming_driver_interface_impl.cpp:24 ConnectToService: connect to service, client_id= NJ1G8VoqIJgUFE7d, this= 0x236054c4860
+[2025-02-03 19:59:18.844] [PSS] [info] [15668|11720]streaming_client_impl.cpp:25 ConnectToService: client_id= NJ1G8VoqIJgUFE7d, name= 3D Engine, desp= StreamingSceneRender, this= 0x235c05cc1a0
+[2025-02-03 19:59:18.844] [PSS] [debug] [15668|27108]streaming_client_impl.cpp:137 InvokeConnectToService: connect to service through the network, port= 54000, this= 0x235c05cc1a0
+[2025-02-03 19:59:18.844] [PSS] [debug] [15668|27108]transport_client_tcp3.cpp:34 Start: buffer size(send\recv): 2097152\2097152, this= 0x2367b36c450
+[2025-02-03 19:59:18.844] [PSS] [info] [15668|27108]transport_client_tcp3.cpp:59 Start: server= 127.0.0.1:54000, local=0.0.0.0:0, this= 0x2367b36c450
+[2025-02-03 19:59:18.844] [PSS] [info] [15668|18464]streaming_client_impl.cpp:62 NotifyConnectResult: network connect to service result= 0, this= 0x235c05cc1a0
+[2025-02-03 19:59:18.844] [PSS] [debug] [15668|18464]transport_client_tcp3.cpp:136 HandleConnect: local= 127.0.0.1:55630, this= 0x2367b36c450
+[2025-02-03 19:59:18.844] [PSS] [debug] [15668|27108]streaming_client_impl.cpp:150 InvokeConnectToServiceByRpc: begin to connect to service by rpc, this= 0x235c05cc1a0
+[2025-02-03 19:59:18.844] [PSS] [info] [15668|27108]rpc.cpp:81 Start: start, request id begin from 6073, this= 0x23632e590f0
+[2025-02-03 19:59:18.844] [PSS] [debug] [15668|27108]streaming_client_impl.cpp:171 InvokeConnectToServiceByRpc: connecting to service success, client_id= NJ1G8VoqIJgUFE7d, this= 0x235c05cc1a0
+[2025-02-03 19:59:18.945] [PSS] [info] [15668|27108]streaming_client_impl.cpp:238 HandleConnectToServiceResp: connect response {}, this= 0x235c05cc1a0
+[2025-02-03 19:59:18.945] [PSS] [error] [15668|27108]streaming_driver_interface_impl.cpp:332 NotifyClientConnectResult: connect to service failed, RPC Error, this= 0x236054c4860
+[2025-02-03 20:05:27.373] [PSS] [debug] [15668|11720]streaming_driver_interface_impl.cpp:19 StreamingDriverInterfaceImpl: callback= 0x2367a5badf0, this= 0x2369e459880
+[2025-02-03 20:05:27.374] [PSS] [error] [15668|11720]streaming_driver_interface_impl.cpp:115 SetTrackingOrigin: streaming not started, this= 0x2369e459880
+[2025-02-03 20:05:27.374] [PSS] [info] [15668|11720]streaming_driver_interface_impl.cpp:24 ConnectToService: connect to service, client_id= Jc6Lo9eyfYjyhV8s, this= 0x2369e459880
+[2025-02-03 20:05:27.374] [PSS] [info] [15668|11720]streaming_client_impl.cpp:25 ConnectToService: client_id= Jc6Lo9eyfYjyhV8s, name= 3D Engine, desp= StreamingSceneRender, this= 0x235c05cf170
+[2025-02-03 20:05:27.374] [PSS] [debug] [15668|29360]streaming_client_impl.cpp:137 InvokeConnectToService: connect to service through the network, port= 54000, this= 0x235c05cf170
+[2025-02-03 20:05:27.374] [PSS] [debug] [15668|29360]transport_client_tcp3.cpp:34 Start: buffer size(send\recv): 2097152\2097152, this= 0x2367b378150
+[2025-02-03 20:05:27.374] [PSS] [info] [15668|29360]transport_client_tcp3.cpp:59 Start: server= 127.0.0.1:54000, local=0.0.0.0:0, this= 0x2367b378150
+[2025-02-03 20:05:27.374] [PSS] [info] [15668|28144]streaming_client_impl.cpp:62 NotifyConnectResult: network connect to service result= 0, this= 0x235c05cf170
+[2025-02-03 20:05:27.374] [PSS] [debug] [15668|29360]streaming_client_impl.cpp:150 InvokeConnectToServiceByRpc: begin to connect to service by rpc, this= 0x235c05cf170
+[2025-02-03 20:05:27.374] [PSS] [debug] [15668|28144]transport_client_tcp3.cpp:136 HandleConnect: local= 127.0.0.1:56889, this= 0x2367b378150
+[2025-02-03 20:05:27.374] [PSS] [info] [15668|29360]rpc.cpp:81 Start: start, request id begin from 8313, this= 0x23632e594b0
+[2025-02-03 20:05:27.374] [PSS] [debug] [15668|29360]streaming_client_impl.cpp:171 InvokeConnectToServiceByRpc: connecting to service success, client_id= Jc6Lo9eyfYjyhV8s, this= 0x235c05cf170
+[2025-02-03 20:05:27.475] [PSS] [info] [15668|29360]streaming_client_impl.cpp:238 HandleConnectToServiceResp: connect response {}, this= 0x235c05cf170
+[2025-02-03 20:05:27.475] [PSS] [error] [15668|29360]streaming_driver_interface_impl.cpp:332 NotifyClientConnectResult: connect to service failed, RPC Error, this= 0x2369e459880
+[2025-02-03 20:06:50.512] [PSS] [debug] [15668|11720]streaming_driver_interface_impl.cpp:19 StreamingDriverInterfaceImpl: callback= 0x2369dbca180, this= 0x236ead8d0a0
+[2025-02-03 20:06:50.512] [PSS] [error] [15668|11720]streaming_driver_interface_impl.cpp:115 SetTrackingOrigin: streaming not started, this= 0x236ead8d0a0
+[2025-02-03 20:06:50.512] [PSS] [info] [15668|11720]streaming_driver_interface_impl.cpp:24 ConnectToService: connect to service, client_id= E8TzThHaUeoAZhes, this= 0x236ead8d0a0
+[2025-02-03 20:06:50.512] [PSS] [info] [15668|11720]streaming_client_impl.cpp:25 ConnectToService: client_id= E8TzThHaUeoAZhes, name= 3D Engine, desp= StreamingSceneRender, this= 0x236c86d17c0
+[2025-02-03 20:06:50.512] [PSS] [debug] [15668|6932]streaming_client_impl.cpp:137 InvokeConnectToService: connect to service through the network, port= 54000, this= 0x236c86d17c0
+[2025-02-03 20:06:50.512] [PSS] [debug] [15668|6932]transport_client_tcp3.cpp:34 Start: buffer size(send\recv): 2097152\2097152, this= 0x2367b37c590
+[2025-02-03 20:06:50.512] [PSS] [info] [15668|6932]transport_client_tcp3.cpp:59 Start: server= 127.0.0.1:54000, local=0.0.0.0:0, this= 0x2367b37c590
+[2025-02-03 20:06:50.512] [PSS] [info] [15668|29900]streaming_client_impl.cpp:62 NotifyConnectResult: network connect to service result= 0, this= 0x236c86d17c0
+[2025-02-03 20:06:50.513] [PSS] [debug] [15668|6932]streaming_client_impl.cpp:150 InvokeConnectToServiceByRpc: begin to connect to service by rpc, this= 0x236c86d17c0
+[2025-02-03 20:06:50.513] [PSS] [debug] [15668|29900]transport_client_tcp3.cpp:136 HandleConnect: local= 127.0.0.1:57035, this= 0x2367b37c590
+[2025-02-03 20:06:50.513] [PSS] [info] [15668|6932]rpc.cpp:81 Start: start, request id begin from 1436, this= 0x235e4152390
+[2025-02-03 20:06:50.513] [PSS] [debug] [15668|6932]streaming_client_impl.cpp:171 InvokeConnectToServiceByRpc: connecting to service success, client_id= E8TzThHaUeoAZhes, this= 0x236c86d17c0
+[2025-02-03 20:06:50.613] [PSS] [info] [15668|6932]streaming_client_impl.cpp:238 HandleConnectToServiceResp: connect response {}, this= 0x236c86d17c0
+[2025-02-03 20:06:50.613] [PSS] [error] [15668|6932]streaming_driver_interface_impl.cpp:332 NotifyClientConnectResult: connect to service failed, RPC Error, this= 0x236ead8d0a0
+[2025-02-03 21:01:33.298] [PSS] [info] ***********  Log Begin **********
+[2025-02-03 21:01:33.298] [PSS] [info] process id= 16820
+[2025-02-03 21:01:33.298] [PSS] [debug] [16820|20688]streaming_driver_interface_impl.cpp:19 StreamingDriverInterfaceImpl: callback= 0x2204eebd430, this= 0x223005b2030
+[2025-02-03 21:01:33.298] [PSS] [error] [16820|20688]streaming_driver_interface_impl.cpp:115 SetTrackingOrigin: streaming not started, this= 0x223005b2030
+[2025-02-03 21:01:33.298] [PSS] [info] [16820|20688]streaming_driver_interface_impl.cpp:24 ConnectToService: connect to service, client_id= 5CUKW2yRc1lga9w1, this= 0x223005b2030
+[2025-02-03 21:01:33.298] [PSS] [info] [16820|20688]streaming_client_impl.cpp:25 ConnectToService: client_id= 5CUKW2yRc1lga9w1, name= 3D Engine, desp= StreamingSceneRender, this= 0x220480e53b0
+[2025-02-03 21:01:33.298] [PSS] [debug] [16820|20708]streaming_client_impl.cpp:137 InvokeConnectToService: connect to service through the network, port= 54000, this= 0x220480e53b0
+[2025-02-03 21:01:33.298] [PSS] [debug] [16820|20708]transport_client_tcp3.cpp:34 Start: buffer size(send\recv): 2097152\2097152, this= 0x2204e299840
+[2025-02-03 21:01:33.298] [PSS] [info] [16820|20708]transport_client_tcp3.cpp:59 Start: server= 127.0.0.1:54000, local=0.0.0.0:0, this= 0x2204e299840
+[2025-02-03 21:01:33.298] [PSS] [info] [16820|4488]streaming_client_impl.cpp:62 NotifyConnectResult: network connect to service result= 0, this= 0x220480e53b0
+[2025-02-03 21:01:33.298] [PSS] [debug] [16820|4488]transport_client_tcp3.cpp:136 HandleConnect: local= 127.0.0.1:63325, this= 0x2204e299840
+[2025-02-03 21:01:33.298] [PSS] [debug] [16820|20708]streaming_client_impl.cpp:150 InvokeConnectToServiceByRpc: begin to connect to service by rpc, this= 0x220480e53b0
+[2025-02-03 21:01:33.298] [PSS] [info] [16820|20708]rpc.cpp:81 Start: start, request id begin from 4120, this= 0x22301130e60
+[2025-02-03 21:01:33.299] [PSS] [debug] [16820|20708]streaming_client_impl.cpp:171 InvokeConnectToServiceByRpc: connecting to service success, client_id= 5CUKW2yRc1lga9w1, this= 0x220480e53b0
+[2025-02-03 21:01:33.399] [PSS] [info] [16820|20708]streaming_client_impl.cpp:238 HandleConnectToServiceResp: connect response {}, this= 0x220480e53b0
+[2025-02-03 21:01:33.399] [PSS] [error] [16820|20708]streaming_driver_interface_impl.cpp:332 NotifyClientConnectResult: connect to service failed, RPC Error, this= 0x223005b2030
+[2025-02-03 21:02:08.347] [PSS] [debug] [16820|20688]streaming_driver_interface_impl.cpp:19 StreamingDriverInterfaceImpl: callback= 0x22047e6cb40, this= 0x22256c6fea0
+[2025-02-03 21:02:08.348] [PSS] [error] [16820|20688]streaming_driver_interface_impl.cpp:115 SetTrackingOrigin: streaming not started, this= 0x22256c6fea0
+[2025-02-03 21:02:08.348] [PSS] [info] [16820|20688]streaming_driver_interface_impl.cpp:24 ConnectToService: connect to service, client_id= 7JrXfNBvSDqEVGXu, this= 0x22256c6fea0
+[2025-02-03 21:02:08.348] [PSS] [info] [16820|20688]streaming_client_impl.cpp:25 ConnectToService: client_id= 7JrXfNBvSDqEVGXu, name= 3D Engine, desp= StreamingSceneRender, this= 0x22042ed5ef0
+[2025-02-03 21:02:08.348] [PSS] [debug] [16820|29584]streaming_client_impl.cpp:137 InvokeConnectToService: connect to service through the network, port= 54000, this= 0x22042ed5ef0
+[2025-02-03 21:02:08.348] [PSS] [debug] [16820|29584]transport_client_tcp3.cpp:34 Start: buffer size(send\recv): 2097152\2097152, this= 0x2204386ad40
+[2025-02-03 21:02:08.348] [PSS] [info] [16820|29584]transport_client_tcp3.cpp:59 Start: server= 127.0.0.1:54000, local=0.0.0.0:0, this= 0x2204386ad40
+[2025-02-03 21:02:08.348] [PSS] [info] [16820|23952]streaming_client_impl.cpp:62 NotifyConnectResult: network connect to service result= 0, this= 0x22042ed5ef0
+[2025-02-03 21:02:08.348] [PSS] [debug] [16820|29584]streaming_client_impl.cpp:150 InvokeConnectToServiceByRpc: begin to connect to service by rpc, this= 0x22042ed5ef0
+[2025-02-03 21:02:08.348] [PSS] [debug] [16820|23952]transport_client_tcp3.cpp:136 HandleConnect: local= 127.0.0.1:63387, this= 0x2204386ad40
+[2025-02-03 21:02:08.348] [PSS] [info] [16820|29584]rpc.cpp:81 Start: start, request id begin from 6836, this= 0x223011305a0
+[2025-02-03 21:02:08.348] [PSS] [debug] [16820|29584]streaming_client_impl.cpp:171 InvokeConnectToServiceByRpc: connecting to service success, client_id= 7JrXfNBvSDqEVGXu, this= 0x22042ed5ef0
+[2025-02-03 21:02:08.449] [PSS] [info] [16820|29584]streaming_client_impl.cpp:238 HandleConnectToServiceResp: connect response {}, this= 0x22042ed5ef0
+[2025-02-03 21:02:08.449] [PSS] [error] [16820|29584]streaming_driver_interface_impl.cpp:332 NotifyClientConnectResult: connect to service failed, RPC Error, this= 0x22256c6fea0
+[2025-02-03 21:02:54.592] [PSS] [debug] [16820|20688]streaming_driver_interface_impl.cpp:19 StreamingDriverInterfaceImpl: callback= 0x22300f5b9b0, this= 0x22047ce3580
+[2025-02-03 21:02:54.593] [PSS] [error] [16820|20688]streaming_driver_interface_impl.cpp:115 SetTrackingOrigin: streaming not started, this= 0x22047ce3580
+[2025-02-03 21:02:54.593] [PSS] [info] [16820|20688]streaming_driver_interface_impl.cpp:24 ConnectToService: connect to service, client_id= CnfmRi3JNThBhzeX, this= 0x22047ce3580
+[2025-02-03 21:02:54.593] [PSS] [info] [16820|20688]streaming_client_impl.cpp:25 ConnectToService: client_id= CnfmRi3JNThBhzeX, name= 3D Engine, desp= StreamingSceneRender, this= 0x2222f8c85e0
+[2025-02-03 21:02:54.593] [PSS] [debug] [16820|26528]streaming_client_impl.cpp:137 InvokeConnectToService: connect to service through the network, port= 54000, this= 0x2222f8c85e0
+[2025-02-03 21:02:54.593] [PSS] [debug] [16820|26528]transport_client_tcp3.cpp:34 Start: buffer size(send\recv): 2097152\2097152, this= 0x2204385e5c0
+[2025-02-03 21:02:54.593] [PSS] [info] [16820|26528]transport_client_tcp3.cpp:59 Start: server= 127.0.0.1:54000, local=0.0.0.0:0, this= 0x2204385e5c0
+[2025-02-03 21:02:54.593] [PSS] [info] [16820|6716]streaming_client_impl.cpp:62 NotifyConnectResult: network connect to service result= 0, this= 0x2222f8c85e0
+[2025-02-03 21:02:54.593] [PSS] [debug] [16820|6716]transport_client_tcp3.cpp:136 HandleConnect: local= 127.0.0.1:63439, this= 0x2204385e5c0
+[2025-02-03 21:02:54.593] [PSS] [debug] [16820|26528]streaming_client_impl.cpp:150 InvokeConnectToServiceByRpc: begin to connect to service by rpc, this= 0x2222f8c85e0
+[2025-02-03 21:02:54.593] [PSS] [info] [16820|26528]rpc.cpp:81 Start: start, request id begin from 7201, this= 0x22049d20810
+[2025-02-03 21:02:54.593] [PSS] [debug] [16820|26528]streaming_client_impl.cpp:171 InvokeConnectToServiceByRpc: connecting to service success, client_id= CnfmRi3JNThBhzeX, this= 0x2222f8c85e0
+[2025-02-03 21:02:54.694] [PSS] [info] [16820|26528]streaming_client_impl.cpp:238 HandleConnectToServiceResp: connect response {}, this= 0x2222f8c85e0
+[2025-02-03 21:02:54.694] [PSS] [error] [16820|26528]streaming_driver_interface_impl.cpp:332 NotifyClientConnectResult: connect to service failed, RPC Error, this= 0x22047ce3580
+[2025-02-03 21:07:59.452] [PSS] [debug] [16820|20688]streaming_driver_interface_impl.cpp:19 StreamingDriverInterfaceImpl: callback= 0x22042e866e0, this= 0x22049500f10
+[2025-02-03 21:07:59.452] [PSS] [error] [16820|20688]streaming_driver_interface_impl.cpp:115 SetTrackingOrigin: streaming not started, this= 0x22049500f10
+[2025-02-03 21:07:59.452] [PSS] [info] [16820|20688]streaming_driver_interface_impl.cpp:24 ConnectToService: connect to service, client_id= rzTwTy44TAOHzKdO, this= 0x22049500f10
+[2025-02-03 21:07:59.452] [PSS] [info] [16820|20688]streaming_client_impl.cpp:25 ConnectToService: client_id= rzTwTy44TAOHzKdO, name= 3D Engine, desp= StreamingSceneRender, this= 0x2204722eee0
+[2025-02-03 21:07:59.452] [PSS] [debug] [16820|30032]streaming_client_impl.cpp:137 InvokeConnectToService: connect to service through the network, port= 54000, this= 0x2204722eee0
+[2025-02-03 21:07:59.452] [PSS] [debug] [16820|30032]transport_client_tcp3.cpp:34 Start: buffer size(send\recv): 2097152\2097152, this= 0x2204e2a5fc0
+[2025-02-03 21:07:59.452] [PSS] [info] [16820|30032]transport_client_tcp3.cpp:59 Start: server= 127.0.0.1:54000, local=0.0.0.0:0, this= 0x2204e2a5fc0
+[2025-02-03 21:07:59.452] [PSS] [info] [16820|27348]streaming_client_impl.cpp:62 NotifyConnectResult: network connect to service result= 0, this= 0x2204722eee0
+[2025-02-03 21:07:59.452] [PSS] [debug] [16820|30032]streaming_client_impl.cpp:150 InvokeConnectToServiceByRpc: begin to connect to service by rpc, this= 0x2204722eee0
+[2025-02-03 21:07:59.452] [PSS] [debug] [16820|27348]transport_client_tcp3.cpp:136 HandleConnect: local= 127.0.0.1:64131, this= 0x2204e2a5fc0
+[2025-02-03 21:07:59.452] [PSS] [info] [16820|30032]rpc.cpp:81 Start: start, request id begin from 6778, this= 0x22277bd7810
+[2025-02-03 21:07:59.453] [PSS] [debug] [16820|30032]streaming_client_impl.cpp:171 InvokeConnectToServiceByRpc: connecting to service success, client_id= rzTwTy44TAOHzKdO, this= 0x2204722eee0
+[2025-02-03 21:07:59.553] [PSS] [info] [16820|30032]streaming_client_impl.cpp:238 HandleConnectToServiceResp: connect response {}, this= 0x2204722eee0
+[2025-02-03 21:07:59.553] [PSS] [error] [16820|30032]streaming_driver_interface_impl.cpp:332 NotifyClientConnectResult: connect to service failed, RPC Error, this= 0x22049500f10
+[2025-02-03 21:08:46.401] [PSS] [debug] [16820|20688]streaming_driver_interface_impl.cpp:19 StreamingDriverInterfaceImpl: callback= 0x220453815b0, this= 0x22047ce3580
+[2025-02-03 21:08:46.401] [PSS] [error] [16820|20688]streaming_driver_interface_impl.cpp:115 SetTrackingOrigin: streaming not started, this= 0x22047ce3580
+[2025-02-03 21:08:46.402] [PSS] [info] [16820|20688]streaming_driver_interface_impl.cpp:24 ConnectToService: connect to service, client_id= 28dcOiPCVuKAwWEe, this= 0x22047ce3580
+[2025-02-03 21:08:46.402] [PSS] [info] [16820|20688]streaming_client_impl.cpp:25 ConnectToService: client_id= 28dcOiPCVuKAwWEe, name= 3D Engine, desp= StreamingSceneRender, this= 0x22045516510
+[2025-02-03 21:08:46.402] [PSS] [debug] [16820|18096]streaming_client_impl.cpp:137 InvokeConnectToService: connect to service through the network, port= 54000, this= 0x22045516510
+[2025-02-03 21:08:46.402] [PSS] [debug] [16820|18096]transport_client_tcp3.cpp:34 Start: buffer size(send\recv): 2097152\2097152, this= 0x220438602a0
+[2025-02-03 21:08:46.402] [PSS] [info] [16820|18096]transport_client_tcp3.cpp:59 Start: server= 127.0.0.1:54000, local=0.0.0.0:0, this= 0x220438602a0
+[2025-02-03 21:08:46.402] [PSS] [info] [16820|27628]streaming_client_impl.cpp:62 NotifyConnectResult: network connect to service result= 0, this= 0x22045516510
+[2025-02-03 21:08:46.402] [PSS] [debug] [16820|18096]streaming_client_impl.cpp:150 InvokeConnectToServiceByRpc: begin to connect to service by rpc, this= 0x22045516510
+[2025-02-03 21:08:46.402] [PSS] [debug] [16820|27628]transport_client_tcp3.cpp:136 HandleConnect: local= 127.0.0.1:64286, this= 0x220438602a0
+[2025-02-03 21:08:46.402] [PSS] [info] [16820|18096]rpc.cpp:81 Start: start, request id begin from 4136, this= 0x22043a0f1c0
+[2025-02-03 21:08:46.402] [PSS] [debug] [16820|18096]streaming_client_impl.cpp:171 InvokeConnectToServiceByRpc: connecting to service success, client_id= 28dcOiPCVuKAwWEe, this= 0x22045516510
+[2025-02-03 21:08:46.503] [PSS] [info] [16820|18096]streaming_client_impl.cpp:238 HandleConnectToServiceResp: connect response {}, this= 0x22045516510
+[2025-02-03 21:08:46.503] [PSS] [error] [16820|18096]streaming_driver_interface_impl.cpp:332 NotifyClientConnectResult: connect to service failed, RPC Error, this= 0x22047ce3580
+[2025-02-03 21:10:02.968] [PSS] [debug] [16820|20688]streaming_driver_interface_impl.cpp:19 StreamingDriverInterfaceImpl: callback= 0x22315694990, this= 0x22049500f10
+[2025-02-03 21:10:02.968] [PSS] [error] [16820|20688]streaming_driver_interface_impl.cpp:115 SetTrackingOrigin: streaming not started, this= 0x22049500f10
+[2025-02-03 21:10:02.968] [PSS] [info] [16820|20688]streaming_driver_interface_impl.cpp:24 ConnectToService: connect to service, client_id= 4uGa7j9bnOLhkSSz, this= 0x22049500f10
+[2025-02-03 21:10:02.968] [PSS] [info] [16820|20688]streaming_client_impl.cpp:25 ConnectToService: client_id= 4uGa7j9bnOLhkSSz, name= 3D Engine, desp= StreamingSceneRender, this= 0x2204439fa10
+[2025-02-03 21:10:02.968] [PSS] [debug] [16820|27140]streaming_client_impl.cpp:137 InvokeConnectToService: connect to service through the network, port= 54000, this= 0x2204439fa10
+[2025-02-03 21:10:02.968] [PSS] [debug] [16820|27140]transport_client_tcp3.cpp:34 Start: buffer size(send\recv): 2097152\2097152, this= 0x2204386bd00
+[2025-02-03 21:10:02.968] [PSS] [info] [16820|27140]transport_client_tcp3.cpp:59 Start: server= 127.0.0.1:54000, local=0.0.0.0:0, this= 0x2204386bd00
+[2025-02-03 21:10:02.969] [PSS] [info] [16820|27924]streaming_client_impl.cpp:62 NotifyConnectResult: network connect to service result= 0, this= 0x2204439fa10
+[2025-02-03 21:10:02.969] [PSS] [debug] [16820|27140]streaming_client_impl.cpp:150 InvokeConnectToServiceByRpc: begin to connect to service by rpc, this= 0x2204439fa10
+[2025-02-03 21:10:02.969] [PSS] [debug] [16820|27924]transport_client_tcp3.cpp:136 HandleConnect: local= 127.0.0.1:64412, this= 0x2204386bd00
+[2025-02-03 21:10:02.969] [PSS] [info] [16820|27140]rpc.cpp:81 Start: start, request id begin from 3447, this= 0x22043a0f300
+[2025-02-03 21:10:02.969] [PSS] [debug] [16820|27140]streaming_client_impl.cpp:171 InvokeConnectToServiceByRpc: connecting to service success, client_id= 4uGa7j9bnOLhkSSz, this= 0x2204439fa10
+[2025-02-03 21:10:03.069] [PSS] [info] [16820|27140]streaming_client_impl.cpp:238 HandleConnectToServiceResp: connect response {}, this= 0x2204439fa10
+[2025-02-03 21:10:03.069] [PSS] [error] [16820|27140]streaming_driver_interface_impl.cpp:332 NotifyClientConnectResult: connect to service failed, RPC Error, this= 0x22049500f10
+[2025-02-03 21:11:20.250] [PSS] [debug] [16820|20688]streaming_driver_interface_impl.cpp:19 StreamingDriverInterfaceImpl: callback= 0x22315474450, this= 0x22047ce3580
+[2025-02-03 21:11:20.250] [PSS] [error] [16820|20688]streaming_driver_interface_impl.cpp:115 SetTrackingOrigin: streaming not started, this= 0x22047ce3580
+[2025-02-03 21:11:20.250] [PSS] [info] [16820|20688]streaming_driver_interface_impl.cpp:24 ConnectToService: connect to service, client_id= C7PEo6bapr7RRuts, this= 0x22047ce3580
+[2025-02-03 21:11:20.250] [PSS] [info] [16820|20688]streaming_client_impl.cpp:25 ConnectToService: client_id= C7PEo6bapr7RRuts, name= 3D Engine, desp= StreamingSceneRender, this= 0x222787692b0
+[2025-02-03 21:11:20.250] [PSS] [debug] [16820|21444]streaming_client_impl.cpp:137 InvokeConnectToService: connect to service through the network, port= 54000, this= 0x222787692b0
+[2025-02-03 21:11:20.250] [PSS] [debug] [16820|21444]transport_client_tcp3.cpp:34 Start: buffer size(send\recv): 2097152\2097152, this= 0x22043869ae0
+[2025-02-03 21:11:20.250] [PSS] [info] [16820|21444]transport_client_tcp3.cpp:59 Start: server= 127.0.0.1:54000, local=0.0.0.0:0, this= 0x22043869ae0
+[2025-02-03 21:11:20.251] [PSS] [info] [16820|26680]streaming_client_impl.cpp:62 NotifyConnectResult: network connect to service result= 0, this= 0x222787692b0
+[2025-02-03 21:11:20.251] [PSS] [debug] [16820|21444]streaming_client_impl.cpp:150 InvokeConnectToServiceByRpc: begin to connect to service by rpc, this= 0x222787692b0
+[2025-02-03 21:11:20.251] [PSS] [debug] [16820|26680]transport_client_tcp3.cpp:136 HandleConnect: local= 127.0.0.1:64506, this= 0x22043869ae0
+[2025-02-03 21:11:20.251] [PSS] [info] [16820|21444]rpc.cpp:81 Start: start, request id begin from 6106, this= 0x22043a0fa80
+[2025-02-03 21:11:20.251] [PSS] [debug] [16820|21444]streaming_client_impl.cpp:171 InvokeConnectToServiceByRpc: connecting to service success, client_id= C7PEo6bapr7RRuts, this= 0x222787692b0
+[2025-02-03 21:11:20.351] [PSS] [info] [16820|21444]streaming_client_impl.cpp:238 HandleConnectToServiceResp: connect response {}, this= 0x222787692b0
+[2025-02-03 21:11:20.351] [PSS] [error] [16820|21444]streaming_driver_interface_impl.cpp:332 NotifyClientConnectResult: connect to service failed, RPC Error, this= 0x22047ce3580
+[2025-02-03 21:13:06.921] [PSS] [debug] [16820|20688]streaming_driver_interface_impl.cpp:19 StreamingDriverInterfaceImpl: callback= 0x2204545d760, this= 0x22314efbb60
+[2025-02-03 21:13:06.921] [PSS] [error] [16820|20688]streaming_driver_interface_impl.cpp:115 SetTrackingOrigin: streaming not started, this= 0x22314efbb60
+[2025-02-03 21:13:06.921] [PSS] [info] [16820|20688]streaming_driver_interface_impl.cpp:24 ConnectToService: connect to service, client_id= QhAnLMgBNcVzhhFt, this= 0x22314efbb60
+[2025-02-03 21:13:06.921] [PSS] [info] [16820|20688]streaming_client_impl.cpp:25 ConnectToService: client_id= QhAnLMgBNcVzhhFt, name= 3D Engine, desp= StreamingSceneRender, this= 0x2231519f420
+[2025-02-03 21:13:06.921] [PSS] [debug] [16820|26280]streaming_client_impl.cpp:137 InvokeConnectToService: connect to service through the network, port= 54000, this= 0x2231519f420
+[2025-02-03 21:13:06.921] [PSS] [debug] [16820|26280]transport_client_tcp3.cpp:34 Start: buffer size(send\recv): 2097152\2097152, this= 0x2204386c4e0
+[2025-02-03 21:13:06.921] [PSS] [info] [16820|26280]transport_client_tcp3.cpp:59 Start: server= 127.0.0.1:54000, local=0.0.0.0:0, this= 0x2204386c4e0
+[2025-02-03 21:13:06.921] [PSS] [info] [16820|13144]streaming_client_impl.cpp:62 NotifyConnectResult: network connect to service result= 0, this= 0x2231519f420
+[2025-02-03 21:13:06.921] [PSS] [debug] [16820|26280]streaming_client_impl.cpp:150 InvokeConnectToServiceByRpc: begin to connect to service by rpc, this= 0x2231519f420
+[2025-02-03 21:13:06.921] [PSS] [debug] [16820|13144]transport_client_tcp3.cpp:136 HandleConnect: local= 127.0.0.1:64659, this= 0x2204386c4e0
+[2025-02-03 21:13:06.921] [PSS] [info] [16820|26280]rpc.cpp:81 Start: start, request id begin from 5717, this= 0x220451a9e10
+[2025-02-03 21:13:06.921] [PSS] [debug] [16820|26280]streaming_client_impl.cpp:171 InvokeConnectToServiceByRpc: connecting to service success, client_id= QhAnLMgBNcVzhhFt, this= 0x2231519f420
+[2025-02-03 21:13:07.022] [PSS] [info] [16820|26280]streaming_client_impl.cpp:238 HandleConnectToServiceResp: connect response {}, this= 0x2231519f420
+[2025-02-03 21:13:07.022] [PSS] [error] [16820|26280]streaming_driver_interface_impl.cpp:332 NotifyClientConnectResult: connect to service failed, RPC Error, this= 0x22314efbb60
+[2025-02-03 21:14:47.562] [PSS] [debug] [16820|20688]streaming_driver_interface_impl.cpp:19 StreamingDriverInterfaceImpl: callback= 0x22300f5e070, this= 0x2231c37ab50
+[2025-02-03 21:14:47.562] [PSS] [error] [16820|20688]streaming_driver_interface_impl.cpp:115 SetTrackingOrigin: streaming not started, this= 0x2231c37ab50
+[2025-02-03 21:14:47.562] [PSS] [info] [16820|20688]streaming_driver_interface_impl.cpp:24 ConnectToService: connect to service, client_id= hy35rHkOP29nswVx, this= 0x2231c37ab50
+[2025-02-03 21:14:47.562] [PSS] [info] [16820|20688]streaming_client_impl.cpp:25 ConnectToService: client_id= hy35rHkOP29nswVx, name= 3D Engine, desp= StreamingSceneRender, this= 0x22045b08730
+[2025-02-03 21:14:47.562] [PSS] [debug] [16820|28544]streaming_client_impl.cpp:137 InvokeConnectToService: connect to service through the network, port= 54000, this= 0x22045b08730
+[2025-02-03 21:14:47.562] [PSS] [debug] [16820|28544]transport_client_tcp3.cpp:34 Start: buffer size(send\recv): 2097152\2097152, this= 0x2204386a020
+[2025-02-03 21:14:47.562] [PSS] [info] [16820|28544]transport_client_tcp3.cpp:59 Start: server= 127.0.0.1:54000, local=0.0.0.0:0, this= 0x2204386a020
+[2025-02-03 21:14:47.562] [PSS] [info] [16820|16812]streaming_client_impl.cpp:62 NotifyConnectResult: network connect to service result= 0, this= 0x22045b08730
+[2025-02-03 21:14:47.562] [PSS] [debug] [16820|16812]transport_client_tcp3.cpp:136 HandleConnect: local= 127.0.0.1:64802, this= 0x2204386a020
+[2025-02-03 21:14:47.562] [PSS] [debug] [16820|28544]streaming_client_impl.cpp:150 InvokeConnectToServiceByRpc: begin to connect to service by rpc, this= 0x22045b08730
+[2025-02-03 21:14:47.563] [PSS] [info] [16820|28544]rpc.cpp:81 Start: start, request id begin from 898, this= 0x22049d20590
+[2025-02-03 21:14:47.563] [PSS] [debug] [16820|28544]streaming_client_impl.cpp:171 InvokeConnectToServiceByRpc: connecting to service success, client_id= hy35rHkOP29nswVx, this= 0x22045b08730
+[2025-02-03 21:14:47.663] [PSS] [info] [16820|28544]streaming_client_impl.cpp:238 HandleConnectToServiceResp: connect response {}, this= 0x22045b08730
+[2025-02-03 21:14:47.663] [PSS] [error] [16820|28544]streaming_driver_interface_impl.cpp:332 NotifyClientConnectResult: connect to service failed, RPC Error, this= 0x2231c37ab50

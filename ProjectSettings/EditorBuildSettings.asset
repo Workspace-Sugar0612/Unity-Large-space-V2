@@ -8,7 +8,7 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/LSV2/Scenes/Start.unity
     guid: 9fc0d4010bbf28b4594072e72b8655ab
-  - enabled: 1
+  - enabled: 0
     path: Assets/LSV2/Scenes/Test/RayCatch.unity
     guid: f52e2a72d00349c4b94062516ae92a4f
   m_configObjects:
