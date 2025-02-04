@@ -6,11 +6,11 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 0
-    path: Assets/LSV2/Scenes/Start.unity
-    guid: 9fc0d4010bbf28b4594072e72b8655ab
-  - enabled: 0
-    path: Assets/LSV2/Scenes/Test/RayCatch.unity
-    guid: f52e2a72d00349c4b94062516ae92a4f
+    path: Assets/LSV2/Scenes/Test/DemoNetwork.unity
+    guid: 4984365aaa5f6e147a7033bb2ca6f5a6
+  - enabled: 1
+    path: "Assets/LSV2/Scenes/Test/Grap\u7269\u4F53\u6293\u53D6.unity"
+    guid: 016dd6522707a704f8c5eead01812d93
   m_configObjects:
     Unity.XR.OpenVR.Settings: {fileID: 11400000, guid: a086bb0c52241214cb6487266678a6cf, type: 2}
     Unity.XR.PICO.LivePreview.Settings: {fileID: 11400000, guid: 758a100b98f451a449b4a943f138b52c, type: 2}
