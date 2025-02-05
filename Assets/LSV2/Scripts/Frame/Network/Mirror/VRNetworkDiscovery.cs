@@ -11,8 +11,9 @@ using UnityEngine;
 
 public class VRNetworkDiscovery : NetworkDiscoveryBase<ServerRequest, ServerResponse>
 {
+    private VRNetworkLauncher _luncher;
+
     #region Server
-    public VRCanvasHUD vrCanvasHUD;
 
     /// <summary>
     /// Reply to the client to inform it of this server
@@ -107,9 +108,11 @@ public class VRNetworkDiscovery : NetworkDiscoveryBase<ServerRequest, ServerResp
         response.uri = realUri.Uri;
 
         //OnServerFound.Invoke(response);
-        if (vrCanvasHUD == null) 
-            vrCanvasHUD = GameObject.FindObjectOfType<VRCanvasHUD>(); 
-        vrCanvasHUD.OnDiscoveredServer(response);
+        if (_luncher == null)
+        {
+            _luncher = GameObject.FindObjectOfType<VRNetworkLauncher>();
+            _luncher.OnDiscoveredServer(response);
+        }
     }
 
     #endregion

@@ -21,6 +21,7 @@ public class VRNetworkPlayerController : NetworkBehaviour
         m_VRPlayerRig = GameObject.FindObjectOfType<VRPlayerRig>();
         m_VRPlayerRig.vrNetPlayerControl = this;
 
+        // 自己看不到自己的镜像模型
         headModel.SetActive(false);
         lHandModel.SetActive(false);
         rHandModel.SetActive(false);

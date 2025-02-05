@@ -13,7 +13,7 @@ public class VRNetworkManager : NetworkManager
     // Overrides the base singleton so we don't
     // have to cast to this type everywhere.
     public static new VRNetworkManager singleton => (VRNetworkManager)NetworkManager.singleton;
-    public VRCanvasHUD vrCanvasHUD;
+    private ULSLog _log;
 
     /// <summary>
     /// Runs on both Server and Client
@@ -38,8 +38,8 @@ public class VRNetworkManager : NetworkManager
     public override void Start()
     {
         base.Start();
-        if (vrCanvasHUD == null)
-            vrCanvasHUD = GameObject.FindObjectOfType<VRCanvasHUD>();
+        if (_log == null)
+            _log = GameObject.FindObjectOfType<ULSLog>();
     }
 
     /// <summary>
@@ -135,7 +135,7 @@ public class VRNetworkManager : NetworkManager
     /// <param name="conn">Connection from client.</param>
     public override void OnServerConnect(NetworkConnectionToClient conn) 
     {
-        vrCanvasHUD.SetupInfoText("A client connected!");
+        _log.input("A client connected!");
     }
 
     /// <summary>
@@ -166,7 +166,7 @@ public class VRNetworkManager : NetworkManager
     public override void OnServerDisconnect(NetworkConnectionToClient conn)
     {
         base.OnServerDisconnect(conn);
-        vrCanvasHUD.SetupInfoText("A client disconnected!");
+        _log.input("A client disconnected!");
     }
 
     /// <summary>
@@ -178,7 +178,7 @@ public class VRNetworkManager : NetworkManager
     /// <param name="message">String message of the error.</param>
     public override void OnServerError(NetworkConnectionToClient conn, TransportError transportError, string message) 
     {
-        vrCanvasHUD.SetupInfoText("OnClientError: " + message);
+        _log.input("OnClientError: " + message);
     }
 
     #endregion
@@ -192,14 +192,14 @@ public class VRNetworkManager : NetworkManager
     public override void OnClientConnect()
     {
         base.OnClientConnect();
-        vrCanvasHUD.SetupInfoText("Connected to server.");
+        _log.input("Connected to server.");
     }
 
     /// <summary>
     /// Called on clients when disconnected from a server.
     /// <para>This is called on the client when it disconnects from the server. Override this function to decide what happens when the client disconnects.</para>
     /// </summary>
-    public override void OnClientDisconnect() { vrCanvasHUD.SetupInfoText("Disconnected from server."); }
+    public override void OnClientDisconnect() { _log.input("Disconnected from server."); }
 
     /// <summary>
     /// Called on clients when a servers tells the client it is no longer ready.
@@ -232,12 +232,12 @@ public class VRNetworkManager : NetworkManager
     /// This is invoked when a server is started - including when a host is started.
     /// <para>StartServer has multiple signatures, but they all cause this hook to be called.</para>
     /// </summary>
-    public override void OnStartServer() { vrCanvasHUD.SetupInfoText("Start Server!"); }
+    public override void OnStartServer() { _log.input("Start Server!"); }
 
     /// <summary>
     /// This is invoked when the client is started.
     /// </summary>
-    public override void OnStartClient() { vrCanvasHUD.SetupInfoText("Start Client!"); }
+    public override void OnStartClient() { _log.input("Start Client!"); }
 
     /// <summary>
     /// This is called when a host is stopped.
@@ -247,12 +247,12 @@ public class VRNetworkManager : NetworkManager
     /// <summary>
     /// This is called when a server is stopped - including when a host is stopped.
     /// </summary>
-    public override void OnStopServer() { vrCanvasHUD.SetupInfoText("Stop Server!"); }
+    public override void OnStopServer() { _log.input("Stop Server!"); }
 
     /// <summary>
     /// This is called when a client is stopped.
     /// </summary>
-    public override void OnStopClient() { vrCanvasHUD.SetupInfoText("Stop Client!"); }
+    public override void OnStopClient() { _log.input("Stop Client!"); }
 
     #endregion
 }
