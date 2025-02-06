@@ -1,8 +1,10 @@
+using Mirror;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using static System.Net.Mime.MediaTypeNames;
 
 public class VRHUD : MonoBehaviour
 {
@@ -20,7 +22,7 @@ public class VRHUD : MonoBehaviour
         okChangedNameButton.onClick.AddListener(delegate { OnValueChangedName(); });
     }
 
-    private void OnValueChangedName()
+    public void OnValueChangedName()
     {
         VRStaticVariables.playerName = playerNameInput.text;
         vrPlayerController.CmdSetupName("Player: " + playerNameInput.text);
