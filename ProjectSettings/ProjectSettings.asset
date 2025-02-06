@@ -4,7 +4,7 @@
 PlayerSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 26
-  productGUID: 13fa76176440db64593b9c69abc7904f
+  productGUID: d1db331fe886b554b9aa6b1ba6042ca9
   AndroidProfiler: 0
   AndroidFilterTouchesWhenObscured: 0
   AndroidEnableSustainedPerformanceMode: 0
@@ -12,8 +12,8 @@ PlayerSettings:
   targetDevice: 2
   useOnDemandResources: 0
   accelerometerFrequency: 60
-  companyName: Sugar
-  productName: PicoOpenXR
+  companyName: DefaultCompany
+  productName: MirrorMulitDemo
   defaultCursor: {fileID: 0}
   cursorHotspot: {x: 0, y: 0}
   m_SplashScreenBackgroundColor: {r: 0.13725491, g: 0.12156863, b: 0.1254902, a: 1}
@@ -140,7 +140,9 @@ PlayerSettings:
   visionOSBundleVersion: 1.0
   tvOSBundleVersion: 1.0
   bundleVersion: 0.1
-  preloadedAssets: []
+  preloadedAssets:
+  - {fileID: 11400000, guid: 361304c679e1bd449992ac4783bf01d2, type: 2}
+  - {fileID: 6544097463027791683, guid: d47148a2d0cb1ff4e8a8c9fd839fbd03, type: 2}
   metroInputSource: 0
   wsaTransparentSwapchain: 0
   m_HolographicPauseOnTrackingLoss: 1
@@ -161,8 +163,7 @@ PlayerSettings:
   androidSupportedAspectRatio: 1
   androidMaxAspectRatio: 2.1
   applicationIdentifier:
-    Android: com.Sugar.PicoOpenXR
-    Standalone: com.DefaultCompany.PicoOpenXR
+    Android: com.DefaultCompany.MirrorMulitDemo
   buildNumber:
     Standalone: 0
     VisionOS: 0
@@ -265,7 +266,7 @@ PlayerSettings:
   AndroidSplashScreenScale: 0
   androidSplashScreen: {fileID: 0}
   AndroidKeystoreName: '{inproject}: user.keystore'
-  AndroidKeyaliasName: key1
+  AndroidKeyaliasName: key
   AndroidEnableArmv9SecurityFeatures: 0
   AndroidBuildApkPerCpuArchitecture: 0
   AndroidTVCompatibility: 0
@@ -741,7 +742,8 @@ PlayerSettings:
   webGLPowerPreference: 2
   scriptingDefineSymbols:
     Android: MIRROR;MIRROR_81_OR_NEWER;MIRROR_82_OR_NEWER;MIRROR_83_OR_NEWER;MIRROR_84_OR_NEWER;MIRROR_85_OR_NEWER;MIRROR_86_OR_NEWER;MIRROR_89_OR_NEWER;MIRROR_90_OR_NEWER;MIRROR_93_OR_NEWER;EDGEGAP_PLUGIN_SERVERS
-    Standalone: MIRROR;MIRROR_81_OR_NEWER;MIRROR_82_OR_NEWER;MIRROR_83_OR_NEWER;MIRROR_84_OR_NEWER;MIRROR_85_OR_NEWER;MIRROR_86_OR_NEWER;MIRROR_89_OR_NEWER;MIRROR_90_OR_NEWER;MIRROR_93_OR_NEWER
+    Standalone: MIRROR;MIRROR_79_OR_NEWER;MIRROR_81_OR_NEWER;MIRROR_82_OR_NEWER;MIRROR_83_OR_NEWER;MIRROR_84_OR_NEWER;MIRROR_85_OR_NEWER;MIRROR_86_OR_NEWER;MIRROR_89_OR_NEWER;EDGEGAP_PLUGIN_SERVERS;MIRROR_90_OR_NEWER;MIRROR_93_OR_NEWER
+    Windows Store Apps: MIRROR;MIRROR_81_OR_NEWER;MIRROR_82_OR_NEWER;MIRROR_83_OR_NEWER;MIRROR_84_OR_NEWER;MIRROR_85_OR_NEWER;MIRROR_86_OR_NEWER;MIRROR_89_OR_NEWER;MIRROR_90_OR_NEWER;MIRROR_93_OR_NEWER
   additionalCompilerArguments: {}
   platformArchitecture: {}
   scriptingBackend:
@@ -774,16 +776,16 @@ PlayerSettings:
   apiCompatibilityLevelPerPlatform: {}
   m_RenderingPath: 1
   m_MobileRenderingPath: 1
-  metroPackageName: PicoOpenXR
+  metroPackageName: MirrorMulitDemo
   metroPackageVersion: 1.0.0.0
   metroCertificatePath: 
   metroCertificatePassword: 
   metroCertificateSubject: 
   metroCertificateIssuer: 
   metroCertificateNotAfter: 0000000000000000
-  metroApplicationDescription: PicoOpenXR
+  metroApplicationDescription: MirrorMulitDemo
   wsaImages: {}
-  metroTileShortName: PicoOpenXR
+  metroTileShortName: MirrorMulitDemo
   metroTileShowName: 0
   metroMediumTileShowName: 0
   metroLargeTileShowName: 0
@@ -851,10 +853,10 @@ PlayerSettings:
   apiCompatibilityLevel: 6
   activeInputHandler: 2
   windowsGamepadBackendHint: 0
-  cloudProjectId: 75a14405-87c2-4815-a49e-6dcf2217c4e5
+  cloudProjectId: e0449059-6c36-4d6a-a316-ed099e79a80e
   framebufferDepthMemorylessMode: 0
   qualitySettingsNames: []
-  projectName: PicoOpenXR
+  projectName: MirrorMulitDemo
   organizationId: t1sugar
   cloudEnabled: 0
   legacyClampBlendShapeWeights: 0

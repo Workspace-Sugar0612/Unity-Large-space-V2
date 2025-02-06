@@ -7,7 +7,7 @@ public class VRPlayerRig : MonoBehaviour
     public Transform rHandTrans;
     public Transform lHandTrans;
     public Transform headTrans;
-    public VRNetworkPlayerController vrNetPlayerControl;
+    public VRNetworkPlayerController vrPlayerController;
 
     // Start is called before the first frame update
     void Start()
@@ -18,16 +18,16 @@ public class VRPlayerRig : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (vrNetPlayerControl)
+        if (vrPlayerController)
         {
-            vrNetPlayerControl.headTrans.position = headTrans.transform.position;
-            vrNetPlayerControl.headTrans.rotation = headTrans.transform.rotation;
+            vrPlayerController.headTrans.position = headTrans.transform.position;
+            vrPlayerController.headTrans.rotation = headTrans.transform.rotation;
 
-            vrNetPlayerControl.lHandTrans.position = lHandTrans.transform.position;
-            vrNetPlayerControl.lHandTrans.rotation = lHandTrans.transform.rotation;
+            vrPlayerController.lHandTrans.position = lHandTrans.transform.position;
+            vrPlayerController.lHandTrans.rotation = lHandTrans.transform.rotation;
 
-            vrNetPlayerControl.rHandTrans.position = rHandTrans.transform.position;
-            vrNetPlayerControl.rHandTrans.rotation = rHandTrans.transform.rotation;
+            vrPlayerController.rHandTrans.position = rHandTrans.transform.position;
+            vrPlayerController.rHandTrans.rotation = rHandTrans.transform.rotation;
         }
     }
 }

@@ -4,7 +4,6 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - Right Hand
   - Camera0
   layers:
   - Default
@@ -42,7 +41,4 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
-    locked: 0
-  - name: UIRay
-    uniqueID: 2994203513
     locked: 0

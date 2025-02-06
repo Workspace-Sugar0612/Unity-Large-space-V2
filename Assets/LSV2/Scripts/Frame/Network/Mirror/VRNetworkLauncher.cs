@@ -4,7 +4,6 @@ using UnityEngine;
 using Mirror;
 using Mirror.Discovery;
 using UnityEngine.UI;
-using Unity.XR.PXR;
 
 public class VRNetworkLauncher : MonoBehaviour
 {
@@ -17,7 +16,7 @@ public class VRNetworkLauncher : MonoBehaviour
     void Start()
     {
         if (_log == null) _log = GameObject.FindObjectOfType<ULSLog>();
-        if (_vrNetworkDiscovery == null) _vrNetworkDiscovery = GameObject.FindObjectOfType<VRNetworkDiscovery>();
+        if (_vrNetworkDiscovery == null) _vrNetworkDiscovery = (VRNetworkDiscovery)FindObjectOfType(typeof(VRNetworkDiscovery));
         if (alwaysAutoStart) StartCoroutine(Waiter());
         // PXR_Manager.EnableVideoSeeThrough = true;
     }

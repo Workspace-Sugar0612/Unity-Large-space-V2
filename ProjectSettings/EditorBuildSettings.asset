@@ -9,8 +9,6 @@ EditorBuildSettings:
     path: Assets/LSV2/Scenes/Test/DemoNetwork.unity
     guid: 4984365aaa5f6e147a7033bb2ca6f5a6
   m_configObjects:
-    Unity.XR.OpenVR.Settings: {fileID: 11400000, guid: a086bb0c52241214cb6487266678a6cf, type: 2}
-    Unity.XR.PICO.LivePreview.Settings: {fileID: 11400000, guid: 758a100b98f451a449b4a943f138b52c, type: 2}
-    Unity.XR.PXR.Settings: {fileID: 11400000, guid: 1e95cbbb9253096498e37244f70e8771, type: 2}
-    com.unity.xr.management.loader_settings: {fileID: 11400000, guid: 96b415f9cc0082b429b758fe31f14694, type: 2}
-    com.unity.xr.openxr.settings4: {fileID: 11400000, guid: c5d66ca8f4cc9154ba2bc8fec573fc3f, type: 2}
+    Unity.XR.PICO.LivePreview.Settings: {fileID: 11400000, guid: eca60bd5efa8a564cb6b35c3c52f14d2, type: 2}
+    Unity.XR.PXR.Settings: {fileID: 11400000, guid: 361304c679e1bd449992ac4783bf01d2, type: 2}
+    com.unity.xr.management.loader_settings: {fileID: 11400000, guid: d47148a2d0cb1ff4e8a8c9fd839fbd03, type: 2}

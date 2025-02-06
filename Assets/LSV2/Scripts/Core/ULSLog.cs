@@ -13,7 +13,7 @@ public class ULSLog : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     public void input(string strlog)
