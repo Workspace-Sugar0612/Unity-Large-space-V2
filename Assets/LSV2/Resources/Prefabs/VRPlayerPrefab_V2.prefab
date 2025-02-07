@@ -366,6 +366,7 @@ MonoBehaviour:
   rHandModel: {fileID: 6915371644435922294}
   playerName: 
   textPlayerName: {fileID: 2868573271662400279}
+  isMR: 1
 --- !u!114 &6341946497970597472
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -407,7 +408,7 @@ MonoBehaviour:
   interpolatePosition: 1
   interpolateRotation: 1
   interpolateScale: 1
-  coordinateSpace: 1
+  coordinateSpace: 0
   timelineOffset: 1
   showGizmos: 0
   showOverlay: 0
@@ -440,7 +441,7 @@ MonoBehaviour:
   interpolatePosition: 1
   interpolateRotation: 1
   interpolateScale: 1
-  coordinateSpace: 1
+  coordinateSpace: 0
   timelineOffset: 1
   showGizmos: 0
   showOverlay: 0
@@ -473,7 +474,7 @@ MonoBehaviour:
   interpolatePosition: 1
   interpolateRotation: 1
   interpolateScale: 1
-  coordinateSpace: 1
+  coordinateSpace: 0
   timelineOffset: 1
   showGizmos: 0
   showOverlay: 0

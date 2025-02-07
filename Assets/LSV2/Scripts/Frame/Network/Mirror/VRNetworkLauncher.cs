@@ -10,12 +10,11 @@ public class VRNetworkLauncher : MonoBehaviour
     public bool alwaysAutoStart = false;
     readonly Dictionary<long, ServerResponse> discoveredServers = new Dictionary<long, ServerResponse>();
     private VRNetworkDiscovery _vrNetworkDiscovery;
-    private ULSLog _log;
+    private Log _log;
 
     // Start is called before the first frame update
     void Start()
     {
-        if (_log == null) _log = GameObject.FindObjectOfType<ULSLog>();
         if (_vrNetworkDiscovery == null) _vrNetworkDiscovery = (VRNetworkDiscovery)FindObjectOfType(typeof(VRNetworkDiscovery));
         if (alwaysAutoStart) StartCoroutine(Waiter());
         // PXR_Manager.EnableVideoSeeThrough = true;
@@ -29,7 +28,7 @@ public class VRNetworkLauncher : MonoBehaviour
 
     public IEnumerator Waiter()
     {
-        _log.input("Discovering servers..");
+        Log.input("Discovering servers..");
         discoveredServers.Clear();
         _vrNetworkDiscovery.StartDiscovery(); //开始查找主机
         // we have set this as 3.1 seconds, default discovery scan is 3 seconds, allows some time if host and client are started at same time
@@ -37,7 +36,7 @@ public class VRNetworkLauncher : MonoBehaviour
 
         if (discoveredServers == null || discoveredServers.Count <= 0) //没有查找到就创建主机
         {
-            _log.input("No Servers found, starting as Host.");
+            Log.input("No Servers found, starting as Host.");
             yield return new WaitForSeconds(1.0f);
             discoveredServers.Clear();
             // NetworkManager.singleton.onlineScene = SceneManager.GetActiveScene().name;
@@ -56,7 +55,7 @@ public class VRNetworkLauncher : MonoBehaviour
     //连接server
     void Connect(ServerResponse response)
     {
-        _log.input("Connecting to: " + response.serverId);
+        Log.input("Connecting to: " + response.serverId);
 
         _vrNetworkDiscovery.StopDiscovery();//停止查询
         NetworkManager.singleton.StartClient(response.uri); //启动客户端连接

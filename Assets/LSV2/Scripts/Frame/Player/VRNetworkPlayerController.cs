@@ -55,6 +55,22 @@ public class VRNetworkPlayerController : NetworkBehaviour
         if (m_VRHUD != null) { m_VRHUD.vrPlayerController = this; }
     }
 
+
+    public bool isMR = false;
+    public override void OnStartClient()
+    {
+        base.OnStartClient();
+        if (isMR)
+        {
+            Transform root = GameObject.Find("ROOT").transform;
+            if (root != null) 
+            {
+                transform.SetParent(root);
+                transform.SetLocalPositionAndRotation(Vector3.zero, Quaternion.identity);
+            }
+        }
+    }
+
     void Start()
     {
         
