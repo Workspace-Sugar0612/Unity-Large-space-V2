@@ -2620,6 +2620,94 @@
                     "isPartOfComposite": false
                 }
             ]
+        },
+        {
+            "name": "PXR",
+            "id": "bf2537ee-8be2-43c0-baa5-256bcdc16ed3",
+            "actions": [
+                {
+                    "name": "RightGrip",
+                    "type": "Button",
+                    "id": "a20260d1-fdb1-49e6-97e8-3e4cd1e91a1a",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "RightPrimary",
+                    "type": "Button",
+                    "id": "173b8405-84ae-4725-80bc-5ce31b25bbfc",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "PushRight",
+                    "type": "Value",
+                    "id": "90a8ac28-6e7d-4195-b04f-c19fe22356cd",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "PushLeft",
+                    "type": "Value",
+                    "id": "f92d30ce-f7bd-4603-b34c-15b7d7340564",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "e60338c3-2978-4bd8-856a-a3846462f94b",
+                    "path": "<XRController>{RightHand}/{GripButton}",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "RightGrip",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "6375ffb6-85b5-4ff3-8189-a2a8dc5f59eb",
+                    "path": "<XRController>{RightHand}/{PrimaryButton}",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "RightPrimary",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "9cc86d6f-b891-48ea-a63d-c78b99644c78",
+                    "path": "<XRController>{RightHand}/{Primary2DAxis}",
+                    "interactions": "Sector(directions=4,sweepBehavior=1)",
+                    "processors": "",
+                    "groups": "",
+                    "action": "PushRight",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "0f14c30d-6b41-4159-9f28-470571b721b6",
+                    "path": "<XRController>{RightHand}/{Primary2DAxis}",
+                    "interactions": "Sector(directions=8,sweepBehavior=1)",
+                    "processors": "",
+                    "groups": "",
+                    "action": "PushLeft",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
         }
     ],
     "controlSchemes": [

@@ -16,8 +16,8 @@ MonoBehaviour:
   handTracking: 0
   adaptiveHand: 0
   highFrequencyHand: 0
-  openMRC: 1
-  faceTracking: 0
+  openMRC: 0
+  faceTracking: 1
   lipsyncTracking: 0
   eyeTracking: 0
   eyetrackingCalibration: 0
@@ -27,8 +27,8 @@ MonoBehaviour:
   enableSubsampled: 0
   bodyTracking: 0
   adaptiveResolution: 0
-  stageMode: 0
-  videoSeeThrough: 0
+  stageMode: 1
+  videoSeeThrough: 1
   spatialAnchor: 0
   sceneCapture: 0
   sharedAnchor: 0
@@ -40,7 +40,7 @@ MonoBehaviour:
   fixedFoveatedSharpening: 0
   selfAdaptiveSharpening: 0
   arFoundation: 0
-  mrSafeguard: 0
-  enableRecommendMSAA: 1
+  mrSafeguard: 1
+  enableRecommendMSAA: 0
   recommendSubsamping: 0
   recommendMSAA: 1

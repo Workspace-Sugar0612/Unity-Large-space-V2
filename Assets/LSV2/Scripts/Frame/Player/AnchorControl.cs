@@ -14,7 +14,7 @@ public class AnchorControl : MonoBehaviour
     
     public InputActionProperty activateAction;
     private bool placeAnchor = false;
-
+    private VRNetworkLauncher _vrNetLaucher;
     public Transform XRInteractionSetup;
 
     private void Awake()
@@ -22,18 +22,21 @@ public class AnchorControl : MonoBehaviour
         tagAnchorPoint = Hint.position;
         tagAnchorRot = Hint.eulerAngles;
         activateAction.action.started += ActionStarted;
+
+        if (_vrNetLaucher == null)
+            _vrNetLaucher = (VRNetworkLauncher)FindObjectOfType(typeof(VRNetworkLauncher));
     }
 
     private void ActionStarted(InputAction.CallbackContext obj)
     {
-        Root.SetPositionAndRotation(Hint.position, Hint.rotation);
+        Root.SetPositionAndRotation(new Vector3(Hint.position.x, 0.0f, Hint.position.z), Hint.rotation);
         placeAnchor = true;
         Hint.gameObject.SetActive(false);
 
         if (XRInteractionSetup.parent != Root)
-        {
             XRInteractionSetup.SetParent(Root);
-        }
+
+        StartCoroutine(_vrNetLaucher.Waiter());
     }
 
     public void Update()
@@ -41,7 +44,7 @@ public class AnchorControl : MonoBehaviour
         if (!placeAnchor)
         {
             tagAnchorPoint = HandControlPoint.position;
-            tagAnchorPoint.y = 0;
+            //tagAnchorPoint.y = 0;
 
             tagAnchorRot.y = HandControlPoint.eulerAngles.y;
 
