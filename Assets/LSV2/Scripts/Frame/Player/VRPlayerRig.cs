@@ -1,33 +1,76 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.XR;
 
 public class VRPlayerRig : MonoBehaviour
 {
-    public Transform rHandTrans;
-    public Transform lHandTrans;
-    public Transform headTrans;
-    public VRNetworkPlayerController vrPlayerController;
+    [Header("Model Transform")]
 
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField]
+    [Tooltip("model's lefthand tranform")]
+    Transform m_LHand;
+    /// <summary>
+    /// model's lefthand tranform
+    /// </summary>
+    public Transform lHand
     {
-        
+        get => m_LHand;
+        set => m_LHand = value;
     }
 
-    // Update is called once per frame
+    [SerializeField]
+    [Tooltip("model's righthand tranform")]
+    Transform m_RHand;
+    /// <summary>
+    /// model's righthand tranform
+    /// </summary>
+    public Transform rHand
+    {
+        get => m_RHand;
+        set => m_RHand = value;
+    }
+
+    [SerializeField]
+    [Tooltip("model's headtranform")]
+    Transform m_Head;
+    /// <summary>
+    /// model's headtranform
+    /// </summary>
+    public Transform head
+    {
+        get => m_Head;
+        set => m_Head = value;
+    }
+
+    [Space]
+    [Header("Controller")]
+
+    [SerializeField]
+    [Tooltip("Prefab model manager. Used to synchronize the transform of different parts of the model with the corresponding parts of the VR origin of the real scene.")]
+    VRNetworkPlayerController m_VRPlayerController;
+    /// <summary>
+    /// Prefab model manager. 
+    /// Used to synchronize the transform of different parts of the model with the corresponding parts of the VR origin of the real scene.
+    /// </summary>
+    public VRNetworkPlayerController vrPlayerController
+    {
+        get => m_VRPlayerController;
+        set => m_VRPlayerController = value;
+    }
+
     void Update()
     {
         if (vrPlayerController)
         {
-            vrPlayerController.headTrans.position = headTrans.transform.position;
-            vrPlayerController.headTrans.rotation = headTrans.transform.rotation;
+            vrPlayerController.head.position = head.transform.position;
+            vrPlayerController.head.rotation = head.transform.rotation;
 
-            vrPlayerController.lHandTrans.position = lHandTrans.transform.position;
-            vrPlayerController.lHandTrans.rotation = lHandTrans.transform.rotation;
+            vrPlayerController.lHand.position = lHand.transform.position;
+            vrPlayerController.lHand.rotation = lHand.transform.rotation;
 
-            vrPlayerController.rHandTrans.position = rHandTrans.transform.position;
-            vrPlayerController.rHandTrans.rotation = rHandTrans.transform.rotation;
+            vrPlayerController.rHand.position = rHand.transform.position;
+            vrPlayerController.rHand.rotation = rHand.transform.rotation;
         }
     }
 }

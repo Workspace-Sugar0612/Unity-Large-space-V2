@@ -4,6 +4,7 @@ using UnityEngine;
 using Mirror;
 using Mirror.Discovery;
 using UnityEngine.UI;
+using UnityEngine.XR.Interaction.Toolkit;
 
 public class VRNetworkLauncher : MonoBehaviour
 {
@@ -17,6 +18,7 @@ public class VRNetworkLauncher : MonoBehaviour
     {
         if (_vrNetworkDiscovery == null) _vrNetworkDiscovery = (VRNetworkDiscovery)FindObjectOfType(typeof(VRNetworkDiscovery));
         if (alwaysAutoStart) StartCoroutine(Waiter());
+
         // PXR_Manager.EnableVideoSeeThrough = true;
     }
 

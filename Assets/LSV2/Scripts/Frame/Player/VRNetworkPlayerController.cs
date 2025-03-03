@@ -6,78 +6,153 @@ using UnityEngine;
 
 public class VRNetworkPlayerController : NetworkBehaviour
 {
-    public Transform rHandTrans;
-    public Transform lHandTrans;
-    public Transform headTrans;
+    [Header("Location's Transform")]
 
-    public GameObject headModel;
-    public GameObject lHandModel;
-    public GameObject rHandModel;
+    [SerializeField]
+    [Tooltip("Right Hand Transform")]
+    public Transform m_RHand;
+    /// <summary>
+    /// Right Hand Transform.
+    /// </summary>
+    public Transform rHand
+    {
+        get => m_RHand;
+        set => m_RHand = value;
+    }
 
+    [SerializeField]
+    [Tooltip("Left Hand Transform")]
+    Transform m_LHand;
+    /// <summary>
+    /// Left Hand Transform.
+    /// </summary>
+    public Transform lHand
+    {
+        get => m_LHand;
+        set => m_LHand = value;
+    }
+
+    [SerializeField]
+    [Tooltip("Head Transform")]
+    Transform m_Head;
+    /// <summary>
+    /// Head Transform.
+    /// </summary>
+    public Transform head
+    {
+        get => m_Head;
+        set => m_Head = value;
+    }
+
+    [Space]
+    [Header("Model Prefab")]
+
+    [SerializeField]
+    [Tooltip("Player Head Model Component")]
+    GameObject m_HeadModel;
+
+    [SerializeField]
+    [Tooltip("Player Left Hand Model Component")]
+    GameObject m_LHandModel;
+
+    [SerializeField]
+    [Tooltip("Player Right Hand Model Component")]
+    GameObject m_RHandModel;
+
+    [Space]
+    [Header("Other Contorller")]
+
+    /// <summary>
+    /// PlayerRig component on player in scene.
+    /// </summary>
     private VRPlayerRig m_VRPlayerRig;
+
+    /// <summary>
+    /// VR ui component.
+    /// </summary>
     private VRHUD m_VRHUD;
 
-    [SyncVar(hook = nameof(OnNameChangedHook))]
-    public string playerName;
+    /// <summary>
+    /// Player Name ui component in Scene.
+    /// </summary>
     public TMP_Text textPlayerName;
+
+    /// <summary>
+    /// Player name variable.
+    /// </summary>
+    [SyncVar(hook = nameof(OnNameChangedHook))]
+    string playerName;
 
     public void OnNameChangedHook(string _old, string _new)
     {
-        if (textPlayerName != null) { textPlayerName.text = playerName; }
+        if (textPlayerName != null)
+        {
+            textPlayerName.text = playerName;
+        }
     }
 
+    /// <summary>
+    /// To request server revise player name.
+    /// </summary>
+    /// <param name="_name"></param>
     [Command]
     public void CmdSetupName(string _name)
     {
         playerName = _name;
     }
 
-    // 开启本地玩家
+    /// <summary>
+    /// Enable local player.
+    /// Let the player ignore his own model.
+    /// </summary>
     public override void OnStartLocalPlayer()
     {
         InitObject();
-
-        // 自己看不到自己的镜像模型
-        headModel.SetActive(false);
-        lHandModel.SetActive(false);
-        rHandModel.SetActive(false);
-
-        if (VRStaticVariables.playerName != "") { CmdSetupName(VRStaticVariables.playerName + netId); }
-        else { CmdSetupName("Player" + netId); }
-    }
-
-    public void InitObject()
-    {
-        m_VRPlayerRig = (VRPlayerRig)FindObjectOfType(typeof(VRPlayerRig));
-        if (m_VRPlayerRig != null) { m_VRPlayerRig.vrPlayerController = this; }
-
-        m_VRHUD = (VRHUD)FindObjectOfType(typeof(VRHUD));
-        if (m_VRHUD != null) { m_VRHUD.vrPlayerController = this; }
-    }
-
-
-    public bool isMR = false;
-    public override void OnStartClient()
-    {
-        base.OnStartClient();
-        if (isMR)
+        m_HeadModel.SetActive(false);
+        m_LHandModel.SetActive(false);
+        m_RHandModel.SetActive(false);
+        if (VRStaticVariables.playerName != "")
         {
-            Transform root = GameObject.Find("ROOT").transform;
-            if (root != null) 
-            {
-                transform.SetParent(root);
-                transform.SetLocalPositionAndRotation(Vector3.zero, Quaternion.identity);
-            }
+            CmdSetupName(VRStaticVariables.playerName + netId);
+        }
+        else 
+        {
+            CmdSetupName("Player" + netId); 
         }
     }
 
-    void Start()
+    /// <summary>
+    /// Init Controller.
+    /// </summary>
+    public void InitObject()
     {
+        if (m_VRPlayerRig == null)
+        {
+            m_VRPlayerRig = (VRPlayerRig)FindObjectOfType(typeof(VRPlayerRig));
+            m_VRPlayerRig.vrPlayerController = this;
+        }
         
+        if (m_VRHUD == null)
+        {
+            m_VRHUD = (VRHUD)FindObjectOfType(typeof(VRHUD));
+            m_VRHUD.vrPlayerController = this;
+        }
     }
 
-    void Update()
-    {
-        
-    }
+    #region OnStartClient
+    //public bool isMR = false;
+    //public override void OnStartClient()
+    //{
+    //    base.OnStartClient();
+    //    if (isMR)
+    //    {
+    //        Transform root = GameObject.Find("ROOT").transform;
+    //        if (root != null)
+    //        {
+    //            transform.SetParent(root);
+    //            transform.SetLocalPositionAndRotation(Vector3.zero, Quaternion.identity);
+    //        }
+    //    }
+    //}
+    #endregion
 }

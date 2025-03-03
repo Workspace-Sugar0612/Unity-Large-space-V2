@@ -5,7 +5,6 @@ using UnityEngine;
 
 public class XRController : MonoBehaviour
 {
-    
     void Start()
     {
         PXR_Manager.EnableVideoSeeThrough = true;
