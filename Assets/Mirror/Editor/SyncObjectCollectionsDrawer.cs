@@ -4,7 +4,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
-using System.Text.RegularExpressions;
 using UnityEditor;
 
 namespace Mirror
@@ -19,12 +18,7 @@ namespace Mirror
         {
             this.field = field;
             visible = false;
-
-            // field.FieldType.Name has a backtick and number at the end, e.g. SyncList`1
-            // so we split it and only take the first part so it looks nicer.
-            // e.g. SyncList`1 -> SyncList
-            // Better to do it one time here than in hot path in OnInspectorGUI
-            label = $"{field.Name} [{Regex.Replace(field.FieldType.Name, @"`\d+", "")}]";
+            label = $"{field.Name}  [{field.FieldType.Name}]";
         }
     }
 

@@ -45,14 +45,6 @@ namespace Mirror
         public static ulong ReadULong(this NetworkReader reader) => reader.ReadBlittable<ulong>();
         public static ulong? ReadULongNullable(this NetworkReader reader) => reader.ReadBlittableNullable<ulong>();
 
-        // ReadInt/UInt/Long/ULong writes full bytes by default.
-        // define additional "VarInt" versions that Weaver will automatically prefer.
-        // 99% of the time [SyncVar] ints are small values, which makes this very much worth it.
-        [WeaverPriority] public static int ReadVarInt(this NetworkReader reader) => (int)Compression.DecompressVarInt(reader);
-        [WeaverPriority] public static uint ReadVarUInt(this NetworkReader reader) => (uint)Compression.DecompressVarUInt(reader);
-        [WeaverPriority] public static long ReadVarLong(this NetworkReader reader) => Compression.DecompressVarInt(reader);
-        [WeaverPriority] public static ulong ReadVarULong(this NetworkReader reader) => Compression.DecompressVarUInt(reader);
-
         public static float ReadFloat(this NetworkReader reader) => reader.ReadBlittable<float>();
         public static float? ReadFloatNullable(this NetworkReader reader) => reader.ReadBlittableNullable<float>();
 
@@ -86,46 +78,29 @@ namespace Mirror
             return reader.encoding.GetString(data.Array, data.Offset, data.Count);
         }
 
+        /// <exception cref="T:OverflowException">if count is invalid</exception>
+        public static byte[] ReadBytesAndSize(this NetworkReader reader)
+        {
+            // count = 0 means the array was null
+            // otherwise count -1 is the length of the array
+            uint count = reader.ReadUInt();
+            // Use checked() to force it to throw OverflowException if data is invalid
+            return count == 0 ? null : reader.ReadBytes(checked((int)(count - 1u)));
+        }
+
         public static byte[] ReadBytes(this NetworkReader reader, int count)
         {
-            // prevent allocation attacks with a reasonable limit.
-            //   server shouldn't allocate too much on client devices.
-            //   client shouldn't allocate too much on server in ClientToServer [SyncVar]s.
-            if (count > NetworkReader.AllocationLimit)
-            {
-                // throw EndOfStream for consistency with ReadBlittable when out of data
-                throw new EndOfStreamException($"NetworkReader attempted to allocate {count} bytes, which is larger than the allowed limit of {NetworkReader.AllocationLimit} bytes.");
-            }
-
             byte[] bytes = new byte[count];
             reader.ReadBytes(bytes, count);
             return bytes;
         }
 
         /// <exception cref="T:OverflowException">if count is invalid</exception>
-        public static byte[] ReadBytesAndSize(this NetworkReader reader)
+        public static ArraySegment<byte> ReadBytesAndSizeSegment(this NetworkReader reader)
         {
-            // we offset count by '1' to easily support null without writing another byte.
-            // encoding null as '0' instead of '-1' also allows for better compression
-            // (ushort vs. short / varuint vs. varint) etc.
-
-            // most sizes are small, read size as VarUInt!
-            uint count = (uint)Compression.DecompressVarUInt(reader);
-            // uint count = reader.ReadUInt();
-            // Use checked() to force it to throw OverflowException if data is invalid
-            return count == 0 ? null : reader.ReadBytes(checked((int)(count - 1u)));
-        }
-        // Reads ArraySegment and size header
-        /// <exception cref="T:OverflowException">if count is invalid</exception>
-        public static ArraySegment<byte> ReadArraySegmentAndSize(this NetworkReader reader)
-        {
-            // we offset count by '1' to easily support null without writing another byte.
-            // encoding null as '0' instead of '-1' also allows for better compression
-            // (ushort vs. short / varuint vs. varint) etc.
-
-            // most sizes are small, read size as VarUInt!
-            uint count = (uint)Compression.DecompressVarUInt(reader);
-            // uint count = reader.ReadUInt();
+            // count = 0 means the array was null
+            // otherwise count - 1 is the length of the array
+            uint count = reader.ReadUInt();
             // Use checked() to force it to throw OverflowException if data is invalid
             return count == 0 ? default : reader.ReadBytesSegment(checked((int)(count - 1u)));
         }
@@ -165,18 +140,6 @@ namespace Mirror
         // Ray is a struct with properties instead of fields
         public static Ray ReadRay(this NetworkReader reader) => new Ray(reader.ReadVector3(), reader.ReadVector3());
         public static Ray? ReadRayNullable(this NetworkReader reader) => reader.ReadBool() ? ReadRay(reader) : default(Ray?);
-
-        // LayerMask is a struct with properties instead of fields
-        public static LayerMask ReadLayerMask(this NetworkReader reader)
-        {
-            // LayerMask doesn't have a constructor that takes an initial value.
-            // 32 layers as a flags enum, max value of 496, we only need a UShort.
-            LayerMask layerMask = default;
-            layerMask.value = reader.ReadUShort();
-            return layerMask;
-        }
-
-        public static LayerMask? ReadLayerMaskNullable(this NetworkReader reader) => reader.ReadBool() ? ReadLayerMask(reader) : default(LayerMask?);
 
         public static Matrix4x4 ReadMatrix4x4(this NetworkReader reader) => reader.ReadBlittable<Matrix4x4>();
         public static Matrix4x4? ReadMatrix4x4Nullable(this NetworkReader reader) => reader.ReadBlittableNullable<Matrix4x4>();
@@ -280,26 +243,10 @@ namespace Mirror
         // note that Weaver/Readers/GenerateReader() handles this manually.
         public static List<T> ReadList<T>(this NetworkReader reader)
         {
-            // we offset count by '1' to easily support null without writing another byte.
-            // encoding null as '0' instead of '-1' also allows for better compression
-            // (ushort vs. short / varuint vs. varint) etc.
-
-            // most sizes are small, read size as VarUInt!
-            uint length = (uint)Compression.DecompressVarUInt(reader);
-            // uint length = reader.ReadUInt();
-            if (length == 0) return null;
-            length -= 1;
-
-            // prevent allocation attacks with a reasonable limit.
-            //   server shouldn't allocate too much on client devices.
-            //   client shouldn't allocate too much on server in ClientToServer [SyncVar]s.
-            if (length > NetworkReader.AllocationLimit)
-            {
-                // throw EndOfStream for consistency with ReadBlittable when out of data
-                throw new EndOfStreamException($"NetworkReader attempted to allocate a List<{typeof(T)}> {length} elements, which is larger than the allowed limit of {NetworkReader.AllocationLimit}.");
-            }
-
-            List<T> result = new List<T>((checked((int)length)));
+            int length = reader.ReadInt();
+            if (length < 0)
+                return null;
+            List<T> result = new List<T>(length);
             for (int i = 0; i < length; i++)
             {
                 result.Add(reader.Read<T>());
@@ -315,16 +262,9 @@ namespace Mirror
         /*
         public static HashSet<T> ReadHashSet<T>(this NetworkReader reader)
         {
-            // we offset count by '1' to easily support null without writing another byte.
-            // encoding null as '0' instead of '-1' also allows for better compression
-            // (ushort vs. short / varuint vs. varint) etc.
-
-            // most sizes are small, read size as VarUInt!
-            uint length = (uint)Compression.DecompressVarUInt(reader);
-            //uint length = reader.ReadUInt();
-            if (length == 0) return null;
-            length -= 1;
-
+            int length = reader.ReadInt();
+            if (length < 0)
+                return null;
             HashSet<T> result = new HashSet<T>();
             for (int i = 0; i < length; i++)
             {
@@ -336,28 +276,21 @@ namespace Mirror
 
         public static T[] ReadArray<T>(this NetworkReader reader)
         {
-            // we offset count by '1' to easily support null without writing another byte.
-            // encoding null as '0' instead of '-1' also allows for better compression
-            // (ushort vs. short / varuint vs. varint) etc.
+            int length = reader.ReadInt();
 
-            // most sizes are small, read size as VarUInt!
-            uint length = (uint)Compression.DecompressVarUInt(reader);
-            //uint length = reader.ReadUInt();
-            if (length == 0) return null;
-            length -= 1;
+            //  we write -1 for null
+            if (length < 0)
+                return null;
 
-            // prevent allocation attacks with a reasonable limit.
-            //   server shouldn't allocate too much on client devices.
-            //   client shouldn't allocate too much on server in ClientToServer [SyncVar]s.
-            if (length > NetworkReader.AllocationLimit)
+            // todo throw an exception for other negative values (we never write them, likely to be attacker)
+
+            // this assumes that a reader for T reads at least 1 bytes
+            // we can't know the exact size of T because it could have a user created reader
+            // NOTE: don't add to length as it could overflow if value is int.max
+            if (length > reader.Remaining)
             {
-                // throw EndOfStream for consistency with ReadBlittable when out of data
-                throw new EndOfStreamException($"NetworkReader attempted to allocate an Array<{typeof(T)}> with {length} elements, which is larger than the allowed limit of {NetworkReader.AllocationLimit}.");
+                throw new EndOfStreamException($"Received array that is too large: {length}");
             }
-
-            // we can't check if reader.Remaining < length,
-            // because we don't know sizeof(T) since it's a managed type.
-            // if (length > reader.Remaining) throw new EndOfStreamException($"Received array that is too large: {length}");
 
             T[] result = new T[length];
             for (int i = 0; i < length; i++)
@@ -375,6 +308,9 @@ namespace Mirror
 
         public static Texture2D ReadTexture2D(this NetworkReader reader)
         {
+            // TODO allocation protection when sending textures to server.
+            //      currently can allocate 32k x 32k x 4 byte = 3.8 GB
+
             // support 'null' textures for [SyncVar]s etc.
             // https://github.com/vis2k/Mirror/issues/3144
             short width = reader.ReadShort();
@@ -382,19 +318,6 @@ namespace Mirror
 
             // read height
             short height = reader.ReadShort();
-
-            // prevent allocation attacks with a reasonable limit.
-            //   server shouldn't allocate too much on client devices.
-            //   client shouldn't allocate too much on server in ClientToServer [SyncVar]s.
-            // log an error and return default.
-            // we don't want attackers to be able to trigger exceptions.
-            int totalSize = width * height;
-            if (totalSize > NetworkReader.AllocationLimit)
-            {
-                Debug.LogWarning($"NetworkReader attempted to allocate a Texture2D with total size (width * height) of {totalSize}, which is larger than the allowed limit of {NetworkReader.AllocationLimit}.");
-                return null;
-            }
-
             Texture2D texture2D = new Texture2D(width, height);
 
             // read pixel content

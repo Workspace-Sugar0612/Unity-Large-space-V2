@@ -6,72 +6,66 @@ namespace Mirror.Examples.AdditiveLevels
 {
     public class FadeInOut : MonoBehaviour
     {
-        [Header("Components")]
-        [SerializeField] Image panelImage;
+        // set these in the inspector
+        [Tooltip("Reference to Image component on child panel")]
+        public Image fadeImage;
 
-        [Header("Settings")]
-        [SerializeField, Range(1, 10)]
-        [Tooltip("Time in seconds to fade in")]
-        byte fadeInTime = 2;
+        [Tooltip("Color to use during scene transition")]
+        public Color fadeColor = Color.black;
 
-        [SerializeField, Range(1, 10)]
-        [Tooltip("Time in seconds to fade out")]
-        byte fadeOutTime = 2;
+        [Range(1, 100), Tooltip("Rate of fade in / out: higher is faster")]
+        public byte stepRate = 2;
 
-        bool isFading;
+        float step;
 
         void OnValidate()
         {
-            if (panelImage == null)
-                panelImage = GetComponentInChildren<Image>();
-
-            fadeInTime = (byte)Mathf.Max(fadeInTime, 1);
-            fadeOutTime = (byte)Mathf.Max(fadeOutTime, 1);
+            if (fadeImage == null)
+                fadeImage = GetComponentInChildren<Image>();
         }
 
-        public float GetFadeInTime() => fadeInTime + Time.fixedDeltaTime;
+        void Start()
+        {
+            // Convert user-friendly setting value to working value
+            step = stepRate * 0.001f;
+        }
+
+        /// <summary>
+        /// Calculates FadeIn / FadeOut time.
+        /// </summary>
+        /// <returns>Duration in seconds</returns>
+        public float GetDuration()
+        {
+            float frames = 1 / step;
+            float frameRate = Time.deltaTime;
+            float duration = frames * frameRate * 0.1f;
+            return duration;
+        }
 
         public IEnumerator FadeIn()
         {
-            //Debug.Log($"FadeIn {isFading}");
-            yield return FadeImage(0f, 1f, fadeInTime);
-        }
+            float alpha = fadeImage.color.a;
 
-        public float GetFadeOutTime() => fadeOutTime + Time.fixedDeltaTime;
+            while (alpha < 1)
+            {
+                yield return null;
+                alpha += step;
+                fadeColor.a = alpha;
+                fadeImage.color = fadeColor;
+            }
+        }
 
         public IEnumerator FadeOut()
         {
-            //Debug.Log($"FadeOut {isFading}");
-            yield return FadeImage(1f, 0f, fadeOutTime);
-        }
+            float alpha = fadeImage.color.a;
 
-        private IEnumerator FadeImage(float startAlpha, float endAlpha, float duration)
-        {
-            if (panelImage == null) yield break;
-
-            if (isFading) yield break;
-
-            // Short circuit if the alpha is already at endAlpha
-            Color color = panelImage.color;
-            if (Mathf.Approximately(color.a, endAlpha)) yield break;
-
-            isFading = true;
-
-            float elapsedTime = 0f;
-            float fixedDeltaTime = Time.fixedDeltaTime;
-
-            while (elapsedTime < duration)
+            while (alpha > 0)
             {
-                elapsedTime += fixedDeltaTime;
-                float alpha = Mathf.Lerp(startAlpha, endAlpha, elapsedTime / duration);
-                panelImage.color = new Color(color.r, color.g, color.b, alpha);
-                yield return new WaitForFixedUpdate();
+                yield return null;
+                alpha -= step;
+                fadeColor.a = alpha;
+                fadeImage.color = fadeColor;
             }
-
-            // Ensure the final alpha value is set
-            panelImage.color = new Color(color.r, color.g, color.b, endAlpha);
-
-            isFading = false;
         }
     }
 }

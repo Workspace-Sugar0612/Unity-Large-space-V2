@@ -54,7 +54,7 @@ namespace Mirror
             newObservers.Clear();
 
             // not force hidden?
-            if (identity.visibility != Visibility.ForceHidden)
+            if (identity.visible != Visibility.ForceHidden)
             {
                 OnRebuildObservers(identity, newObservers);
             }

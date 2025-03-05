@@ -2,8 +2,9 @@
 using System;
 using System.Linq;
 using System.Net;
-using Mirror;
 using UnityEngine;
+using Mirror;
+using Unity.Collections;
 using UnityEngine.Serialization;
 
 namespace kcp2k
@@ -115,14 +116,14 @@ namespace kcp2k
             client = new KcpClient(
                 () => OnClientConnected.Invoke(),
                 (message, channel) => OnClientDataReceived.Invoke(message, FromKcpChannel(channel)),
-                () => OnClientDisconnected?.Invoke(), // may be null in StopHost(): https://github.com/MirrorNetworking/Mirror/issues/3708
+                () => OnClientDisconnected.Invoke(),
                 (error, reason) => OnClientError.Invoke(ToTransportError(error), reason),
                 config
             );
 
             // server
             server = new KcpServer(
-                (connectionId, endPoint) => OnServerConnectedWithAddress.Invoke(connectionId, endPoint.PrettyAddress()),
+                (connectionId) => OnServerConnected.Invoke(connectionId),
                 (connectionId, message, channel) => OnServerDataReceived.Invoke(connectionId, message, FromKcpChannel(channel)),
                 (connectionId) => OnServerDisconnected.Invoke(connectionId),
                 (connectionId, error, reason) => OnServerError.Invoke(connectionId, ToTransportError(error), reason),
@@ -132,7 +133,7 @@ namespace kcp2k
             if (statisticsLog)
                 InvokeRepeating(nameof(OnLogStatistics), 1, 1);
 
-            Log.Info("KcpTransport initialized!");
+            Debug.Log("KcpTransport initialized!");
         }
 
         protected virtual void OnValidate()
@@ -144,14 +145,8 @@ namespace kcp2k
         }
 
         // all except WebGL
-        // Do not change this back to using Application.platform
-        // because that doesn't work in the Editor!
         public override bool Available() =>
-#if UNITY_WEBGL
-            false;
-#else
-            true;
-#endif
+            Application.platform != RuntimePlatform.WebGLPlayer;
 
         // client
         public override bool ClientConnected() => client.connected;
@@ -208,7 +203,13 @@ namespace kcp2k
         public override string ServerGetClientAddress(int connectionId)
         {
             IPEndPoint endPoint = server.GetClientEndPoint(connectionId);
-            return endPoint.PrettyAddress();
+            return endPoint != null
+                // Map to IPv4 if "IsIPv4MappedToIPv6"
+                // "::ffff:127.0.0.1" -> "127.0.0.1"
+                ? (endPoint.Address.IsIPv4MappedToIPv6
+                ? endPoint.Address.MapToIPv4().ToString()
+                : endPoint.Address.ToString())
+                : "";
         }
         public override void ServerStop() => server.Stop();
         public override void ServerEarlyUpdate()
@@ -255,20 +256,20 @@ namespace kcp2k
         // see also: https://github.com/vis2k/Mirror/pull/2777
         public long GetAverageMaxSendRate() =>
             server.connections.Count > 0
-                ? server.connections.Values.Sum(conn => conn.MaxSendRate) / server.connections.Count
+                ? server.connections.Values.Sum(conn => conn.peer.MaxSendRate) / server.connections.Count
                 : 0;
         public long GetAverageMaxReceiveRate() =>
             server.connections.Count > 0
-                ? server.connections.Values.Sum(conn => conn.MaxReceiveRate) / server.connections.Count
+                ? server.connections.Values.Sum(conn => conn.peer.MaxReceiveRate) / server.connections.Count
                 : 0;
         long GetTotalSendQueue() =>
-            server.connections.Values.Sum(conn => conn.SendQueueCount);
+            server.connections.Values.Sum(conn => conn.peer.SendQueueCount);
         long GetTotalReceiveQueue() =>
-            server.connections.Values.Sum(conn => conn.ReceiveQueueCount);
+            server.connections.Values.Sum(conn => conn.peer.ReceiveQueueCount);
         long GetTotalSendBuffer() =>
-            server.connections.Values.Sum(conn => conn.SendBufferCount);
+            server.connections.Values.Sum(conn => conn.peer.SendBufferCount);
         long GetTotalReceiveBuffer() =>
-            server.connections.Values.Sum(conn => conn.ReceiveBufferCount);
+            server.connections.Values.Sum(conn => conn.peer.ReceiveBufferCount);
 
         // PrettyBytes function from DOTSNET
         // pretty prints bytes as KB/MB/GB/etc.
@@ -311,12 +312,12 @@ namespace kcp2k
             {
                 GUILayout.BeginVertical("Box");
                 GUILayout.Label("CLIENT");
-                GUILayout.Label($"  MaxSendRate: {PrettyBytes(client.MaxSendRate)}/s");
-                GUILayout.Label($"  MaxRecvRate: {PrettyBytes(client.MaxReceiveRate)}/s");
-                GUILayout.Label($"  SendQueue: {client.SendQueueCount}");
-                GUILayout.Label($"  ReceiveQueue: {client.ReceiveQueueCount}");
-                GUILayout.Label($"  SendBuffer: {client.SendBufferCount}");
-                GUILayout.Label($"  ReceiveBuffer: {client.ReceiveBufferCount}");
+                GUILayout.Label($"  MaxSendRate: {PrettyBytes(client.peer.MaxSendRate)}/s");
+                GUILayout.Label($"  MaxRecvRate: {PrettyBytes(client.peer.MaxReceiveRate)}/s");
+                GUILayout.Label($"  SendQueue: {client.peer.SendQueueCount}");
+                GUILayout.Label($"  ReceiveQueue: {client.peer.ReceiveQueueCount}");
+                GUILayout.Label($"  SendBuffer: {client.peer.SendBufferCount}");
+                GUILayout.Label($"  ReceiveBuffer: {client.peer.ReceiveBufferCount}");
                 GUILayout.EndVertical();
             }
 
@@ -343,23 +344,23 @@ namespace kcp2k
                 log += $"  ReceiveQueue: {GetTotalReceiveQueue()}\n";
                 log += $"  SendBuffer: {GetTotalSendBuffer()}\n";
                 log += $"  ReceiveBuffer: {GetTotalReceiveBuffer()}\n\n";
-                Log.Info(log);
+                Debug.Log(log);
             }
 
             if (ClientConnected())
             {
                 string log = "kcp CLIENT @ time: " + NetworkTime.localTime + "\n";
-                log += $"  MaxSendRate: {PrettyBytes(client.MaxSendRate)}/s\n";
-                log += $"  MaxRecvRate: {PrettyBytes(client.MaxReceiveRate)}/s\n";
-                log += $"  SendQueue: {client.SendQueueCount}\n";
-                log += $"  ReceiveQueue: {client.ReceiveQueueCount}\n";
-                log += $"  SendBuffer: {client.SendBufferCount}\n";
-                log += $"  ReceiveBuffer: {client.ReceiveBufferCount}\n\n";
-                Log.Info(log);
+                log += $"  MaxSendRate: {PrettyBytes(client.peer.MaxSendRate)}/s\n";
+                log += $"  MaxRecvRate: {PrettyBytes(client.peer.MaxReceiveRate)}/s\n";
+                log += $"  SendQueue: {client.peer.SendQueueCount}\n";
+                log += $"  ReceiveQueue: {client.peer.ReceiveQueueCount}\n";
+                log += $"  SendBuffer: {client.peer.SendBufferCount}\n";
+                log += $"  ReceiveBuffer: {client.peer.ReceiveBufferCount}\n\n";
+                Debug.Log(log);
             }
         }
 
-        public override string ToString() => $"KCP [{port}]";
+        public override string ToString() => "KCP";
     }
 }
 //#endif MIRROR <- commented out because MIRROR isn't defined on first import yet

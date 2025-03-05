@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -22,23 +23,18 @@ namespace Mirror.Examples.MultipleMatch
         public Text winCountLocal;
         public Text winCountOpponent;
 
-        [Header("Diagnostics")]
-        [ReadOnly, SerializeField] internal CanvasController canvasController;
-        [ReadOnly, SerializeField] internal NetworkIdentity player1;
-        [ReadOnly, SerializeField] internal NetworkIdentity player2;
-        [ReadOnly, SerializeField] internal NetworkIdentity startingPlayer;
+        [Header("Diagnostics - Do Not Modify")]
+        public CanvasController canvasController;
+        public NetworkIdentity player1;
+        public NetworkIdentity player2;
+        public NetworkIdentity startingPlayer;
 
         [SyncVar(hook = nameof(UpdateGameUI))]
-        [ReadOnly, SerializeField] internal NetworkIdentity currentPlayer;
+        public NetworkIdentity currentPlayer;
 
         void Awake()
         {
-#if UNITY_2022_2_OR_NEWER
-            canvasController = GameObject.FindAnyObjectByType<CanvasController>();
-#else
-            // Deprecated in Unity 2023.1
-            canvasController = GameObject.FindObjectOfType<CanvasController>();
-#endif
+            canvasController = FindObjectOfType<CanvasController>();
         }
 
         public override void OnStartServer()
@@ -58,6 +54,8 @@ namespace Mirror.Examples.MultipleMatch
 
         public override void OnStartClient()
         {
+            matchPlayerData.Callback += UpdateWins;
+
             canvasGroup.alpha = 1f;
             canvasGroup.interactable = true;
             canvasGroup.blocksRaycasts = true;
@@ -106,7 +104,7 @@ namespace Mirror.Examples.MultipleMatch
             mpd.currentScore = mpd.currentScore | cellValue;
             matchPlayerData[currentPlayer] = mpd;
 
-            boardScore |= cellValue;
+            boardScore = boardScore | cellValue;
 
             if (CheckWinner(mpd.currentScore))
             {
@@ -275,22 +273,22 @@ namespace Mirror.Examples.MultipleMatch
 
             if (!disconnected)
             {
-                NetworkServer.RemovePlayerForConnection(player1.connectionToClient, RemovePlayerOptions.Destroy);
+                NetworkServer.RemovePlayerForConnection(player1.connectionToClient, true);
                 CanvasController.waitingConnections.Add(player1.connectionToClient);
 
-                NetworkServer.RemovePlayerForConnection(player2.connectionToClient, RemovePlayerOptions.Destroy);
+                NetworkServer.RemovePlayerForConnection(player2.connectionToClient, true);
                 CanvasController.waitingConnections.Add(player2.connectionToClient);
             }
             else if (conn == player1.connectionToClient)
             {
                 // player1 has disconnected - send player2 back to Lobby
-                NetworkServer.RemovePlayerForConnection(player2.connectionToClient, RemovePlayerOptions.Destroy);
+                NetworkServer.RemovePlayerForConnection(player2.connectionToClient, true);
                 CanvasController.waitingConnections.Add(player2.connectionToClient);
             }
             else if (conn == player2.connectionToClient)
             {
                 // player2 has disconnected - send player1 back to Lobby
-                NetworkServer.RemovePlayerForConnection(player1.connectionToClient, RemovePlayerOptions.Destroy);
+                NetworkServer.RemovePlayerForConnection(player1.connectionToClient, true);
                 CanvasController.waitingConnections.Add(player1.connectionToClient);
             }
 

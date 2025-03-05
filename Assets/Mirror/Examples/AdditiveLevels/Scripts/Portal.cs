@@ -14,7 +14,7 @@ namespace Mirror.Examples.AdditiveLevels
         [Tooltip("Where to spawn player in Destination Scene")]
         public Vector3 startPosition;
 
-        [Tooltip("Reference to child TextMesh label")]
+        [Tooltip("Reference to child TMP label")]
         public TextMesh label; // don't depend on TMPro. 2019 errors.
 
         [SyncVar(hook = nameof(OnLabelTextChanged))]
@@ -27,7 +27,7 @@ namespace Mirror.Examples.AdditiveLevels
 
         public override void OnStartServer()
         {
-            labelText = Path.GetFileNameWithoutExtension(destinationScene).Replace("MirrorAdditiveLevels", "");
+            labelText = Path.GetFileNameWithoutExtension(destinationScene);
 
             // Simple Regex to insert spaces before capitals, numbers
             labelText = Regex.Replace(labelText, @"\B[A-Z0-9]+", " $0");
@@ -43,58 +43,57 @@ namespace Mirror.Examples.AdditiveLevels
         // up in the Physics collision matrix so only Player collides with Portal.
         void OnTriggerEnter(Collider other)
         {
-            if (!(other is CapsuleCollider)) return; // ignore CharacterController colliders
-
-            //Debug.Log($"Portal.OnTriggerEnter {other}");
             // tag check in case you didn't set up the layers and matrix as noted above
             if (!other.CompareTag("Player")) return;
 
             // applies to host client on server and remote clients
-            if (other.TryGetComponent(out Common.Controllers.Player.PlayerControllerBase playerController))
+            if (other.TryGetComponent(out PlayerController playerController))
                 playerController.enabled = false;
 
             if (isServer)
-                StartCoroutine(SendPlayerToNewScene(other.gameObject));
+            {
+                NetworkIdentity identity = other.gameObject.GetComponentInParent<NetworkIdentity>();
+
+                if (identity != null)
+                {
+                    StartCoroutine(SendPlayerToNewScene(identity.gameObject));
+                }
+
+            }
         }
 
         [ServerCallback]
         IEnumerator SendPlayerToNewScene(GameObject player)
         {
-            if (!player.TryGetComponent(out NetworkIdentity identity)) yield break;
+            if (player.TryGetComponent(out NetworkIdentity identity))
+            {
+                NetworkConnectionToClient conn = identity.connectionToClient;
+                if (conn == null) yield break;
 
-            NetworkConnectionToClient conn = identity.connectionToClient;
-            if (conn == null) yield break;
+                // Tell client to unload previous subscene. No custom handling for this.
+                conn.Send(new SceneMessage { sceneName = gameObject.scene.path, sceneOperation = SceneOperation.UnloadAdditive, customHandling = true });
 
-            // Tell client to unload previous subscene with custom handling (see NetworkManager::OnClientChangeScene).
-            conn.Send(new SceneMessage { sceneName = gameObject.scene.path, sceneOperation = SceneOperation.UnloadAdditive, customHandling = true });
+                yield return new WaitForSeconds(AdditiveLevelsNetworkManager.singleton.fadeInOut.GetDuration());
 
-            // wait for fader to complete.
-            yield return new WaitForSeconds(AdditiveLevelsNetworkManager.singleton.fadeInOut.GetFadeInTime());
+                NetworkServer.RemovePlayerForConnection(conn, false);
 
-            // Remove player after fader has completed
-            NetworkServer.RemovePlayerForConnection(conn, RemovePlayerOptions.Unspawn);
+                // reposition player on server and client
+                player.transform.position = startPosition;
+                player.transform.LookAt(Vector3.up);
 
-            // reposition player on server and client
-            player.transform.position = startPosition;
+                // Move player to new subscene.
+                SceneManager.MoveGameObjectToScene(player, SceneManager.GetSceneByPath(destinationScene));
+                SceneManager.MoveGameObjectToScene(player, SceneManager.GetSceneByPath(destinationScene));
 
-            // Rotate player to face center of scene
-            // Player is 2m tall with pivot at 0,1,0 so we need to look at
-            // 1m height to not tilt the player down to look at origin
-            player.transform.LookAt(Vector3.up);
+                // Tell client to load the new subscene with custom handling (see NetworkManager::OnClientChangeScene).
+                conn.Send(new SceneMessage { sceneName = destinationScene, sceneOperation = SceneOperation.LoadAdditive, customHandling = true });
 
-            // Move player to new subscene.
-            SceneManager.MoveGameObjectToScene(player, SceneManager.GetSceneByPath(destinationScene));
+                NetworkServer.AddPlayerForConnection(conn, player);
 
-            // Tell client to load the new subscene with custom handling (see NetworkManager::OnClientChangeScene).
-            conn.Send(new SceneMessage { sceneName = destinationScene, sceneOperation = SceneOperation.LoadAdditive, customHandling = true });
-
-            // Player will be spawned after destination scene is loaded
-            NetworkServer.AddPlayerForConnection(conn, player);
-
-            // host client playerController would have been disabled by OnTriggerEnter above
-            // Remote client players are respawned with playerController already enabled
-            if (NetworkClient.localPlayer != null && NetworkClient.localPlayer.TryGetComponent(out Common.Controllers.Player.PlayerControllerBase playerController))
-                playerController.enabled = true;
+                // host client would have been disabled by OnTriggerEnter above
+                if (NetworkClient.localPlayer != null && NetworkClient.localPlayer.TryGetComponent(out PlayerController playerController))
+                    playerController.enabled = true;
+            }
         }
     }
 }

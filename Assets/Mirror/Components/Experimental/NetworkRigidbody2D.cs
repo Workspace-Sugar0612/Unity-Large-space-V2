@@ -1,11 +1,9 @@
-using System;
 using UnityEngine;
 
 namespace Mirror.Experimental
 {
-    [AddComponentMenu("")]
+    [AddComponentMenu("Network/ Experimental/Network Rigidbody 2D")]
     [HelpURL("https://mirror-networking.gitbook.io/docs/components/network-rigidbody")]
-    [Obsolete("Use the new NetworkRigidbodyReliable/Unreliable 2D component with Snapshot Interpolation instead.")]
     public class NetworkRigidbody2D : NetworkBehaviour
     {
         [Header("Settings")]
@@ -42,15 +40,8 @@ namespace Mirror.Experimental
         protected override void OnValidate()
         {
             base.OnValidate();
-            Reset();
-        }
-
-        public virtual void Reset()
-        {
             if (target == null)
                 target = GetComponent<Rigidbody2D>();
-
-            syncDirection = SyncDirection.ClientToServer;
         }
 
         #region Sync vars

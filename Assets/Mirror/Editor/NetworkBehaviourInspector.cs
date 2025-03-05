@@ -43,8 +43,7 @@ namespace Mirror
 
         void OnEnable()
         {
-            // sometimes target is null. just return early.
-            if (target == null) return;
+            if (target == null) { Debug.LogWarning("NetworkBehaviourInspector had no target object"); return; }
 
             // If target's base class is changed from NetworkBehaviour to MonoBehaviour
             // then Unity temporarily keep using this Inspector causing things to break

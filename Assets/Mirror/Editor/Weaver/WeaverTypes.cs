@@ -10,7 +10,7 @@ namespace Mirror.Weaver
     {
         public MethodReference ScriptableObjectCreateInstanceMethod;
 
-        public FieldReference NetworkBehaviourDirtyBitsReference;
+        public MethodReference NetworkBehaviourDirtyBitsReference;
         public MethodReference GetWriterReference;
         public MethodReference ReturnWriterReference;
 
@@ -53,9 +53,6 @@ namespace Mirror.Weaver
 
         public MethodReference readNetworkBehaviourGeneric;
 
-        public TypeReference weaverFuseType;
-        public MethodReference weaverFuseMethod;
-
         // attributes
         public TypeDefinition initializeOnLoadMethodAttribute;
         public TypeDefinition runtimeInitializeOnLoadMethodAttribute;
@@ -78,9 +75,6 @@ namespace Mirror.Weaver
             TypeReference ActionType = Import(typeof(Action<,>));
             ActionT_T = Resolvers.ResolveMethod(ActionType, assembly, Log, ".ctor", ref WeavingFailed);
 
-            weaverFuseType = Import(typeof(WeaverFuse));
-            weaverFuseMethod = Resolvers.ResolveMethod(weaverFuseType, assembly, Log, "Weaved", ref WeavingFailed);
-
             TypeReference NetworkServerType = Import(typeof(NetworkServer));
             NetworkServerGetActive = Resolvers.ResolveMethod(NetworkServerType, assembly, Log, "get_active", ref WeavingFailed);
 
@@ -90,7 +84,7 @@ namespace Mirror.Weaver
 
             TypeReference NetworkBehaviourType = Import<NetworkBehaviour>();
 
-            NetworkBehaviourDirtyBitsReference = Resolvers.ResolveField(NetworkBehaviourType, assembly, Log, "syncVarDirtyBits", ref WeavingFailed);
+            NetworkBehaviourDirtyBitsReference = Resolvers.ResolveProperty(NetworkBehaviourType, assembly, "syncVarDirtyBits");
 
             generatedSyncVarSetter = Resolvers.ResolveMethod(NetworkBehaviourType, assembly, Log, "GeneratedSyncVarSetter", ref WeavingFailed);
             generatedSyncVarSetter_GameObject = Resolvers.ResolveMethod(NetworkBehaviourType, assembly, Log, "GeneratedSyncVarSetter_GameObject", ref WeavingFailed);

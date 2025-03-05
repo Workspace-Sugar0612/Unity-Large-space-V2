@@ -67,11 +67,13 @@ namespace Mirror
         // for example: main player & pets are owned. monsters & npcs aren't.
         public bool isOwned => netIdentity.isOwned;
 
+        // Deprecated 2022-10-13
+        [Obsolete(".hasAuthority was renamed to .isOwned. This is easier to understand and prepares for SyncDirection, where there is a difference betwen isOwned and authority.")]
+        public bool hasAuthority => isOwned;
+
         /// <summary>authority is true if we are allowed to modify this component's state. On server, it's true if SyncDirection is ServerToClient. On client, it's true if SyncDirection is ClientToServer and(!) if this object is owned by the client.</summary>
-        // on the client: if Client->Server SyncDirection and owned
-        // on the server: if Server->Client SyncDirection
-        // on the host:   if Server->Client SyncDirection (= server owns it), or if Client->Server and owned (=host client owns it)
-        // in host mode:  always true because either server or client always has authority, and host is both.
+        // on the client: if owned and if clientAuthority sync direction
+        // on the server: if serverAuthority sync direction
         //
         // for example, NetworkTransform:
         //   client may modify position if ClientAuthority mode and owned
@@ -82,20 +84,10 @@ namespace Mirror
         //
         // also note that this is a per-NetworkBehaviour flag.
         // another component may not be client authoritative, etc.
-        public bool authority
-        {
-            get
-            {
-                // host mode needs to be checked explicitly
-                if (isClient && isServer) return syncDirection == SyncDirection.ServerToClient || isOwned;
-
-                // client-only
-                if (isClient) return syncDirection == SyncDirection.ClientToServer && isOwned;
-
-                // server-only
-                return syncDirection == SyncDirection.ServerToClient;
-            }
-        }
+        public bool authority =>
+            isClient
+                ? syncDirection == SyncDirection.ClientToServer && isOwned
+                : syncDirection == SyncDirection.ServerToClient;
 
         /// <summary>The unique network Id of this object (unique at runtime).</summary>
         public uint netId => netIdentity.netId;
@@ -135,9 +127,8 @@ namespace Mirror
         //   -> still supports dynamically sized types
         //
         // 64 bit mask, tracking up to 64 SyncVars.
-        // protected since NB child classes read this field in the weaver generated SerializeSyncVars method
-        protected ulong syncVarDirtyBits;
-        // 64 bit mask, tracking up to 64 sync collections.
+        protected ulong syncVarDirtyBits { get; private set; }
+        // 64 bit mask, tracking up to 64 sync collections (internal for tests).
         // internal for tests, field for faster access (instead of property)
         // TODO 64 SyncLists are too much. consider smaller mask later.
         internal ulong syncObjectDirtyBits;
@@ -148,35 +139,6 @@ namespace Mirror
         // the setter would call the hook and we deadlock.
         // hook guard prevents that.
         ulong syncVarHookGuard;
-
-        protected virtual void OnValidate()
-        {
-            // Skip if Editor is in Play mode
-            if (Application.isPlaying) return;
-
-            // we now allow child NetworkBehaviours.
-            // we can not [RequireComponent(typeof(NetworkIdentity))] anymore.
-            // instead, we need to ensure a NetworkIdentity is somewhere in the
-            // parents.
-            // only run this in Editor. don't add more runtime overhead.
-
-            // GetComponentInParent(includeInactive) is needed because Prefabs are not
-            // considered active, so this check requires to scan inactive.
-#if UNITY_2021_3_OR_NEWER // 2021 has GetComponentInParent(bool includeInactive = false)
-            if (GetComponent<NetworkIdentity>() == null &&
-                GetComponentInParent<NetworkIdentity>(true) == null)
-            {
-                Debug.LogError($"{GetType()} on {name} requires a NetworkIdentity. Please add a NetworkIdentity component to {name} or it's parents.", this);
-            }
-#elif UNITY_2020_3_OR_NEWER // 2020 only has GetComponentsInParent(bool includeInactive = false), we can use this too
-            NetworkIdentity[] parentsIds = GetComponentsInParent<NetworkIdentity>(true);
-            int parentIdsCount = parentsIds != null ? parentsIds.Length : 0;
-            if (GetComponent<NetworkIdentity>() == null && parentIdsCount == 0)
-            {
-                Debug.LogError($"{GetType()} on {name} requires a NetworkIdentity. Please add a NetworkIdentity component to {name} or it's parents.", this);
-            }
-#endif
-        }
 
         // USED BY WEAVER to set syncvars in host mode without deadlocking
         protected bool GetSyncVarHookGuard(ulong dirtyBit) =>
@@ -331,6 +293,27 @@ namespace Mirror
             };
         }
 
+        protected virtual void OnValidate()
+        {
+            // we now allow child NetworkBehaviours.
+            // we can not [RequireComponent(typeof(NetworkIdentity))] anymore.
+            // instead, we need to ensure a NetworkIdentity is somewhere in the
+            // parents.
+            // only run this in Editor. don't add more runtime overhead.
+
+#if UNITY_EDITOR
+            if (GetComponent<NetworkIdentity>() == null &&
+#if UNITY_2020_3_OR_NEWER
+                GetComponentInParent<NetworkIdentity>(true) == null)
+#else
+                GetComponentInParent<NetworkIdentity>() == null)
+#endif
+            {
+                Debug.LogError($"{GetType()} on {name} requires a NetworkIdentity. Please add a NetworkIdentity component to {name} or it's parents.");
+            }
+#endif
+        }
+
         // pass full function name to avoid ClassA.Func <-> ClassB.Func collisions
         protected void SendCommandInternal(string functionFullName, int functionHashCode, NetworkWriter writer, int channelId, bool requiresAuthority = true)
         {
@@ -371,12 +354,6 @@ namespace Mirror
             if (NetworkClient.connection == null)
             {
                 Debug.LogError($"Command {functionFullName} called on {name} with no client running.", gameObject);
-                return;
-            }
-
-            if (netId == 0)
-            {
-                Debug.LogWarning($"Command {functionFullName} called on {name} with netId=0. Maybe it wasn't spawned yet?", gameObject);
                 return;
             }
 
@@ -442,14 +419,13 @@ namespace Mirror
             {
                 serialized.Write(message);
 
-                // send to every observer.
-                // batching buffers this automatically.
+                // add to every observer's connection's rpc buffer
                 foreach (NetworkConnectionToClient conn in netIdentity.observers.Values)
                 {
                     bool isOwner = conn == netIdentity.connectionToClient;
                     if ((!isOwner || includeOwner) && conn.isReady)
                     {
-                        conn.Send(message, channelId);
+                        conn.BufferRpc(message, channelId);
                     }
                 }
             }
@@ -501,9 +477,10 @@ namespace Mirror
                 payload = writer.ToArraySegment()
             };
 
-            // send it to the connection.
-            // batching buffers this automatically.
-            conn.Send(message, channelId);
+            // serialize it to the connection's rpc buffer.
+            // send them all at once, instead of sending one message per rpc.
+            // conn.Send(message, channelId);
+            connToClient.BufferRpc(message, channelId);
         }
 
         // move the [SyncVar] generated property's .set into C# to avoid much IL
@@ -771,6 +748,7 @@ namespace Mirror
         //          GeneratedSyncVarDeserialize(reader, ref health, null, reader.ReadInt());
         //      }
         //  }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void GeneratedSyncVarDeserialize<T>(ref T field, Action<T, T> OnChanged, T value)
         {
             T previous = field;
@@ -828,6 +806,7 @@ namespace Mirror
         //           GeneratedSyncVarDeserialize_GameObject(reader, ref target, OnChangedNB, ref ___targetNetId);
         //       }
         //   }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void GeneratedSyncVarDeserialize_GameObject(ref GameObject field, Action<GameObject, GameObject> OnChanged, NetworkReader reader, ref uint netIdField)
         {
             uint previousNetId = netIdField;
@@ -890,6 +869,7 @@ namespace Mirror
         //           GeneratedSyncVarDeserialize_NetworkIdentity(reader, ref target, OnChangedNI, ref ___targetNetId);
         //       }
         //   }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void GeneratedSyncVarDeserialize_NetworkIdentity(ref NetworkIdentity field, Action<NetworkIdentity, NetworkIdentity> OnChanged, NetworkReader reader, ref uint netIdField)
         {
             uint previousNetId = netIdField;
@@ -953,6 +933,7 @@ namespace Mirror
         //           GeneratedSyncVarDeserialize_NetworkBehaviour(reader, ref target, OnChangedNB, ref ___targetNetId);
         //       }
         //   }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void GeneratedSyncVarDeserialize_NetworkBehaviour<T>(ref T field, Action<T, T> OnChanged, NetworkReader reader, ref NetworkBehaviourSyncVar netIdField)
             where T : NetworkBehaviour
         {
@@ -1059,7 +1040,7 @@ namespace Mirror
             // Debug.Log($"SetSyncVarNetworkBehaviour NetworkIdentity {GetType().Name} bit [{dirtyBit}] netIdField:{oldField}->{syncField}");
         }
 
-        // helper function for [SyncVar] NetworkBehaviours.
+        // helper function for [SyncVar] NetworkIdentities.
         // -> ref GameObject as second argument makes OnDeserialize processing easier
         protected T GetSyncVarNetworkBehaviour<T>(NetworkBehaviourSyncVar syncNetBehaviour, ref T behaviourField) where T : NetworkBehaviour
         {
@@ -1075,15 +1056,6 @@ namespace Mirror
             // over and over again, which shouldn't null them forever
             if (!NetworkClient.spawned.TryGetValue(syncNetBehaviour.netId, out NetworkIdentity identity))
             {
-                return null;
-            }
-            
-            // ensure componentIndex is in range.
-            // show explicit errors if something went wrong, instead of IndexOutOfRangeException.
-            // removing components at runtime isn't allowed, yet this happened in a project so we need to check for it.
-            if (syncNetBehaviour.componentIndex >= identity.NetworkBehaviours.Length)
-            {
-                Debug.LogError($"[SyncVar] {typeof(T)} on {name}'s {GetType()}: can't access {identity.name} NetworkBehaviour[{syncNetBehaviour.componentIndex}] because it only has {identity.NetworkBehaviours.Length} components.\nWas a NetworkBeahviour accidentally destroyed at runtime?");
                 return null;
             }
 
@@ -1127,9 +1099,10 @@ namespace Mirror
             DeserializeSyncVars(reader, initialState);
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         void SerializeSyncObjects(NetworkWriter writer, bool initialState)
         {
-            // if initialState: write all SyncObjects (SyncList/Set/etc)
+            // if initialState: write all SyncVars.
             // otherwise write dirtyBits+dirty SyncVars
             if (initialState)
                 SerializeObjectsAll(writer);
@@ -1137,6 +1110,7 @@ namespace Mirror
                 SerializeObjectsDelta(writer);
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         void DeserializeSyncObjects(NetworkReader reader, bool initialState)
         {
             if (initialState)
@@ -1377,10 +1351,5 @@ namespace Mirror
 
         /// <summary>Stop event, only called for objects the client has authority over.</summary>
         public virtual void OnStopAuthority() {}
-
-        // Weaver injects this into inheriting classes to return true.
-        // allows runtime & tests to check if a type was weaved.
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual bool Weaved() => false;
     }
 }

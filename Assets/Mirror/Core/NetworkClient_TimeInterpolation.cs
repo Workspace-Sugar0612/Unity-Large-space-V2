@@ -11,16 +11,23 @@ namespace Mirror
         // via NetMan or NetworkClientConfig or NetworkClient as component etc.
         public static SnapshotInterpolationSettings snapshotSettings = new SnapshotInterpolationSettings();
 
-        // snapshot interpolation runtime data /////////////////////////////////
-        // buffer time is dynamically adjusted.
-        // store the current multiplier here, without touching the original in settings.
-        // this way we can easily reset to or compare with original where needed.
-        public static double bufferTimeMultiplier;
+        // obsolete snapshot settings access
+        // DEPRECATED 2023-03-11
+        [Obsolete("NetworkClient snapshot interpolation settings were moved to NetworkClient.snapshotSettings.*")]
+        public static double bufferTimeMultiplier => snapshotSettings.bufferTimeMultiplier;
+        [Obsolete("NetworkClient snapshot interpolation settings were moved to NetworkClient.snapshotSettings.*")]
+        public static float catchupNegativeThreshold => snapshotSettings.catchupNegativeThreshold;
+        [Obsolete("NetworkClient snapshot interpolation settings were moved to NetworkClient.snapshotSettings.*")]
+        public static float catchupPositiveThreshold => snapshotSettings.catchupPositiveThreshold;
+        [Obsolete("NetworkClient snapshot interpolation settings were moved to NetworkClient.snapshotSettings.*")]
+        public static double catchupSpeed => snapshotSettings.catchupSpeed;
+        [Obsolete("NetworkClient snapshot interpolation settings were moved to NetworkClient.snapshotSettings.*")]
+        public static double slowdownSpeed => snapshotSettings.slowdownSpeed;
+        [Obsolete("NetworkClient snapshot interpolation settings were moved to NetworkClient.snapshotSettings.*")]
+        public static int driftEmaDuration => snapshotSettings.driftEmaDuration;
 
-        // original buffer time based on the settings
-        // dynamically adjusted buffer time based on dynamically adjusted multiplier
-        public static double initialBufferTime => NetworkServer.sendInterval * snapshotSettings.bufferTimeMultiplier;
-        public static double bufferTime        => NetworkServer.sendInterval * bufferTimeMultiplier;
+        // snapshot interpolation runtime data /////////////////////////////////
+        public static double bufferTime => NetworkServer.sendInterval * snapshotSettings.bufferTimeMultiplier;
 
         // <servertime, snaps>
         public static SortedList<double, TimeSnapshot> snapshots = new SortedList<double, TimeSnapshot>();
@@ -82,7 +89,8 @@ namespace Mirror
         static void InitTimeInterpolation()
         {
             // reset timeline, localTimescale & snapshots from last session (if any)
-            bufferTimeMultiplier = snapshotSettings.bufferTimeMultiplier;
+            // Don't reset bufferTimeMultiplier here - whatever their network condition
+            // was when they disconnected, it won't have changed on immediate reconnect.
             localTimeline = 0;
             localTimescale = 1;
             snapshots.Clear();
@@ -118,7 +126,7 @@ namespace Mirror
             {
                 // set bufferTime on the fly.
                 // shows in inspector for easier debugging :)
-                bufferTimeMultiplier = SnapshotInterpolation.DynamicAdjustment(
+                snapshotSettings.bufferTimeMultiplier = SnapshotInterpolation.DynamicAdjustment(
                     NetworkServer.sendInterval,
                     deliveryTimeEma.StandardDeviation,
                     snapshotSettings.dynamicAdjustmentTolerance
@@ -128,7 +136,6 @@ namespace Mirror
             // insert into the buffer & initialize / adjust / catchup
             SnapshotInterpolation.InsertAndAdjust(
                 snapshots,
-                snapshotSettings.bufferLimit,
                 snap,
                 ref localTimeline,
                 ref localTimescale,

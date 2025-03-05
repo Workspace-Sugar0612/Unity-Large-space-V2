@@ -52,6 +52,15 @@ namespace Mirror
         public ArraySegment<byte> payload;
     }
 
+    // holds multiple buffered rpcs for the given connection.
+    // more efficient than sending one message per rpc.
+    public struct RpcBufferMessage : NetworkMessage
+    {
+        // payload contains multiple serialized RpcMessages.
+        // but without the message header.
+        public ArraySegment<byte> payload;
+    }
+
     public struct SpawnMessage : NetworkMessage
     {
         // netId of new or existing object
@@ -102,39 +111,22 @@ namespace Mirror
         public ArraySegment<byte> payload;
     }
 
-    // whoever wants to measure rtt, sends this to the other end.
+    // A client sends this message to the server
+    // to calculate RTT and synchronize time
     public struct NetworkPingMessage : NetworkMessage
     {
-        // local time is used to calculate round trip time,
-        // and to calculate the predicted time offset.
-        public double localTime;
+        public double clientTime;
 
-        // predicted time is sent to compare the final error, for debugging only
-        public double predictedTimeAdjusted;
-
-        public NetworkPingMessage(double localTime, double predictedTimeAdjusted)
+        public NetworkPingMessage(double value)
         {
-            this.localTime = localTime;
-            this.predictedTimeAdjusted = predictedTimeAdjusted;
+            clientTime = value;
         }
     }
 
-    // the other end responds with this message.
-    // we can use this to calculate rtt.
+    // The server responds with this message
+    // The client can use this to calculate RTT and sync time
     public struct NetworkPongMessage : NetworkMessage
     {
-        // local time is used to calculate round trip time.
-        public double localTime;
-
-        // predicted error is used to adjust the predicted timeline.
-        public double predictionErrorUnadjusted;
-        public double predictionErrorAdjusted; // for debug purposes
-
-        public NetworkPongMessage(double localTime, double predictionErrorUnadjusted, double predictionErrorAdjusted)
-        {
-            this.localTime = localTime;
-            this.predictionErrorUnadjusted = predictionErrorUnadjusted;
-            this.predictionErrorAdjusted = predictionErrorAdjusted;
-        }
+        public double clientTime;
     }
 }

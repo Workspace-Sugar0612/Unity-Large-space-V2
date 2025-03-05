@@ -2,7 +2,6 @@ using UnityEngine;
 
 namespace Mirror.Examples.NetworkRoom
 {
-    [AddComponentMenu("")]
     public class PlayerScore : NetworkBehaviour
     {
         [SyncVar]

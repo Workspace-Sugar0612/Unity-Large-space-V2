@@ -25,7 +25,7 @@ namespace Mirror.Weaver
         {
             if (md.Name == ".cctor" ||
                 md.Name == NetworkBehaviourProcessor.ProcessedFunctionName ||
-                md.Name.StartsWith(RemoteCalls.RemoteProcedureCalls.InvokeRpcPrefix))
+                md.Name.StartsWith(Weaver.InvokeRpcPrefix))
                 return false;
 
             if (md.IsAbstract)
