@@ -1210,7 +1210,7 @@ namespace Mirror
             if (!conn.observing.Contains(identity)) return;
 
             //Debug.Log($"Server SendChangeOwnerMessage: name={identity.name} netid={identity.netId}");
-
+            Debug.Log("Send!!!!!");
             conn.Send(new ChangeOwnerMessage
             {
                 netId = identity.netId,

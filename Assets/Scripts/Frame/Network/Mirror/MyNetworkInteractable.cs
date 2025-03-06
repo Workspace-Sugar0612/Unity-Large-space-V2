@@ -12,11 +12,13 @@ public class MyNetworkInteractable : NetworkBehaviour
     private Rigidbody m_Rigidbody;
     private void Start()
     {
-        if (m_Rigidbody == null) { m_Rigidbody = GetComponent<Rigidbody>(); } 
+        if (m_Rigidbody == null) 
+            m_Rigidbody = GetComponent<Rigidbody>();
     }
 
     public void EventPick()
     {
+        Debug.Log("Event Pick");
         ResetInteractableVelocity();
         CmdPickup(connectionToClient);
     }
@@ -27,6 +29,7 @@ public class MyNetworkInteractable : NetworkBehaviour
         ResetInteractableVelocity();
         if (sender != netIdentity.connectionToClient)
         {
+            Debug.Log("AssignClientAuthority");
             netIdentity.RemoveClientAuthority();
             netIdentity.AssignClientAuthority(sender);
         }
@@ -34,8 +37,10 @@ public class MyNetworkInteractable : NetworkBehaviour
 
     private void ResetInteractableVelocity()
     {
+        Debug.Log("ResetInteractableVelocity");
         if (m_Rigidbody)
         {
+            Debug.Log("Reset");
             m_Rigidbody.velocity = Vector3.zero;
             m_Rigidbody.angularVelocity = Vector3.zero;
         }

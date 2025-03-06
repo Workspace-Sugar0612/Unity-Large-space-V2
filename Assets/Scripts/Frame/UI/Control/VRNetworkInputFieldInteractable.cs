@@ -6,10 +6,15 @@ using UnityEngine;
 
 public class VRNetworkInputFieldInterable : NetworkBehaviour
 {
-
+    /// <summary>
+    /// New inputfield text content.
+    /// </summary>
     [SyncVar(hook = nameof(OnNewTextChanged))]
-    public string m_NewText;
+    private string m_NewText;
 
+    /// <summary>
+    /// InputField control.
+    /// </summary>
     public TMP_InputField playerNameInput;
 
     void Start()

@@ -10,43 +10,41 @@ public class MyVRHUD : MonoBehaviour
 {
     #region UI Variable
 
-    //public TMP_InputField playerNameInput;
-    //public Button okChangedNameButton;
-    //public Button autoConnection;
+    /// <summary>
+    /// Input player want name.
+    /// </summary>
+    public TMP_InputField playerNameInput;
+
+    /// <summary>
+    /// confirm change name.
+    /// </summary>
+    public Button okChangedNameButton;
 
     #endregion
 
     public VRNetworkPlayerController vrPlayerController;
-    private MyNetworkLauncher _vrNetLaucher;
-
-    /// <summary>
-    /// AutoConnect network.
-    /// If not find Server, then create one server.
-    /// </summary>
-    public bool isAutoConnect;
+    private MyNetworkLauncher m_VrNetLaucher;
 
     private void Awake()
     {
-        if (_vrNetLaucher == null)
-            _vrNetLaucher = (MyNetworkLauncher)FindObjectOfType(typeof(MyNetworkLauncher));
+        if (m_VrNetLaucher == null)
+            m_VrNetLaucher = (MyNetworkLauncher)FindObjectOfType(typeof(MyNetworkLauncher));
     }
 
     private void Start()
     {
         OnConnection();
-        //okChangedNameButton.onClick.AddListener(delegate { OnValueChangedName(); });
-        //autoConnection.onClick.AddListener(delegate { OnConnection(); });
+        okChangedNameButton.onClick.AddListener(delegate { OnValueChangedName(); });
     }
 
     public void OnValueChangedName()
     {
-        //MyVRStaticVariables.playerName = playerNameInput.text;
-        //vrPlayerController.CmdSetupName("Player: " + playerNameInput.text);
+        MyVRStaticVariables.playerName = playerNameInput.text;
+        vrPlayerController.CmdSetupName("Player: " + playerNameInput.text);
     }
 
     public void OnConnection()
     {
-        if (isAutoConnect == true)
-            StartCoroutine(_vrNetLaucher.Waiter());
+        StartCoroutine(m_VrNetLaucher.Waiter());
     }
 }

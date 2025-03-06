@@ -1220,7 +1220,7 @@ namespace Mirror
             }
 
             SetClientOwner(conn);
-
+            Debug.Log("SendChangeOwnerMessage!!!!");
             // The client will match to the existing object
             NetworkServer.SendChangeOwnerMessage(this, conn);
 
@@ -1263,6 +1263,7 @@ namespace Mirror
 
             if (connectionToClient != null)
             {
+                Debug.Log("RemoveClientAuthority!!!");
                 clientAuthorityCallback?.Invoke(connectionToClient, this, false);
                 NetworkConnectionToClient previousOwner = connectionToClient;
                 connectionToClient = null;
