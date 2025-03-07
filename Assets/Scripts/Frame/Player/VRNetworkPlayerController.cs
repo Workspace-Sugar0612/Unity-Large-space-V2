@@ -89,6 +89,8 @@ public class VRNetworkPlayerController : NetworkBehaviour
     /// </summary>
     public TMP_Text textPlayerName;
 
+    private HandInteraction m_HandInteraction;
+
     /// <summary>
     /// Player name variable.
     /// </summary>
@@ -148,6 +150,12 @@ public class VRNetworkPlayerController : NetworkBehaviour
         {
             m_VRHUD = (MyVRHUD)FindObjectOfType(typeof(MyVRHUD));
             m_VRHUD.vrPlayerController = this;
+        }
+
+        if (m_HandInteraction == null)
+        {
+            m_HandInteraction = (HandInteraction)FindObjectOfType(typeof(HandInteraction));
+            m_HandInteraction.vrNetworkPlayerController = this;
         }
     }
 
