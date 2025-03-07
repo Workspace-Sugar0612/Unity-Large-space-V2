@@ -3,14 +3,15 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class VRNetworkInputFieldInterable : NetworkBehaviour
 {
     /// <summary>
     /// New inputfield text content.
     /// </summary>
-    [SyncVar(hook = nameof(OnNewTextChanged))]
-    private string m_NewText;
+    [SyncVar(hook = nameof(NewTextChanged))]
+    private string m_SyncText;
 
     /// <summary>
     /// InputField control.
@@ -19,16 +20,23 @@ public class VRNetworkInputFieldInterable : NetworkBehaviour
 
     void Start()
     {
-        playerNameInput.onValueChanged.AddListener((s) => { CmdInputFieldText(s); });
+        playerNameInput.onValueChanged.AddListener(InputFieldValChanged);
     }
 
-    public void OnNewTextChanged(string _old, string _new)
+    private void NewTextChanged(string _old, string _new)
     {
-        playerNameInput.text = m_NewText;
+        playerNameInput.text = m_SyncText;
     }
 
-    public void CmdInputFieldText(string text)
+    private void InputFieldValChanged(string text)
     {
-        m_NewText = text;
+        CmdSyncText(text);
+    }
+
+
+    [Command(requiresAuthority = false)]
+    private void CmdSyncText(string t)
+    {
+        m_SyncText = t;
     }
 }

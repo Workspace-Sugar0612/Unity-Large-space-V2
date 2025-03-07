@@ -24,15 +24,15 @@ public class MyNetworkScene : NetworkBehaviour
     //[ClientRpc]
     private void RpcGenericNetwork(int method)
     {
-        if (method == 1) { SetAudioSourceState(true); }
-        else if (method == 2) { SetParticleState(true); }
-        else if (method == 3) { SetParticleState(false); }
+        if (method == 1) { RpcSetAudioSourceState(true); }
+        else if (method == 2) { RpcSetParticleState(true); }
+        else if (method == 3) { RpcSetParticleState(false); }
         else if (method == 4) { CmdPokeNumberButton(); }
         else { }
     }
 
     [ClientRpc]
-    private void SetAudioSourceState(bool state)
+    private void RpcSetAudioSourceState(bool state)
     {
         if (state)
             audioSource.Play(); 
@@ -41,7 +41,7 @@ public class MyNetworkScene : NetworkBehaviour
     }
 
     [ClientRpc]
-    private void SetParticleState(bool state)
+    private void RpcSetParticleState(bool state)
     {
         if (state)
             particleSystem.Play();

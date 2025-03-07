@@ -44,6 +44,18 @@ public class VRNetworkPlayerController : NetworkBehaviour
         set => m_Head = value;
     }
 
+    [SerializeField]
+    [Tooltip("Name Transform")]
+    Transform m_UI;
+    /// <summary>
+    /// Name Transform.
+    /// </summary>
+    public Transform nameUI
+    {
+        get => m_UI;
+        set => m_UI = value;
+    }
+
     [Space]
     [Header("Model Prefab")]
 
