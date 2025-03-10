@@ -59,10 +59,11 @@ public class MyVRPlayerRig : MonoBehaviour
         set => m_VRPlayerController = value;
     }
 
-    void Update()
+
+    private void PlayerModleSync()
     {
         if (vrPlayerController)
-        { 
+        {
             vrPlayerController.head.position = head.transform.position;
             vrPlayerController.head.rotation = head.transform.rotation;
 
@@ -76,5 +77,10 @@ public class MyVRPlayerRig : MonoBehaviour
             vrPlayerController.rHand.rotation = rHand.transform.rotation;
 
         }
+    }
+
+    void Update()
+    {
+        PlayerModleSync();
     }
 }

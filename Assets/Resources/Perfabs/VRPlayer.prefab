@@ -396,6 +396,7 @@ MonoBehaviour:
   m_LHandModel: {fileID: 465529162033633478}
   m_RHandModel: {fileID: 4938878741849134738}
   textPlayerName: {fileID: 3069002722878179239}
+  heldObjectTemp: {fileID: 1001344263380057079, guid: 78a85a84f102d0440b647b3c23a0bcf6, type: 3}
 --- !u!1 &2319475652799005014
 GameObject:
   m_ObjectHideFlags: 0

@@ -89,13 +89,53 @@ public class VRNetworkPlayerController : NetworkBehaviour
     /// </summary>
     public TMP_Text textPlayerName;
 
-    private HandInteraction m_HandInteraction;
-
     /// <summary>
     /// Player name variable.
     /// </summary>
     [SyncVar(hook = nameof(OnNameChangedHook))]
     string playerName;
+
+    [Space]
+    [Header("Touch Object")]
+    [Tooltip("The item held in the user's right hand")]
+    public GameObject heldObjectTemp;
+
+    /// <summary>
+    /// heldObjectTemp's instance in scene.
+    /// </summary>
+    private GameObject m_HeldObject;
+
+    /// <summary>
+    /// The distance between the grasped object and the right hand.
+    /// </summary>
+    private float m_Dist;
+
+    public void Awake()
+    {
+        m_Dist = 0.5f;
+    }
+
+    public void Start()
+    {
+        InitAndSpawn();
+    }
+
+    private void InitAndSpawn()
+    {
+        m_HeldObject = Instantiate(heldObjectTemp, this.transform);
+    }
+
+    private void ObjectFollowing()
+    {
+        if (m_HeldObject != null)
+        {
+            Vector3 PlayerPos = rHand.position;
+            Vector3 targetPos = PlayerPos + rHand.forward * m_Dist;
+            m_HeldObject.transform.position = Vector3.Lerp(m_HeldObject.transform.position, targetPos, Time.deltaTime * 10f);
+            m_HeldObject.transform.rotation = rHand.rotation;
+        }
+    }
+
 
     public void OnNameChangedHook(string _old, string _new)
     {
@@ -151,12 +191,11 @@ public class VRNetworkPlayerController : NetworkBehaviour
             m_VRHUD = (MyVRHUD)FindObjectOfType(typeof(MyVRHUD));
             m_VRHUD.vrPlayerController = this;
         }
+    }
 
-        if (m_HandInteraction == null)
-        {
-            m_HandInteraction = (HandInteraction)FindObjectOfType(typeof(HandInteraction));
-            m_HandInteraction.vrNetworkPlayerController = this;
-        }
+    private void Update()
+    {
+        ObjectFollowing();
     }
 
     #region OnStartClient
