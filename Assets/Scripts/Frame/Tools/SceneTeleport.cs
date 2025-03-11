@@ -3,41 +3,51 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class SceneTeleport : NetworkBehaviour
 {
-
-    [Header("A UI control that shows how many people are interacting.")]
+    [Tooltip("A UI control that shows how many people are interacting.")]
     public TMP_Text personCntText;
 
     /// <summary>
     /// Number of people who initiated the interaction
     /// </summary>
     [SyncVar(hook = nameof(PersonCountChanged))]
-    private int m_PersonCount;
+    private int m_PersonCount = 0;
 
-    private void Awake()
-    {
-        m_PersonCount = 0;
-    }
+    /// <summary>
+    /// var m_PersonCount changed callback.
+    /// </summary>
+    /// <param name="_Old"></param>
+    /// <param name="_New"></param>
 
-    void Start()
-    {
-        
-    }
+    private VRSceneManager m_VRSceneManager;
 
     private void PersonCountChanged(int _Old, int _New)
     {
-        Debug.Log("Person Count Changed.");
         personCntText.text = m_PersonCount.ToString();
+    }
+
+    [Command(requiresAuthority = false)]
+    public void CmdSetPersonCount(int diff)
+    {
+        m_PersonCount += diff;
     }
 
     public void OnTriggerEnter(Collider other)//有碰撞体进入该物体时调用
     {
         if (other.CompareTag("Trigger"))//判断进入物体的碰撞体的Tag是Player
         {
-            Debug.Log($"tag perent name: {other.name}, and tag name: {other.tag}");
-            m_PersonCount += 1;
+            if (isServer)
+            {
+                CmdSetPersonCount(1);
+                if (m_VRSceneManager == null)
+                {
+                    m_VRSceneManager = (VRSceneManager)FindObjectOfType(typeof(VRSceneManager));
+                    StartCoroutine(m_VRSceneManager.SwitchScene());
+                }
+            }
         }
     }
 
@@ -45,7 +55,10 @@ public class SceneTeleport : NetworkBehaviour
     {
         if (other.CompareTag("Trigger"))//判断进入物体的碰撞体的Tag是Player
         {
-            m_PersonCount -= 1;
+            if (isServer)
+            {
+                CmdSetPersonCount(-1);
+            }
         }
     }
 }

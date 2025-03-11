@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 1475426063958487385}
   - component: {fileID: 4319183170039690429}
   - component: {fileID: 4039827552666008312}
-  - component: {fileID: 5489630397991652159}
+  - component: {fileID: 5598455614288569977}
   m_Layer: 0
   m_Name: TP
   m_TagString: Untagged
@@ -124,7 +124,7 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0
   personCntText: {fileID: 6450013196651341360}
---- !u!114 &5489630397991652159
+--- !u!114 &5598455614288569977
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

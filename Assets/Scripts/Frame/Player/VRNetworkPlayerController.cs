@@ -112,7 +112,7 @@ public class VRNetworkPlayerController : NetworkBehaviour
 
     public void Awake()
     {
-        m_Dist = 0.5f;
+        m_Dist = 0.2f;
     }
 
     public void Start()

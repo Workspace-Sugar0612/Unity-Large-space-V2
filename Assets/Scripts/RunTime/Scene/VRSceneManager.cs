@@ -7,21 +7,22 @@ using UnityEngine.SceneManagement;
 
 public class VRSceneManager : NetworkBehaviour
 {
-    /// <summary>
-    /// Need teleport scene name.
-    /// </summary>
+    [Header("Scene Name")]
+    [Scene, Tooltip("Need teleport scene name.")]
     public string sceneName;
 
-    [Command]
+    [Command(requiresAuthority = false)]
     public void CmdSwitchScene(string sceneName)
     {
+        Debug.Log($"Command Switch Scene Name:{sceneName}");
         RpcLoadScene(sceneName);
     }
 
     [ClientRpc]
     private void RpcLoadScene(string sceneName)
     {
-        StartCoroutine(LoadSceneAsync(sceneName));
+        //StartCoroutine(LoadSceneAsync(sceneName));
+        StartCoroutine(SwitchScene());
     }
 
     IEnumerator LoadSceneAsync(string sceneName)
@@ -34,5 +35,14 @@ public class VRSceneManager : NetworkBehaviour
             yield return null;
         }
         SceneManager.SetActiveScene(SceneManager.GetSceneByName(sceneName));
+    }
+
+    [ServerCallback]
+    public IEnumerator SwitchScene()
+    {
+        Debug.Log("======= SwitchScene =======");
+        yield return new WaitForSeconds(2.0f);
+        //SceneManager.LoadScene(sceneName);
+        NetworkManager.singleton.ServerChangeScene(sceneName);
     }
 }

@@ -2,6 +2,7 @@ using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Mirror;
+using Unity.XR.CoreUtils;
 
 /*
 	Documentation: https://mirror-networking.gitbook.io/docs/components/network-manager
@@ -22,6 +23,14 @@ public class MyNetworkManager : NetworkManager
     public override void Awake()
     {
         base.Awake();
+    }
+
+    // 重写NetworkManager的SceneLoaded方法
+    public void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        // ServerChangeScene("");
+        // ClientChangeScene()
+        // NetworkClient.RegisterHandler
     }
 
     #region Unity Callbacks

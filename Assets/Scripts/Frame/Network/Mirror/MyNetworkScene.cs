@@ -2,6 +2,7 @@ using Mirror;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
@@ -12,6 +13,9 @@ public class MyNetworkScene : NetworkBehaviour
     public AudioSource audioSource; // when button poked, audio play.
     public Text incrementalNumberText;
 
+    /// <summary>
+    /// poke number.
+    /// </summary>
     [SyncVar(hook = nameof(OnPokeNumberChangedHook))]
     private int pokeNumber;
 

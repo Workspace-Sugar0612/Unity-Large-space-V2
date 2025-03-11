@@ -2748,6 +2748,27 @@ Camera:
   m_CorrespondingSourceObject: {fileID: 9014170783809206330, guid: 895f6f3c2d334633b5800312285058d2, type: 3}
   m_PrefabInstance: {fileID: 1415836078}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1812726262 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 10359790391518029, guid: 9b44d99a857ebf745b6b76f94b65398c, type: 3}
+  m_PrefabInstance: {fileID: 1944948561}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1812726269
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1812726262}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 499783cb2694aed46a7f2ed0e6ab2e48, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncDirection: 0
+  syncMode: 0
+  syncInterval: 0
+  sceneName: Assets/Scenes/001.unity
 --- !u!1 &1879317206
 GameObject:
   m_ObjectHideFlags: 0
@@ -3050,12 +3071,12 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4039827552666008312, guid: 9b44d99a857ebf745b6b76f94b65398c, type: 3}
-      propertyPath: syncDirection
-      value: 1
+      propertyPath: sceneName
+      value: 001
       objectReference: {fileID: 0}
-    - target: {fileID: 5489630397991652159, guid: 9b44d99a857ebf745b6b76f94b65398c, type: 3}
+    - target: {fileID: 5598455614288569977, guid: 9b44d99a857ebf745b6b76f94b65398c, type: 3}
       propertyPath: sceneId
-      value: 3734308344
+      value: 2631135535
       objectReference: {fileID: 0}
     - target: {fileID: 5770534048100150933, guid: 9b44d99a857ebf745b6b76f94b65398c, type: 3}
       propertyPath: m_Camera
@@ -3064,7 +3085,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 10359790391518029, guid: 9b44d99a857ebf745b6b76f94b65398c, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1812726269}
   m_SourcePrefab: {fileID: 100100000, guid: 9b44d99a857ebf745b6b76f94b65398c, type: 3}
 --- !u!1 &1957391746 stripped
 GameObject:
