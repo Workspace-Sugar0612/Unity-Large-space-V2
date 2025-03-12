@@ -118,7 +118,7 @@ public class VRNetworkPlayerController : NetworkBehaviour
     public void Start()
     {
         InitAndSpawn();
-        Debug.Log("====== VRNetworkPlayerController Start =======");
+        //Debug.Log("====== VRNetworkPlayerController Start =======");
     }
 
     private void InitAndSpawn()

@@ -16,22 +16,26 @@ public class SceneTeleport : NetworkBehaviour
     [SyncVar(hook = nameof(PersonCountChanged))]
     private int m_PersonCount = 0;
 
+    /// <summary> Cutscenes Controller. </summary>
+    private VRSceneController m_VRSceneController;
+
+    /// <summary> Animation Manager </summary>
+    private AnimManager m_AnimManager;
+
+    private void Awake()
+    {
+        if (m_VRSceneController == null)
+            m_VRSceneController = (VRSceneController)FindObjectOfType(typeof(VRSceneController));
+
+        if (m_AnimManager == null)
+            m_AnimManager = (AnimManager)FindObjectOfType(typeof(AnimManager));
+    }
+
     /// <summary>
     /// var m_PersonCount changed callback.
     /// </summary>
     /// <param name="_Old"></param>
     /// <param name="_New"></param>
-
-    private VRSceneManager m_VRSceneManager;
-
-    private void Awake()
-    {
-        if (m_VRSceneManager == null)
-        {
-            m_VRSceneManager = (VRSceneManager)FindObjectOfType(typeof(VRSceneManager));
-        }
-    }
-
     private void PersonCountChanged(int _Old, int _New)
     {
         personCntText.text = m_PersonCount.ToString();
@@ -50,10 +54,9 @@ public class SceneTeleport : NetworkBehaviour
             if (isServer)
             {
                 CmdSetPersonCount(1);
-
-                if (m_VRSceneManager != null)
+                if (m_PersonCount == MyVRStaticVariables.personCount)
                 {
-                    StartCoroutine(m_VRSceneManager.SwitchScene(m_PersonCount));
+                    m_AnimManager.SetMaskAnimator_Bool("isEnd", true);
                 }
             }
         }

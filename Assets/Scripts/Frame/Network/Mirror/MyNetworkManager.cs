@@ -16,6 +16,9 @@ public class MyNetworkManager : NetworkManager
     public static new MyNetworkManager singleton => (MyNetworkManager)NetworkManager.singleton;
     private Log _log;
 
+    /// <summary> Animation Manager </summary>
+    private AnimManager m_AnimManager;
+
     /// <summary>
     /// Runs on both Server and Client
     /// Networking is NOT initialized when this fires
@@ -23,6 +26,9 @@ public class MyNetworkManager : NetworkManager
     public override void Awake()
     {
         base.Awake();
+
+        if (m_AnimManager == null)
+            m_AnimManager = (AnimManager)FindObjectOfType(typeof(AnimManager));
     }
 
     // 重写NetworkManager的SceneLoaded方法
