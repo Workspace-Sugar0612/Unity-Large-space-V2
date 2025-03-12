@@ -11,38 +11,21 @@ public class VRSceneManager : NetworkBehaviour
     [Scene, Tooltip("Need teleport scene name.")]
     public string sceneName;
 
-    [Command(requiresAuthority = false)]
-    public void CmdSwitchScene(string sceneName)
-    {
-        Debug.Log($"Command Switch Scene Name:{sceneName}");
-        RpcLoadScene(sceneName);
-    }
 
-    [ClientRpc]
-    private void RpcLoadScene(string sceneName)
+    /// <summary>
+    /// Switch Scene.
+    /// </summary>
+    /// <param name="cnt"> current palyer count. </param>
+    /// <returns></returns>
+    public IEnumerator SwitchScene(int cnt)
     {
-        //StartCoroutine(LoadSceneAsync(sceneName));
-        StartCoroutine(SwitchScene());
-    }
+        Debug.Log($"======= SwitchScene =======: {cnt} - {MyVRStaticVariables.personCount}");
+        yield return new WaitUntil(() => cnt == MyVRStaticVariables.personCount);
 
-    IEnumerator LoadSceneAsync(string sceneName)
-    {
-        AsyncOperation ao = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
-        while (!ao.isDone)
+        if (isServer)
         {
-            // float progress = Mathf.Clamp01(ao.progress / 0.9f); // 进度标准化到0-1
-            // EventCenter.GetInstance().EventTrigger("SceneProgress", progress);
-            yield return null;
+            //SceneManager.LoadScene(sceneName);
+            NetworkManager.singleton.ServerChangeScene(sceneName);
         }
-        SceneManager.SetActiveScene(SceneManager.GetSceneByName(sceneName));
-    }
-
-    [ServerCallback]
-    public IEnumerator SwitchScene()
-    {
-        Debug.Log("======= SwitchScene =======");
-        yield return new WaitForSeconds(2.0f);
-        //SceneManager.LoadScene(sceneName);
-        NetworkManager.singleton.ServerChangeScene(sceneName);
     }
 }

@@ -118,6 +118,7 @@ public class VRNetworkPlayerController : NetworkBehaviour
     public void Start()
     {
         InitAndSpawn();
+        Debug.Log("====== VRNetworkPlayerController Start =======");
     }
 
     private void InitAndSpawn()
@@ -181,14 +182,18 @@ public class VRNetworkPlayerController : NetworkBehaviour
     public void InitObject()
     {
         if (m_VRPlayerRig == null)
-        {
             m_VRPlayerRig = (MyVRPlayerRig)FindObjectOfType(typeof(MyVRPlayerRig));
+
+        if (m_VRHUD == null)
+            m_VRHUD = (MyVRHUD)FindObjectOfType(typeof(MyVRHUD));
+
+        if (m_VRPlayerRig != null)
+        {    
             m_VRPlayerRig.vrPlayerController = this;
         }
         
-        if (m_VRHUD == null)
+        if (m_VRHUD != null)
         {
-            m_VRHUD = (MyVRHUD)FindObjectOfType(typeof(MyVRHUD));
             m_VRHUD.vrPlayerController = this;
         }
     }

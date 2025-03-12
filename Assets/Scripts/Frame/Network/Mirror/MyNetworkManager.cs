@@ -142,7 +142,8 @@ public class MyNetworkManager : NetworkManager
     /// <param name="conn">Connection from client.</param>
     public override void OnServerConnect(NetworkConnectionToClient conn) 
     {
-        Log.input("A client connected!");
+        MyVRStaticVariables.personCount += 1;
+        Log.input($"A client connected! {MyVRStaticVariables.personCount}");
     }
 
     /// <summary>
@@ -172,8 +173,9 @@ public class MyNetworkManager : NetworkManager
     /// <param name="conn">Connection from client.</param>
     public override void OnServerDisconnect(NetworkConnectionToClient conn)
     {
+        MyVRStaticVariables.personCount -= 1;
         base.OnServerDisconnect(conn);
-        Log.input("A client disconnected!");
+        Log.input($"A client disconnected! {MyVRStaticVariables.personCount}");
     }
 
     /// <summary>

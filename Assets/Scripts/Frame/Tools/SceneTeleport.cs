@@ -24,6 +24,14 @@ public class SceneTeleport : NetworkBehaviour
 
     private VRSceneManager m_VRSceneManager;
 
+    private void Awake()
+    {
+        if (m_VRSceneManager == null)
+        {
+            m_VRSceneManager = (VRSceneManager)FindObjectOfType(typeof(VRSceneManager));
+        }
+    }
+
     private void PersonCountChanged(int _Old, int _New)
     {
         personCntText.text = m_PersonCount.ToString();
@@ -42,10 +50,10 @@ public class SceneTeleport : NetworkBehaviour
             if (isServer)
             {
                 CmdSetPersonCount(1);
-                if (m_VRSceneManager == null)
+
+                if (m_VRSceneManager != null)
                 {
-                    m_VRSceneManager = (VRSceneManager)FindObjectOfType(typeof(VRSceneManager));
-                    StartCoroutine(m_VRSceneManager.SwitchScene());
+                    StartCoroutine(m_VRSceneManager.SwitchScene(m_PersonCount));
                 }
             }
         }
