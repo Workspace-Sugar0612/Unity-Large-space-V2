@@ -84,6 +84,9 @@ public class VRNetworkPlayerController : NetworkBehaviour
     /// </summary>
     private MyVRHUD m_VRHUD;
 
+    /// <summary> Animation Manager. </summary>
+    private AnimManager m_AnimManager;
+
     /// <summary>
     /// Player Name ui component in Scene.
     /// </summary>
@@ -113,6 +116,9 @@ public class VRNetworkPlayerController : NetworkBehaviour
     public void Awake()
     {
         m_Dist = 0.2f;
+
+        if (m_AnimManager == null)
+            m_AnimManager = (AnimManager)FindObjectOfType(typeof(AnimManager));
     }
 
     public void Start()
@@ -172,7 +178,12 @@ public class VRNetworkPlayerController : NetworkBehaviour
         }
         else 
         {
-            CmdSetupName("Player" + netId); 
+            CmdSetupName("Player" + netId);
+        }
+
+        if (m_AnimManager != null)
+        {
+            //m_AnimManager.PlayMaskStartAnim();
         }
     }
 

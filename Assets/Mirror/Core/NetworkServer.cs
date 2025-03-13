@@ -1209,8 +1209,8 @@ namespace Mirror
             // May be excluded from the client by interest management
             if (!conn.observing.Contains(identity)) return;
 
-            //Debug.Log($"Server SendChangeOwnerMessage: name={identity.name} netid={identity.netId}");
-            Debug.Log("Send!!!!!");
+            // Debug.Log($"Server SendChangeOwnerMessage: name={identity.name} netid={identity.netId}");
+            // Debug.Log("Send!!!!!");
             conn.Send(new ChangeOwnerMessage
             {
                 netId = identity.netId,

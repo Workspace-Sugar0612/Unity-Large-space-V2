@@ -16,8 +16,9 @@ public class VRSceneController : NetworkBehaviour
     /// </summary>
     /// <param name="cnt"> current palyer count. </param>
     /// <returns></returns>
-    public void SwitchScene()
+    public IEnumerator SwitchScene(float duration)
     {
+        yield return new WaitForSeconds(duration);
         if (isServer)
         {
             NetworkManager.singleton.ServerChangeScene(sceneName);

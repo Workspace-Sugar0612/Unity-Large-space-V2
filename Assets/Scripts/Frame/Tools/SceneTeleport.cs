@@ -2,6 +2,7 @@ using Mirror;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.XR.PXR;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -16,19 +17,18 @@ public class SceneTeleport : NetworkBehaviour
     [SyncVar(hook = nameof(PersonCountChanged))]
     private int m_PersonCount = 0;
 
-    /// <summary> Cutscenes Controller. </summary>
-    private VRSceneController m_VRSceneController;
-
     /// <summary> Animation Manager </summary>
     private AnimManager m_AnimManager;
 
+    private VRSceneController m_VRSceneController;
+
     private void Awake()
     {
-        if (m_VRSceneController == null)
-            m_VRSceneController = (VRSceneController)FindObjectOfType(typeof(VRSceneController));
-
         if (m_AnimManager == null)
             m_AnimManager = (AnimManager)FindObjectOfType(typeof(AnimManager));
+
+        if (m_VRSceneController == null)
+            m_VRSceneController = (VRSceneController)FindObjectOfType(typeof(VRSceneController));
     }
 
     /// <summary>
@@ -47,6 +47,15 @@ public class SceneTeleport : NetworkBehaviour
         m_PersonCount += diff;
     }
 
+    [ClientRpc]
+    private void RpcTeleportScene()
+    {
+        PXR_ScreenFade m_ScreenFade = (PXR_ScreenFade)FindObjectOfType(typeof(PXR_ScreenFade));
+        m_ScreenFade.SetAlphaVar(0.0f, 1.0f);
+        m_ScreenFade.enabled = true;
+        StartCoroutine(m_VRSceneController.SwitchScene(m_ScreenFade.gradientTime));
+    }
+
     public void OnTriggerEnter(Collider other)//有碰撞体进入该物体时调用
     {
         if (other.CompareTag("Trigger"))//判断进入物体的碰撞体的Tag是Player
@@ -56,7 +65,8 @@ public class SceneTeleport : NetworkBehaviour
                 CmdSetPersonCount(1);
                 if (m_PersonCount == MyVRStaticVariables.personCount)
                 {
-                    m_AnimManager.SetMaskAnimator_Bool("isEnd", true);
+                    // m_AnimManager.RpcPlayMaskEndAnim();
+                    RpcTeleportScene();
                 }
             }
         }
