@@ -13,7 +13,7 @@ PlayerSettings:
   useOnDemandResources: 0
   accelerometerFrequency: 60
   companyName: QZNS
-  productName: MirrorDemo_v0.07
+  productName: MirrorDemo_v0.09
   defaultCursor: {fileID: 0}
   cursorHotspot: {x: 0, y: 0}
   m_SplashScreenBackgroundColor: {r: 0.13725491, g: 0.12156863, b: 0.1254902, a: 1}
@@ -140,7 +140,10 @@ PlayerSettings:
   visionOSBundleVersion: 1.0
   tvOSBundleVersion: 1.0
   bundleVersion: 0.1
-  preloadedAssets: []
+  preloadedAssets:
+  - {fileID: -2411713454120093779, guid: fdfd9a7579b1340efac4272be2213881, type: 2}
+  - {fileID: 764365376040806772, guid: 8b6e819556d814d30a7efd097161c913, type: 2}
+  - {fileID: 11400000, guid: 509c58b5a62187d468227a398dd03fb0, type: 2}
   metroInputSource: 0
   wsaTransparentSwapchain: 0
   m_HolographicPauseOnTrackingLoss: 1

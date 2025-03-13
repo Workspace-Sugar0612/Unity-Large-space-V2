@@ -58,6 +58,7 @@ public class SceneTeleport : NetworkBehaviour
 
     public void OnTriggerEnter(Collider other)//有碰撞体进入该物体时调用
     {
+        Debug.Log($"other name: {other.name} and other tag: {other.tag}");
         if (other.CompareTag("Trigger"))//判断进入物体的碰撞体的Tag是Player
         {
             if (isServer)
@@ -65,7 +66,6 @@ public class SceneTeleport : NetworkBehaviour
                 CmdSetPersonCount(1);
                 if (m_PersonCount == MyVRStaticVariables.personCount)
                 {
-                    // m_AnimManager.RpcPlayMaskEndAnim();
                     RpcTeleportScene();
                 }
             }
