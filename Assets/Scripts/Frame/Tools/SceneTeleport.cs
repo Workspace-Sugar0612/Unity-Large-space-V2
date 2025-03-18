@@ -50,7 +50,7 @@ public class SceneTeleport : NetworkBehaviour
     [ClientRpc]
     private void RpcTeleportScene()
     {
-        PXR_ScreenFade m_ScreenFade = (PXR_ScreenFade)FindObjectOfType(typeof(PXR_ScreenFade));
+        VRScreenFade m_ScreenFade = (VRScreenFade)FindObjectOfType(typeof(VRScreenFade));
         m_ScreenFade.SetAlphaVar(0.0f, 1.0f);
         m_ScreenFade.enabled = true;
         StartCoroutine(m_VRSceneController.SwitchScene(m_ScreenFade.gradientTime));

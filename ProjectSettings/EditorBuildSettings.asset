@@ -6,6 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Scenes/HandScene.unity
+    guid: 60da6f7fc61fb4348ab13d7a518ad814
+  - enabled: 0
     path: Assets/Scenes/Start.unity
     guid: 4b428d974fe647240b8cf1d57da58f04
   - enabled: 1
@@ -14,5 +17,7 @@ EditorBuildSettings:
   m_configObjects:
     Unity.XR.Oculus.Settings: {fileID: 11400000, guid: 888d48b45cc3246d29397bcf04d21676, type: 2}
     Unity.XR.PXR.Settings: {fileID: 11400000, guid: 509c58b5a62187d468227a398dd03fb0, type: 2}
+    UnityEditor.XR.ARCore.ARCoreSettings: {fileID: 11400000, guid: 1c70662425e543448820349d00ebe3d8, type: 2}
+    com.unity.xr.arfoundation.simulation_settings: {fileID: 11400000, guid: d5c9b648f8ee3ae41aaaac8734f86895, type: 2}
     com.unity.xr.management.loader_settings: {fileID: 11400000, guid: fdfd9a7579b1340efac4272be2213881, type: 2}
     com.unity.xr.openxr.settings4: {fileID: 11400000, guid: 8b6e819556d814d30a7efd097161c913, type: 2}
