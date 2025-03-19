@@ -2,7 +2,6 @@ using Mirror;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
-using Unity.XR.PXR;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
