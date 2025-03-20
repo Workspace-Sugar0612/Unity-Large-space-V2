@@ -10,15 +10,14 @@ public class MyVRHUD : MonoBehaviour
 {
     #region UI Variable
 
-    /// <summary>
-    /// Input player want name.
-    /// </summary>
+    /// <summary> Input player want name. </summary>
     public TMP_InputField playerNameInput;
 
-    /// <summary>
-    /// confirm change name.
-    /// </summary>
+    /// <summary> confirm change name. </summary>
     public Button okChangedNameButton;
+
+    /// <summary> Show debug log in release version Game. </summary>
+    public TMP_Text logText;
 
     #endregion
 
@@ -46,5 +45,14 @@ public class MyVRHUD : MonoBehaviour
     public void OnConnection()
     {
         StartCoroutine(m_VrNetLaucher.Waiter());
+    }
+
+    /// <summary>
+    /// 显示新的内容在Log Text 控件上
+    /// </summary>
+    /// <param name="content"></param>
+    public void InputLog(string content)
+    {
+       logText.text = content;
     }
 }

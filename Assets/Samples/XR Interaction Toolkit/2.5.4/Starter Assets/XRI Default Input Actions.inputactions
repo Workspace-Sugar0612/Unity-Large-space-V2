@@ -1714,7 +1714,7 @@
                 },
                 {
                     "name": "",
-                    "id": "03b2edfd-11a0-4374-b506-150826212c18",
+                    "id": "338dd357-3b34-430a-8084-16489dd9568a",
                     "path": "<PicoAimHand>{RightHand}/indexPressed",
                     "interactions": "",
                     "processors": "",
@@ -1748,7 +1748,7 @@
                 {
                     "name": "",
                     "id": "50b6e4e4-a515-4c8e-bc08-b7ebff849060",
-                    "path": "<PicoAimHand>{RightHand}/pinchStrengthIndex",
+                    "path": "<PicoAimHand>{RightHand}/indexPressed",
                     "interactions": "",
                     "processors": "",
                     "groups": "",

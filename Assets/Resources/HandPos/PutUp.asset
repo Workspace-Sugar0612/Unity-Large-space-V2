@@ -10,21 +10,21 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0fea894361bde054fbfc4de741aa3483, type: 3}
-  m_Name: PXR_HandPoseConfig_0319104725
+  m_Name: PutUp
   m_EditorClassIdentifier: 
   shapesRecognizer:
     thumb:
       handFinger: 0
-      flexion: 0
-      curl: 0
-      abduction: 0
+      flexion: 1
+      curl: 1
+      abduction: 2
       fingerConfigs:
         flexionConfigs:
-          min: 90
+          min: 155
           max: 180
           width: 10
         curlConfigs:
-          min: 45
+          min: 90
           max: 180
           width: 20
         abductionConfigs:
@@ -32,16 +32,16 @@ MonoBehaviour:
           width: 6
     index:
       handFinger: 1
-      flexion: 0
-      curl: 0
-      abduction: 0
+      flexion: 1
+      curl: 1
+      abduction: 2
       fingerConfigs:
         flexionConfigs:
-          min: 90
+          min: 144
           max: 180
           width: 10
         curlConfigs:
-          min: 0
+          min: 107
           max: 180
           width: 20
         abductionConfigs:
@@ -49,16 +49,16 @@ MonoBehaviour:
           width: 6
     middle:
       handFinger: 2
-      flexion: 0
-      curl: 0
-      abduction: 0
+      flexion: 1
+      curl: 1
+      abduction: 2
       fingerConfigs:
         flexionConfigs:
-          min: 90
+          min: 144
           max: 180
           width: 10
         curlConfigs:
-          min: 0
+          min: 107
           max: 180
           width: 20
         abductionConfigs:
@@ -66,16 +66,16 @@ MonoBehaviour:
           width: 6
     ring:
       handFinger: 3
-      flexion: 0
-      curl: 0
-      abduction: 0
+      flexion: 1
+      curl: 1
+      abduction: 2
       fingerConfigs:
         flexionConfigs:
-          min: 90
+          min: 144
           max: 180
           width: 10
         curlConfigs:
-          min: 0
+          min: 107
           max: 180
           width: 20
         abductionConfigs:
@@ -83,16 +83,16 @@ MonoBehaviour:
           width: 6
     pinky:
       handFinger: 4
-      flexion: 0
-      curl: 0
+      flexion: 1
+      curl: 1
       abduction: 0
       fingerConfigs:
         flexionConfigs:
-          min: 90
+          min: 144
           max: 180
           width: 10
         curlConfigs:
-          min: 0
+          min: 107
           max: 180
           width: 20
         abductionConfigs:
@@ -105,7 +105,7 @@ MonoBehaviour:
   transRecognizer:
     trackAxis: 0
     spaceType: 0
-    trackTarget: 0
+    trackTarget: 2
     angleThreshold: 35
     thresholdWidth: 10
     holdDuration: 0.022
