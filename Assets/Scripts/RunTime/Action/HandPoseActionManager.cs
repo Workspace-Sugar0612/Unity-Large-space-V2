@@ -18,32 +18,20 @@ public class HandPosActionManager : MonoBehaviour
     }
 
     /// <summary>
-    /// 自定义手势识别在开始阶段
+    /// 自定义手势识别执行
     /// </summary>
     /// <param name="handPoseAction"></param>
-    public void StartHandPoseAction(PXR_HandPoseConfig handPoseAction)
+    public void HandPosePerformed(string poseName)
     {
-        m_CurrHandPoseName = handPoseAction.name;
-        m_MyVRHud.InputLog($"Start Hand Pose: {m_CurrHandPoseName}");
-    }
-
-    /// <summary>
-    /// 自定义手势持续事件
-    /// </summary>
-    /// <param name="handPoseAction"></param>
-    /// <param name="single"></param>
-    public void UpdateHandPoseAction(float msDuration)
-    {
-        //float duration = msDuration / 1000.0f;
-        m_MyVRHud.InputLog($"Update Hand Pose: {m_CurrHandPoseName}, duration: {msDuration}");
+        m_CurrHandPoseName = poseName;
+        m_MyVRHud.InputLog($"检测识别到{m_CurrHandPoseName}手势! ");
     }
 
     /// <summary>
     /// 自定义手势退出事件
     /// </summary>
-    /// <param name="handPoseAction"></param>
     public void EndHandPoseAction()
     {
-        m_MyVRHud.InputLog($"End Hand Pose: {m_CurrHandPoseName}");
+        m_MyVRHud.InputLog($"{m_CurrHandPoseName}手势退出！");
     }
 }
