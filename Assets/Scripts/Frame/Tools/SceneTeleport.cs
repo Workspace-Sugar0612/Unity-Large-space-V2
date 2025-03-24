@@ -4,11 +4,18 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using DG.Tweening;
 
 public class SceneTeleport : NetworkBehaviour
 {
     [Tooltip("A UI control that shows how many people are interacting.")]
     public TMP_Text personCntText;
+
+    [Tooltip("teleport target location.")]
+    public Transform teleportTarget;
+
+    [Tooltip("可以激活teleport平台的玩家，让玩家可以跟随teleport移动")]
+    public Transform player;
 
     /// <summary>
     /// Number of people who initiated the interaction
@@ -20,6 +27,9 @@ public class SceneTeleport : NetworkBehaviour
     private AnimManager m_AnimManager;
 
     private VRSceneController m_VRSceneController;
+
+    /// <summary> How long does it take to start the system tp to the target location. </summary>
+    private float m_TeleportTime = 3.5f;
 
     private void Awake()
     {
@@ -65,7 +75,8 @@ public class SceneTeleport : NetworkBehaviour
                 CmdSetPersonCount(1);
                 if (m_PersonCount == MyVRStaticVariables.personCount)
                 {
-                    RpcTeleportScene();
+                    player.SetParent(transform);
+                    StartCoroutine(TeleportRise());
                 }
             }
         }
@@ -80,5 +91,15 @@ public class SceneTeleport : NetworkBehaviour
                 CmdSetPersonCount(-1);
             }
         }
+    }
+
+    public IEnumerator TeleportRise()
+    {
+        yield return new WaitForSeconds(2.0f);
+        transform.DOMove(teleportTarget.position, m_TeleportTime).SetEase(Ease.Linear).OnComplete(() =>
+        {
+            player.SetParent(null);
+            RpcTeleportScene();
+        });
     }
 }

@@ -67,15 +67,14 @@ public class MyVRPlayerRig : MonoBehaviour
             vrPlayerController.head.position = head.transform.position;
             vrPlayerController.head.rotation = head.transform.rotation;
 
-            vrPlayerController.nameUI.position = head.transform.position;
-            vrPlayerController.nameUI.rotation = rHand.transform.rotation;
-
             vrPlayerController.lHand.position = lHand.transform.position;
             vrPlayerController.lHand.rotation = lHand.transform.rotation;
 
             vrPlayerController.rHand.position = rHand.transform.position;
             vrPlayerController.rHand.rotation = rHand.transform.rotation;
 
+            vrPlayerController.m_PlayerCollider.position = head.transform.position;
+            vrPlayerController.m_PlayerCollider.rotation = head.transform.rotation;
         }
     }
 

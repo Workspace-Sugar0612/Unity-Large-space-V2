@@ -36,8 +36,8 @@ public class MyNetworkLauncher : MonoBehaviour
         Log.input("Discovering servers..");
         discoveredServers.Clear();
         _vrNetworkDiscovery.StartDiscovery(); //开始查找主机
-        // we have set this as 3.1 seconds, default discovery scan is 3 seconds, allows some time if host and client are started at same time
-        yield return new WaitForSeconds(3.1f);
+        // we have set this as 1.0 seconds, default discovery scan is 3 seconds, allows some time if host and client are started at same time
+        yield return new WaitForSeconds(1.0f);
 
         if (discoveredServers == null || discoveredServers.Count <= 0) //没有查找到就创建主机
         {

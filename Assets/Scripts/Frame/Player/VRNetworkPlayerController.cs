@@ -44,17 +44,20 @@ public class VRNetworkPlayerController : NetworkBehaviour
         set => m_Head = value;
     }
 
-    [SerializeField]
-    [Tooltip("Name Transform")]
-    Transform m_UI;
+    [Tooltip("玩家整体胶囊碰撞体")]
+    public Transform m_PlayerCollider;
+
+    //[SerializeField]
+    //[Tooltip("Name Transform")]
+    //Transform m_UI;
     /// <summary>
     /// Name Transform.
     /// </summary>
-    public Transform nameUI
-    {
-        get => m_UI;
-        set => m_UI = value;
-    }
+    //public Transform nameUI
+    //{
+    //    get => m_UI;
+    //    set => m_UI = value;
+    //}
 
     [Space]
     [Header("Model Prefab")]
@@ -98,21 +101,6 @@ public class VRNetworkPlayerController : NetworkBehaviour
     [SyncVar(hook = nameof(OnNameChangedHook))]
     string playerName;
 
-    //[Space]
-    //[Header("Touch Object")]
-    //[Tooltip("The item held in the user's right hand")]
-    //public GameObject heldObjectTemp;
-
-    ///// <summary>
-    ///// heldObjectTemp's instance in scene.
-    ///// </summary>
-    //private GameObject m_HeldObject;
-
-    ///// <summary>
-    ///// The distance between the grasped object and the right hand.
-    ///// </summary>
-    //private float m_Dist;
-
     public void Awake()
     {
         //m_Dist = 0.2f;
@@ -123,26 +111,8 @@ public class VRNetworkPlayerController : NetworkBehaviour
 
     public void Start()
     {
-        InitAndSpawn();
-        //Debug.Log("====== VRNetworkPlayerController Start =======");
-    }
 
-    private void InitAndSpawn()
-    {
-        //m_HeldObject = Instantiate(heldObjectTemp, this.transform);
     }
-
-    private void ObjectFollowing()
-    {
-        //if (m_HeldObject != null)
-        //{
-        //    Vector3 PlayerPos = rHand.position;
-        //    Vector3 targetPos = PlayerPos + rHand.forward * m_Dist;
-        //    m_HeldObject.transform.position = Vector3.Lerp(m_HeldObject.transform.position, targetPos, Time.deltaTime * 10f);
-        //    m_HeldObject.transform.rotation = rHand.rotation;
-        //}
-    }
-
 
     public void OnNameChangedHook(string _old, string _new)
     {
@@ -180,11 +150,6 @@ public class VRNetworkPlayerController : NetworkBehaviour
         {
             CmdSetupName("Player" + netId);
         }
-
-        if (m_AnimManager != null)
-        {
-            //m_AnimManager.PlayMaskStartAnim();
-        }
     }
 
     /// <summary>
@@ -211,7 +176,7 @@ public class VRNetworkPlayerController : NetworkBehaviour
 
     private void Update()
     {
-        ObjectFollowing();
+
     }
 
     #region OnStartClient
