@@ -8,9 +8,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/HandScene.unity
     guid: 60da6f7fc61fb4348ab13d7a518ad814
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/HandGestures_Temp.unity
-    guid: 23d9895efb046fc46841587e8ab88a9b
+    guid: df4db9d7911908f479eb2ad3ef23166e
   - enabled: 0
     path: Assets/Scenes/Start.unity
     guid: 4b428d974fe647240b8cf1d57da58f04
