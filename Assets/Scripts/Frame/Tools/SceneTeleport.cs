@@ -54,6 +54,16 @@ public class SceneTeleport : NetworkBehaviour
     public void CmdSetPersonCount(int diff)
     {
         m_PersonCount += diff;
+        Log.input($"m_PersonCount: {m_PersonCount}, MyVRStaticVariables.personCount: {MyVRStaticVariables.personCount}");
+        if (MyVRStaticVariables.personCount != 0
+            && m_PersonCount != 0
+            && m_PersonCount == MyVRStaticVariables.personCount)
+        {
+            Log.input("Movement teleport");
+            RpcSetPlayerParent(transform);
+            //player.SetParent(transform);
+            StartCoroutine(TeleportRise());
+        }
     }
 
     [ClientRpc]
@@ -67,18 +77,10 @@ public class SceneTeleport : NetworkBehaviour
 
     public void OnTriggerEnter(Collider other)//有碰撞体进入该物体时调用
     {
-        Debug.Log($"other name: {other.name} and other tag: {other.tag}");
+        //Debug.Log($"other name: {other.name} and other tag: {other.tag}");
         if (other.CompareTag("Trigger"))//判断进入物体的碰撞体的Tag是Player
         {
-            if (isServer)
-            {
-                CmdSetPersonCount(1);
-                if (m_PersonCount == MyVRStaticVariables.personCount)
-                {
-                    player.SetParent(transform);
-                    StartCoroutine(TeleportRise());
-                }
-            }
+            CmdSetPersonCount(1);
         }
     }
 
@@ -88,11 +90,27 @@ public class SceneTeleport : NetworkBehaviour
         {
             if (isServer)
             {
+                RpcSetPlayerParent(null);
                 CmdSetPersonCount(-1);
             }
         }
     }
 
+    /// <summary>
+    /// 设置玩家当前的父物体
+    /// 主要用于玩家可以跟随平台一起移动
+    /// </summary>
+    /// <param name="parent"></param>
+    [ClientRpc]
+    public void RpcSetPlayerParent(Transform parent)
+    {
+        player.SetParent(parent);
+    }
+
+    /// <summary>
+    /// 平台移动
+    /// </summary>
+    /// <returns></returns>
     public IEnumerator TeleportRise()
     {
         yield return new WaitForSeconds(2.0f);
