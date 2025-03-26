@@ -122,7 +122,7 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1001 &522858337
+--- !u!1001 &88157742
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -130,10 +130,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 2390865423855887540, guid: 45ea5e1a608b8f84da664e15772c12c0, type: 3}
-      propertyPath: fadeColor.a
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 3740413963123940482, guid: 45ea5e1a608b8f84da664e15772c12c0, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -180,7 +176,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8921795992085745699, guid: 45ea5e1a608b8f84da664e15772c12c0, type: 3}
       propertyPath: sceneId
-      value: 609707466
+      value: 2595582502
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -540,6 +536,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5873a6160a0cdd458a858d1c37095bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncDirection: 0
+  syncMode: 0
+  syncInterval: 0
   m_LHand: {fileID: 1867356756}
   m_RHand: {fileID: 1867356755}
   m_Head: {fileID: 1867356757}
@@ -678,7 +677,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: d439d48471cd364478bb148f6fda093c, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -731,4 +730,4 @@ SceneRoots:
   - {fileID: 1597556248}
   - {fileID: 1961236047}
   - {fileID: 1867356754}
-  - {fileID: 522858337}
+  - {fileID: 88157742}

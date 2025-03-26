@@ -1,9 +1,10 @@
+using Mirror;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.XR;
 
-public class MyVRPlayerRig : MonoBehaviour
+public class MyVRPlayerRig : NetworkBehaviour
 {
     [Header("Model Transform")]
 
@@ -58,7 +59,21 @@ public class MyVRPlayerRig : MonoBehaviour
         get => m_VRPlayerController;
         set => m_VRPlayerController = value;
     }
+    
+    /// <summary> 进入场景/退出场景时的渐变效果 </summary>
+    private VRScreenFade vrScreenFade;
 
+    public void Awake()
+    {
+        if (vrScreenFade == null)
+            vrScreenFade = (VRScreenFade)FindObjectOfType(typeof(VRScreenFade));
+    }
+
+    public void Start()
+    {
+        vrScreenFade.SetAlphaVar(1.0f, 0.0f);
+        vrScreenFade.enabled = true;
+    }
 
     private void PlayerModleSync()
     {
