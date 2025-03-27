@@ -6,16 +6,16 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/HandScene.unity
+    path: Assets/Scenes/Hand/HandScene.unity
     guid: 60da6f7fc61fb4348ab13d7a518ad814
   - enabled: 1
-    path: Assets/Scenes/HandGestures_Temp.unity
+    path: Assets/Scenes/Hand/HandGestures_Temp.unity
     guid: df4db9d7911908f479eb2ad3ef23166e
   - enabled: 0
-    path: Assets/Scenes/Start.unity
+    path: Assets/Scenes/Normal/Start.unity
     guid: 4b428d974fe647240b8cf1d57da58f04
   - enabled: 1
-    path: Assets/Scenes/001.unity
+    path: Assets/Scenes/Normal/001.unity
     guid: 660e69e1a84263946b45bb92c610816d
   - enabled: 1
     path: Assets/Samples/XR Interaction Toolkit/2.5.4/Hands Interaction Demo/HandsDemoScene.unity
