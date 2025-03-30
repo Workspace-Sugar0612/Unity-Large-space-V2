@@ -55,19 +55,19 @@ public class MatchMaker : NetworkBehaviour
         playerIndex = -1;
         if (matchIDs.Contains(_matchID))
         {
-            foreach (Match match in matches)
+            for (int i = 0; i < matches.Count; ++i)
             {
-                if (match.matchID == _matchID)
+                if (matches[i].matchID == _matchID)
                 {
-                    if (!match.inMatch && !match.matchFull)
+                    if (!matches[i].inMatch && !matches[i].matchFull)
                     {
-                        match.players.Add(_player);
-                        _player.currentMatch = match;
-                        playerIndex = match.players.Count;
-                        match.players[0].PlayerCountUpdated(match.players.Count);
-                        if (match.players.Count == maxMatchPlayers)
+                        matches[i].players.Add(_player);
+                        _player.currentMatch = matches[i];
+                        playerIndex = matches[i].players.Count;
+                        matches[i].players[0].PlayerCountUpdated(matches[i].players.Count);
+                        if (matches[i].players.Count == maxMatchPlayers)
                         {
-                            match.matchFull = true; // 人数满员
+                            matches[i].matchFull = true; // 人数满员
                         }
                         break;
                     }
@@ -121,9 +121,9 @@ public static class MatchExtensions
 public class Match
 {
     public string matchID;
-    public List<Player> players = new List<Player>();
     public bool inMatch;
     public bool matchFull;
+    public List<Player> players = new List<Player>();
     public Match(string id, Player player)
     {
         matchID = id;

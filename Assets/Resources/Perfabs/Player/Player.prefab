@@ -84,7 +84,7 @@ MonoBehaviour:
   playerIndex: 0
   currentMatch:
     matchID: 
-    players: []
     inMatch: 0
     matchFull: 0
+    players: []
   playerLobbyUI: {fileID: 0}

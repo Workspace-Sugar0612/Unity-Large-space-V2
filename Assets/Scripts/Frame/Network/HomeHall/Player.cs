@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(NetworkMatch))]
 public class Player : NetworkBehaviour
 {
     public static Player localPlayer;
@@ -19,13 +20,23 @@ public class Player : NetworkBehaviour
     [Tooltip("进入房间后玩家的UI标志")]
     [SerializeField] GameObject playerLobbyUI;
 
-    void Start()
+    void Awake()
+    {
+        networkMatch = GetComponent<NetworkMatch>();
+    }
+
+    public override void OnStartClient()
     {
         if (isLocalPlayer)
         {
             localPlayer = this;
         }
-        networkMatch = GetComponent<NetworkMatch>();
+        else
+        {
+            Log.input($"Spawning other player UI Prefab");
+            playerLobbyUI = UILobby.instance.SpawnPlayerUIPrefab(this);
+        }
+        //networkMatch = GetComponent<NetworkMatch>();
     }
 
     /// <summary>
@@ -108,6 +119,7 @@ public class Player : NetworkBehaviour
     /// 根据玩家人数更新Lobby的UI
     /// </summary>
     /// <param name="playerCount"></param>
+    [Server]
     public void PlayerCountUpdated(int playerCount)
     {
         TargetPlayerCountUpdated(playerCount);

@@ -2401,7 +2401,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 0
+  m_PresetInfoIsWorld: 1
 --- !u!223 &1737179202
 Canvas:
   m_ObjectHideFlags: 0
@@ -2669,7 +2669,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1806107867
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2831,8 +2831,8 @@ MonoBehaviour:
   uiPlayerPrefab: {fileID: 1518919392078566614, guid: cf9c128ebb07df34c88388853fad964f, type: 3}
   uiPlayerParent: {fileID: 1681862997}
   matchIDText: {fileID: 2039726851}
-  exitButton: {fileID: 0}
-  startButton: {fileID: 0}
+  exitButton: {fileID: 2042058136}
+  startButton: {fileID: 1806107868}
 --- !u!1 &2039726849
 GameObject:
   m_ObjectHideFlags: 0

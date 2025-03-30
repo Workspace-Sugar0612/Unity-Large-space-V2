@@ -9,13 +9,6 @@
       },
       "url": "https://packages.unity.com"
     },
-    "com.unity.assetbundlebrowser": {
-      "version": "https://github.com/Unity-Technologies/AssetBundles-Browser.git",
-      "depth": 0,
-      "source": "git",
-      "dependencies": {},
-      "hash": "ad2a81ec3068eafd48753df1825a8dd7201ce60c"
-    },
     "com.unity.collab-proxy": {
       "version": "2.4.3",
       "depth": 0,
@@ -258,9 +251,9 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.xr.picoxr": {
-      "version": "file:C:/Users/admin/Downloads/PICO Unity Integration SDK_3.1.0_20250109",
+      "version": "file:PICO Unity Integration SDK_3.1.0_20250109",
       "depth": 0,
-      "source": "local",
+      "source": "embedded",
       "dependencies": {
         "com.unity.xr.management": "4.0.0",
         "com.unity.xr.interaction.toolkit": "2.0.0",
