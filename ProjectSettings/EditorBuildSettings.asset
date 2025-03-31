@@ -6,6 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Scenes/NetworkHomeHall/Offline.unity
+    guid: c9d5994c3b1fd8444838e26c6f6aa2a2
+  - enabled: 1
     path: Assets/Scenes/Hand/HandScene.unity
     guid: 60da6f7fc61fb4348ab13d7a518ad814
   - enabled: 1
@@ -23,9 +26,6 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/NetworkHomeHall/Lobby.unity
     guid: a195efed2a93f314bad24cb204692f81
-  - enabled: 1
-    path: Assets/Scenes/NetworkHomeHall/Offline.unity
-    guid: c9d5994c3b1fd8444838e26c6f6aa2a2
   - enabled: 1
     path: Assets/Scenes/NetworkHomeHall/HandSceneHomeHall.unity
     guid: 74cc20d89353c9b48b26765cbd62dfc3

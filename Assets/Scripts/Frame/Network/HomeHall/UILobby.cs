@@ -9,38 +9,38 @@ public class UILobby : MonoBehaviour
     public static UILobby instance;
 
     [Header("Host Join")]
-    [Tooltip("Á¬½ÓUI½çÃæ")]
+    [Tooltip("è¿æ¥UIç•Œé¢")]
     [SerializeField] Canvas connectCanvas;
 
-    [Tooltip("ÏëÒªËÑË÷µÄ·¿¼äºÅ")]
+    [Tooltip("æƒ³è¦æœç´¢çš„æˆ¿é—´å·")]
     [SerializeField] private TMP_InputField joinMatchID;
 
-    [Tooltip("¼ÓÈë·¿¼ä")]
+    [Tooltip("åŠ å…¥æˆ¿é—´")]
     [SerializeField] private Button joinButton;
 
-    [Tooltip("´´½¨·¿¼ä")]
+    [Tooltip("åˆ›å»ºæˆ¿é—´")]
     [SerializeField] private Button hostButton;
 
     [SerializeField] List<Selectable> lobbySelectables = new List<Selectable>();
 
     [Space]
     [Header("Lobby")]
-    [Tooltip("·¿¼äUI½çÃæ")]
+    [Tooltip("æˆ¿é—´UIç•Œé¢")]
     [SerializeField] private Canvas lobbyCanvas;
 
-    [Tooltip("·¿¼äÍæ¼ÒUI")]
+    [Tooltip("æˆ¿é—´ç©å®¶UI")]
     [SerializeField] GameObject uiPlayerPrefab;
 
-    [Tooltip("Éú³ÉµÄ·¿¼äÍæ¼ÒUIµÄ¸¸ÎïÌåTransform")]
+    [Tooltip("ç”Ÿæˆçš„æˆ¿é—´ç©å®¶UIçš„çˆ¶ç‰©ä½“Transform")]
     [SerializeField] Transform uiPlayerParent;
 
-    [Tooltip("·¿¼äID")]
+    [Tooltip("æˆ¿é—´ID")]
     [SerializeField] Text matchIDText;
 
-    [Tooltip("ÍË³ö·¿¼ä°´Å¥")]
+    [Tooltip("é€€å‡ºæˆ¿é—´æŒ‰é’®")]
     [SerializeField] Button exitButton;
 
-    [Tooltip("¿ªÊ¼ÓÎÏ·°´Å¥")]
+    [Tooltip("å¼€å§‹æ¸¸æˆæŒ‰é’®")]
     [SerializeField] Button startButton;
 
     GameObject LobbyPlayerUI; // Lobby palyer perfab ui.
@@ -58,6 +58,11 @@ public class UILobby : MonoBehaviour
         Player.localPlayer.HostGame();
     }
 
+    /// <summary>
+    /// åˆ›å»ºæˆ¿é—´æˆåŠŸ
+    /// </summary>
+    /// <param name="success"></param>
+    /// <param name="matchID"></param>
     public void HostSuccess(bool success, string matchID)
     {
         if (success)
@@ -74,12 +79,20 @@ public class UILobby : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// åŠ å…¥æˆ¿é—´
+    /// </summary>
     public void Join()
     {
         lobbySelectables.ForEach(x => x.interactable = false);
         Player.localPlayer.JoinGame(joinMatchID.text.ToUpper());
     }
 
+    /// <summary>
+    /// ç”Ÿæˆæˆ¿é—´ç©å®¶UIé¢„åˆ¶ä½“
+    /// </summary>
+    /// <param name="player"></param>
+    /// <returns></returns>
     public GameObject SpawnPlayerUIPrefab (Player player)
     {
         GameObject newUIPlayer = Instantiate(uiPlayerPrefab, uiPlayerParent);
@@ -87,7 +100,12 @@ public class UILobby : MonoBehaviour
         newUIPlayer.transform.SetSiblingIndex(player.playerIndex - 1);
         return newUIPlayer;
     }
-
+    
+    /// <summary>
+    /// åŠ å…¥æˆåŠŸ
+    /// </summary>
+    /// <param name="success"></param>
+    /// <param name="_matchID"></param>
     public void JoinSuccess(bool success, string _matchID)
     {
         if (success)
@@ -104,8 +122,25 @@ public class UILobby : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// è®¾ç½®æˆ¿é—´å¼€å§‹æ¸¸æˆæŒ‰é’®çš„Active
+    /// </summary>
+    /// <param name="active"></param>
     public void SetStartButtonActive(bool active)
     {
         startButton.gameObject.SetActive(active);
+    }
+
+    /// <summary>
+    /// é€€å‡ºæˆ¿é—´
+    /// </summary>
+    public void DisconnectGame()
+    {
+        if (LobbyPlayerUI != null) Destroy(LobbyPlayerUI);
+        Player.localPlayer.DisconnectGame();
+
+        lobbyCanvas.enabled = false;
+        connectCanvas.enabled = true;
+        lobbySelectables.ForEach(x => x.interactable = true);
     }
 }

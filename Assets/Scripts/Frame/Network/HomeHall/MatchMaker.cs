@@ -16,13 +16,13 @@ public class MatchMaker : NetworkBehaviour
         get => m_Instance;
     }
 
-    [Tooltip("·¿¼äÁĞ±í")]
+    [Tooltip("æˆ¿é—´åˆ—è¡¨")]
     public SyncList<Match> matches = new SyncList<Match>();
 
-    [Tooltip("·¿¼äIDÁĞ±í")]
+    [Tooltip("æˆ¿é—´IDåˆ—è¡¨")]
     public SyncList<string> matchIDs = new SyncList<string>();
 
-    [Tooltip("·¿¼ä×î´ó¿ÉÈİÄÉÈËÊı")]
+    [Tooltip("æœ€å¤§æˆ¿é—´äººæ•°")]
     [SerializeField] int maxMatchPlayers = 3;
 
     public void Start()
@@ -30,6 +30,13 @@ public class MatchMaker : NetworkBehaviour
         m_Instance = this;
     }
 
+    /// <summary>
+    ///  åˆ›å»ºæˆ¿é—´ä¸»æŒæ¸¸æˆ
+    /// </summary>
+    /// <param name="hostId"></param>
+    /// <param name="player"></param>
+    /// <param name="playerIndex"></param>
+    /// <returns></returns>
     public bool HostGame(string hostId, Player player, out int playerIndex)
     {
         playerIndex = -1;
@@ -50,6 +57,13 @@ public class MatchMaker : NetworkBehaviour
         }
     }
 
+    /// <summary>
+    /// åŠ å…¥æˆ¿é—´
+    /// </summary>
+    /// <param name="_matchID"></param>
+    /// <param name="_player"></param>
+    /// <param name="playerIndex"></param>
+    /// <returns></returns>
     public bool JoinGame(string _matchID, Player _player, out int playerIndex)
     {
         playerIndex = -1;
@@ -67,7 +81,7 @@ public class MatchMaker : NetworkBehaviour
                         matches[i].players[0].PlayerCountUpdated(matches[i].players.Count);
                         if (matches[i].players.Count == maxMatchPlayers)
                         {
-                            matches[i].matchFull = true; // ÈËÊıÂúÔ±
+                            matches[i].matchFull = true; // ???????
                         }
                         break;
                     }
@@ -86,6 +100,10 @@ public class MatchMaker : NetworkBehaviour
         }
     }
 
+    /// <summary>
+    /// ç”ŸæˆéšæœºID
+    /// </summary>
+    /// <returns></returns>
     public static string GetRandomMatchID()
     {
         string id = string.Empty;
@@ -104,8 +122,40 @@ public class MatchMaker : NetworkBehaviour
         Debug.Log($"Random ID: {id}");
         return id;
     }
+
+    /// <summary>
+    /// é€€å‡ºæˆ¿é—´
+    /// </summary>
+    /// <param name="player"></param>
+    /// <param name="_matchID"></param>
+    public void PlayerDisconnected (Player player, string _matchID)
+    {
+        for (int i = 0; i < matches.Count; ++i)
+        {
+            if (matches[i].matchID == _matchID)
+            {
+                int playerIndex = matches[i].players.IndexOf(player);
+                if (matches[i].players.Count > playerIndex) matches[i].players.RemoveAt(playerIndex);
+                Log.cinput("blue", $"Player disconnected from match {_matchID} | {matches[i].players.Count} players remaining");
+
+                //å¦‚ä½•æˆ¿é—´äººæ•°ä¸º0ï¼Œåˆ é™¤æˆ¿é—´
+                if (matches[i].players.Count == 0)
+                {
+                    Log.cinput("blue", "No more players in Match.");
+                    matches.RemoveAt(i);
+                    matchIDs.Remove(_matchID);
+                }
+                else
+                {
+                    Player.localPlayer.PlayerCountUpdated(matches[i].players.Count);
+                }
+                break;
+            }
+        }
+    }
 }
 
+/// <summary> Matchæ‰©å±• </summary>
 public static class MatchExtensions
 {
     public static Guid ToGuid(this string id)

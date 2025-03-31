@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class UIPlayer : MonoBehaviour
 {
-    [Tooltip("Íæ¼ÒÃû×Ö")]
+    [Tooltip("æˆ¿é—´çŽ©å®¶UI")]
     [SerializeField] Text playerName;
     Player player;
 

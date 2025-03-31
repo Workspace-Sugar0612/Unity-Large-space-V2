@@ -56,5 +56,6 @@
         "temp/": true,
         "Temp/": true
     },
-    "dotnet.defaultSolution": "Unity-Large-space-V2.sln"
+    "dotnet.defaultSolution": "Unity-Large-space-V2.sln",
+    "dotnet.preferCSharpExtension": true
 }

@@ -1,28 +1,37 @@
 using Mirror;
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
 
 [RequireComponent(typeof(NetworkMatch))]
 public class Player : NetworkBehaviour
 {
     public static Player localPlayer;
-    [SyncVar] private string matchID;
 
-    [Tooltip("Íæ¼Ò½øÈë·¿¼äºóµÄid")]
+    /// <summary> æˆ¿é—´ID </summary>
+    [SyncVar] public string matchID;
+
+    [Tooltip("ç©å®¶è¿›å…¥æˆ¿é—´çš„ç´¢å¼•id")]
     [SyncVar] public int playerIndex;
 
     private NetworkMatch networkMatch;
 
-    [Tooltip("µ±Ç°Íæ¼ÒËùÔÚ·¿¼ä")]
+    [Tooltip("ç©å®¶å½“å‰æ‰€åœ¨æˆ¿é—´")]
     [SyncVar] public Match currentMatch;
 
-    [Tooltip("½øÈë·¿¼äºóÍæ¼ÒµÄUI±êÖ¾")]
+    [Tooltip("ç©å®¶Lobby UI Prefab")]
     [SerializeField] GameObject playerLobbyUI;
+
+    Guid netIDGuid;
 
     void Awake()
     {
         networkMatch = GetComponent<NetworkMatch>();
+    }
+
+    public override void OnStartServer()
+    {
+        // Log.cinput("red", $"OnStartServer: {matchID}");
+        netIDGuid = matchID.ToGuid();
     }
 
     public override void OnStartClient()
@@ -36,11 +45,20 @@ public class Player : NetworkBehaviour
             Log.input($"Spawning other player UI Prefab");
             playerLobbyUI = UILobby.instance.SpawnPlayerUIPrefab(this);
         }
-        //networkMatch = GetComponent<NetworkMatch>();
+    }
+
+    public override void OnStopClient () {
+        Log.cinput ("red", $"Client Stopped");
+        ClientDisconnect ();
+    }
+
+    public override void OnStopServer () {
+        Log.cinput ("red", $"Client Stopped on Server");
+        ServerDisconnect ();
     }
 
     /// <summary>
-    /// ´´½¨·¿¼ä
+    /// åˆ›å»ºæˆ¿é—´è¡Œä¸º
     /// </summary>
     /// <param name="_matchId"></param>
     public void HostGame()
@@ -49,6 +67,10 @@ public class Player : NetworkBehaviour
         CmdHostGame(matchId);
     }
     
+    /// <summary>
+    /// å‘æœåŠ¡å™¨è¯·æ±‚åˆ›å»ºæˆ¿é—´
+    /// </summary>
+    /// <param name="_matchId"></param>
     [Command]
     public void CmdHostGame(string _matchId)
     {
@@ -76,7 +98,7 @@ public class Player : NetworkBehaviour
     }
 
     /// <summary>
-    /// ¼ÓÈë·¿¼ä
+    /// åŠ å…¥æˆ¿é—´è¡Œä¸º
     /// </summary>
     /// <param name="_inputID"></param>
     public void JoinGame(string _inputID)
@@ -116,7 +138,7 @@ public class Player : NetworkBehaviour
     }
 
     /// <summary>
-    /// ¸ù¾İÍæ¼ÒÈËÊı¸üĞÂLobbyµÄUI
+    /// æ ¹æ®ç©å®¶äººæ•°æ›´æ–°
     /// </summary>
     /// <param name="playerCount"></param>
     [Server]
@@ -126,7 +148,7 @@ public class Player : NetworkBehaviour
     }
 
     /// <summary>
-    /// ¸ù¾İÍæ¼ÒÈËÊı¾ö¶¨ÊÇ·ñÏÔÊ¾¿ªÊ¼ÓÎÏ·°´Å¥
+    /// æ ¹æ®ç©å®¶äººæ•°åˆ¤æ–­æ˜¯å¦æ˜¾ç¤ºå¼€å§‹æ¸¸æˆæŒ‰é’®
     /// </summary>
     /// <param name="playerCount"></param>
     [TargetRpc]
@@ -139,6 +161,50 @@ public class Player : NetworkBehaviour
         else
         {
             UILobby.instance.SetStartButtonActive(false);
+        }
+    }
+
+    /// <summary>
+    /// æ–­å¼€è¿æ¥è¡Œä¸º
+    /// </summary>
+    public void DisconnectGame()
+    {
+        CmdDisconnectGame();
+    }
+
+    /// <summary>
+    /// å‘æœåŠ¡å™¨è¯·æ±‚æ–­å¼€è¿æ¥
+    /// </summary>
+    [Command]
+    public void CmdDisconnectGame()
+    {
+        ServerDisconnect();
+    }
+
+    void ServerDisconnect () {
+        MatchMaker.instance.PlayerDisconnected(this, matchID);
+        RpcDisconnectGame();
+        networkMatch.matchId = netIDGuid; // é‡ç½®matchId
+    }
+
+    [ClientRpc]
+    void RpcDisconnectGame()
+    {
+        ClientDisconnect();
+    }
+
+    void ClientDisconnect () 
+    {
+        if (playerLobbyUI != null)
+        {
+            if (!isServer)
+            {
+                Destroy(playerLobbyUI);
+            }
+            else
+            {
+                playerLobbyUI.SetActive(false);
+            }
         }
     }
 }

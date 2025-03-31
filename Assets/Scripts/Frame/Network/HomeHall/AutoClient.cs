@@ -12,12 +12,17 @@ public class AutoClient : MonoBehaviour
         if (!Application.isBatchMode)
         {
             Log.input(" ==== Client Build ====");
-            networkManager.StartClient();
+            //networkManager.StartClient();
         }
         else
         {
             Log.input(" ==== Server Build ====");
         }
+    }
+
+    public void HostPublic()
+    {
+        networkManager.StartHost();
     }
 
     public void JoinLocal ()
