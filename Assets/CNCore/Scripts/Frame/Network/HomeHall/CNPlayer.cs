@@ -3,9 +3,9 @@ using System;
 using UnityEngine;
 
 [RequireComponent(typeof(NetworkMatch))]
-public class Player : NetworkBehaviour
+public class CNPlayer : NetworkBehaviour
 {
-    public static Player localPlayer;
+    public static CNPlayer localPlayer;
 
     /// <summary> 房间ID </summary>
     [SyncVar] public string matchID;
@@ -43,7 +43,7 @@ public class Player : NetworkBehaviour
         else
         {
             Log.input($"Spawning other player UI Prefab");
-            playerLobbyUI = UILobby.instance.SpawnPlayerUIPrefab(this);
+            playerLobbyUI = CNUILobby.instance.SpawnPlayerUIPrefab(this);
         }
     }
 
@@ -63,7 +63,7 @@ public class Player : NetworkBehaviour
     /// <param name="_matchId"></param>
     public void HostGame()
     {
-        string matchId = MatchMaker.GetRandomMatchID();
+        string matchId = CNMatchMaker.GetRandomMatchID();
         CmdHostGame(matchId);
     }
     
@@ -75,7 +75,7 @@ public class Player : NetworkBehaviour
     public void CmdHostGame(string _matchId)
     {
         matchID = _matchId;
-        if (MatchMaker.instance.HostGame(_matchId, this, out playerIndex))
+        if (CNMatchMaker.instance.HostGame(_matchId, this, out playerIndex))
         {
             Log.cinput("green", $"Game host successfully!");
             networkMatch.matchId = _matchId.ToGuid();
@@ -94,7 +94,7 @@ public class Player : NetworkBehaviour
         playerIndex = _playerIndex;
         matchID = _matchID;
         Log.input($"Match ID : {matchID}");
-        UILobby.instance.HostSuccess(success, _matchID);
+        CNUILobby.instance.HostSuccess(success, _matchID);
     }
 
     /// <summary>
@@ -110,7 +110,7 @@ public class Player : NetworkBehaviour
     public void CmdJoinGame(string _matchID)
     {
         matchID = _matchID;
-        if (MatchMaker.instance.JoinGame(_matchID, this, out playerIndex))
+        if (CNMatchMaker.instance.JoinGame(_matchID, this, out playerIndex))
         {
             Log.cinput("green", $"Game Joined successfully");
             networkMatch.matchId = _matchID.ToGuid();
@@ -134,7 +134,7 @@ public class Player : NetworkBehaviour
         playerIndex = _playerIndex;
         matchID = _matchID;
         Debug.Log($"MatchID: {matchID} == {_matchID}");
-        UILobby.instance.JoinSuccess(success, _matchID);
+        CNUILobby.instance.JoinSuccess(success, _matchID);
     }
 
     /// <summary>
@@ -156,11 +156,11 @@ public class Player : NetworkBehaviour
     {
         if (playerCount > 1)
         {
-            UILobby.instance.SetStartButtonActive(true);
+            CNUILobby.instance.SetStartButtonActive(true);
         }
         else
         {
-            UILobby.instance.SetStartButtonActive(false);
+            CNUILobby.instance.SetStartButtonActive(false);
         }
     }
 
@@ -182,7 +182,7 @@ public class Player : NetworkBehaviour
     }
 
     void ServerDisconnect () {
-        MatchMaker.instance.PlayerDisconnected(this, matchID);
+        CNMatchMaker.instance.PlayerDisconnected(this, matchID);
         RpcDisconnectGame();
         networkMatch.matchId = netIDGuid; // 重置matchId
     }

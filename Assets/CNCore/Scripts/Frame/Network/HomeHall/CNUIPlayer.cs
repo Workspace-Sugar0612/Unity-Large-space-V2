@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class UIPlayer : MonoBehaviour
+public class CNUIPlayer : MonoBehaviour
 {
     [Tooltip("房间玩家UI")]
     [SerializeField] Text playerName;
-    Player player;
+    CNPlayer player;
 
-    public void SetPlayer (Player player)
+    public void SetPlayer (CNPlayer player)
     {
         this.player = player;
         playerName.text = "Player " + player.playerIndex.ToString();

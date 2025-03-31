@@ -4,9 +4,9 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class UILobby : MonoBehaviour
+public class CNUILobby : MonoBehaviour
 {
-    public static UILobby instance;
+    public static CNUILobby instance;
 
     [Header("Host Join")]
     [Tooltip("连接UI界面")]
@@ -55,7 +55,7 @@ public class UILobby : MonoBehaviour
     public void HostPublic()
     {
         lobbySelectables.ForEach(x => x.interactable = false);
-        Player.localPlayer.HostGame();
+        CNPlayer.localPlayer.HostGame();
     }
 
     /// <summary>
@@ -70,7 +70,7 @@ public class UILobby : MonoBehaviour
             connectCanvas.enabled = false;
             lobbyCanvas.enabled = true;
             if (LobbyPlayerUI) Destroy(LobbyPlayerUI);
-            LobbyPlayerUI = SpawnPlayerUIPrefab(Player.localPlayer);
+            LobbyPlayerUI = SpawnPlayerUIPrefab(CNPlayer.localPlayer);
             matchIDText.text = matchID;
         }
         else
@@ -85,7 +85,7 @@ public class UILobby : MonoBehaviour
     public void Join()
     {
         lobbySelectables.ForEach(x => x.interactable = false);
-        Player.localPlayer.JoinGame(joinMatchID.text.ToUpper());
+        CNPlayer.localPlayer.JoinGame(joinMatchID.text.ToUpper());
     }
 
     /// <summary>
@@ -93,10 +93,10 @@ public class UILobby : MonoBehaviour
     /// </summary>
     /// <param name="player"></param>
     /// <returns></returns>
-    public GameObject SpawnPlayerUIPrefab (Player player)
+    public GameObject SpawnPlayerUIPrefab (CNPlayer player)
     {
         GameObject newUIPlayer = Instantiate(uiPlayerPrefab, uiPlayerParent);
-        newUIPlayer.GetComponent<UIPlayer>().SetPlayer(player);
+        newUIPlayer.GetComponent<CNUIPlayer>().SetPlayer(player);
         newUIPlayer.transform.SetSiblingIndex(player.playerIndex - 1);
         return newUIPlayer;
     }
@@ -113,7 +113,7 @@ public class UILobby : MonoBehaviour
             connectCanvas.enabled = false;
             lobbyCanvas.enabled = true;
             if (LobbyPlayerUI != null) Destroy(LobbyPlayerUI);
-            LobbyPlayerUI = SpawnPlayerUIPrefab(Player.localPlayer);
+            LobbyPlayerUI = SpawnPlayerUIPrefab(CNPlayer.localPlayer);
             matchIDText.text = _matchID;
         }
         else
@@ -137,7 +137,7 @@ public class UILobby : MonoBehaviour
     public void DisconnectGame()
     {
         if (LobbyPlayerUI != null) Destroy(LobbyPlayerUI);
-        Player.localPlayer.DisconnectGame();
+        CNPlayer.localPlayer.DisconnectGame();
 
         lobbyCanvas.enabled = false;
         connectCanvas.enabled = true;

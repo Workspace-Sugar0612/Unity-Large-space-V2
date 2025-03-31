@@ -7,11 +7,11 @@ using System.Security.Cryptography;
 using System.Text;
 using UnityEngine;
 
-public class MatchMaker : NetworkBehaviour
+public class CNMatchMaker : NetworkBehaviour
 {
-    private static MatchMaker m_Instance;
+    private static CNMatchMaker m_Instance;
 
-    public static MatchMaker instance
+    public static CNMatchMaker instance
     {
         get => m_Instance;
     }
@@ -37,7 +37,7 @@ public class MatchMaker : NetworkBehaviour
     /// <param name="player"></param>
     /// <param name="playerIndex"></param>
     /// <returns></returns>
-    public bool HostGame(string hostId, Player player, out int playerIndex)
+    public bool HostGame(string hostId, CNPlayer player, out int playerIndex)
     {
         playerIndex = -1;
         if (!matchIDs.Contains(hostId))
@@ -64,7 +64,7 @@ public class MatchMaker : NetworkBehaviour
     /// <param name="_player"></param>
     /// <param name="playerIndex"></param>
     /// <returns></returns>
-    public bool JoinGame(string _matchID, Player _player, out int playerIndex)
+    public bool JoinGame(string _matchID, CNPlayer _player, out int playerIndex)
     {
         playerIndex = -1;
         if (matchIDs.Contains(_matchID))
@@ -128,7 +128,7 @@ public class MatchMaker : NetworkBehaviour
     /// </summary>
     /// <param name="player"></param>
     /// <param name="_matchID"></param>
-    public void PlayerDisconnected (Player player, string _matchID)
+    public void PlayerDisconnected (CNPlayer player, string _matchID)
     {
         for (int i = 0; i < matches.Count; ++i)
         {
@@ -147,7 +147,7 @@ public class MatchMaker : NetworkBehaviour
                 }
                 else
                 {
-                    Player.localPlayer.PlayerCountUpdated(matches[i].players.Count);
+                    CNPlayer.localPlayer.PlayerCountUpdated(matches[i].players.Count);
                 }
                 break;
             }
@@ -173,8 +173,8 @@ public class Match
     public string matchID;
     public bool inMatch;
     public bool matchFull;
-    public List<Player> players = new List<Player>();
-    public Match(string id, Player player)
+    public List<CNPlayer> players = new List<CNPlayer>();
+    public Match(string id, CNPlayer player)
     {
         matchID = id;
         inMatch = false;
