@@ -35,34 +35,34 @@ public class MyNetworkLauncher : MonoBehaviour
     {
         Log.input("Discovering servers..");
         discoveredServers.Clear();
-        _vrNetworkDiscovery.StartDiscovery(); //¿ªÊ¼²éÕÒÖ÷»ú
+        _vrNetworkDiscovery.StartDiscovery(); //å¼€å§‹æŸ¥æ‰¾ä¸»æœº
         // we have set this as 1.0 seconds, default discovery scan is 3 seconds, allows some time if host and client are started at same time
         yield return new WaitForSeconds(1.0f);
 
-        if (discoveredServers == null || discoveredServers.Count <= 0) //Ã»ÓÐ²éÕÒµ½¾Í´´½¨Ö÷»ú
+        if (discoveredServers == null || discoveredServers.Count <= 0) //æ²¡æœ‰æŸ¥æ‰¾åˆ°å°±åˆ›å»ºä¸»æœº
         {
             Log.input("No Servers found, starting as Host.");
             yield return new WaitForSeconds(1.0f);
             discoveredServers.Clear();
             // NetworkManager.singleton.onlineScene = SceneManager.GetActiveScene().name;
             NetworkManager.singleton.StartHost();
-            _vrNetworkDiscovery.AdvertiseServer(); // ·þÎñÆ÷¹«¿ª
+            _vrNetworkDiscovery.AdvertiseServer(); // æœåŠ¡å™¨å…¬å¼€
         }
     }
 
-    //µ±²éÕÒµ½Ö÷»ú ½øÐÐÁ´½Ó
+    //å½“æŸ¥æ‰¾åˆ°ä¸»æœº è¿›è¡Œé“¾æŽ¥
     public void OnDiscoveredServer(ServerResponse response)
     {
         discoveredServers[response.serverId] = response;
         Connect(response);
     }
 
-    //Á¬½Óserver
+    //è¿žæŽ¥server
     void Connect(ServerResponse response)
     {
-        Log.input("Connecting to: " + response.serverId);
+        Log.cinput("green", $"Connected to: {response.serverId}");
 
-        _vrNetworkDiscovery.StopDiscovery();//Í£Ö¹²éÑ¯
-        NetworkManager.singleton.StartClient(response.uri); //Æô¶¯¿Í»§¶ËÁ¬½Ó
+        _vrNetworkDiscovery.StopDiscovery();//åœæ­¢æŸ¥è¯¢
+        NetworkManager.singleton.StartClient(response.uri); //å¯åŠ¨å®¢æˆ·ç«¯è¿žæŽ¥
     }
 }

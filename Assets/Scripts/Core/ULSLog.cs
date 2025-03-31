@@ -8,4 +8,9 @@ public class Log
     {
         Debug.Log(strlog);
     }
+
+    public static void cinput(string color, string log)
+    {
+        Debug.Log($"<color={color}>{log}</color>");
+    }
 }
