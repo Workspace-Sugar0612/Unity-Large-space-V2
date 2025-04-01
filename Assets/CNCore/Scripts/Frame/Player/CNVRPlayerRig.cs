@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.XR;
 
-public class CNVRPlayerRig : NetworkBehaviour
+public class CNVRPlayerRig : MonoBehaviour
 {
     [Header("Model Transform")]
 

@@ -542,7 +542,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c76462b3b1915443946753fe3620894, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  networkManager: {fileID: 0}
   cnNetworkDiscovery: {fileID: 699500316}
 --- !u!1 &369797521
 GameObject:
@@ -765,7 +764,6 @@ GameObject:
   - component: {fileID: 699500315}
   - component: {fileID: 699500316}
   - component: {fileID: 699500317}
-  - component: {fileID: 699500318}
   m_Layer: 0
   m_Name: NetworkManager
   m_TagString: Untagged
@@ -868,10 +866,10 @@ MonoBehaviour:
   autoConnectClientBuild: 0
   sendRate: 30
   offlineScene: Assets/CNCore/Scene/NetworkHomeHall/Offline.unity
-  onlineScene: 
+  onlineScene: Assets/CNCore/Scene/NetworkHomeHall/Lobby.unity
   transport: {fileID: 699500314}
   networkAddress: localhost
-  maxConnections: 100
+  maxConnections: 200
   authenticator: {fileID: 0}
   playerPrefab: {fileID: 1734799815635286640, guid: a9c519b9fa9228045bf5f613030037e7, type: 3}
   autoCreatePlayer: 1
@@ -888,19 +886,6 @@ MonoBehaviour:
     dynamicAdjustmentTolerance: 1
     deliveryTimeEmaDuration: 2
   timeInterpolationGui: 0
---- !u!114 &699500318
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 699500311}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a0c3dc09c4341984092b9c5ccc74d21a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  alwaysAutoStart: 1
 --- !u!1 &877844499
 GameObject:
   m_ObjectHideFlags: 0
@@ -1661,7 +1646,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: XR Interaction Setup
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 8742723379562989161, guid: 1fdf9148c9ee1434c91811f55179f77d, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []

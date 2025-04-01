@@ -106,11 +106,11 @@ public class CNNetworkDiscovery : NetworkDiscoveryBase<ServerRequest, ServerResp
         response.uri = realUri.Uri;
 
         //OnServerFound.Invoke(response);
-        if (_luncher == null)
-        {
-           _luncher = FindObjectOfType<CNNetworkLauncher>();
-           _luncher.OnDiscoveredServer(response);
-        }
+        // if (_luncher == null)
+        // {
+        //    _luncher = FindObjectOfType<CNNetworkLauncher>();
+        //    _luncher.OnDiscoveredServer(response);
+        // }
 
         if (cnAutoClient == null)
         {

@@ -260,7 +260,7 @@ public class CNPlayer : NetworkBehaviour
     [TargetRpc]
     void TargetBeginGame () 
     {
-        //SceneManager.LoadScene("Game");
+        SceneManager.LoadSceneAsync("Game", LoadSceneMode.Additive);
         //NetworkManager.singleton.ServerChangeScene("Game");
     }
 }

@@ -266,7 +266,7 @@ MonoBehaviour:
   syncDirection: 0
   syncMode: 0
   syncInterval: 0
-  sceneName: Assets/Scenes/001.unity
+  sceneName: 
 --- !u!1 &28647146
 GameObject:
   m_ObjectHideFlags: 0

@@ -97,8 +97,8 @@ GameObject:
   - component: {fileID: 1741081719}
   - component: {fileID: 3921725938020594998}
   - component: {fileID: 5978041223631745730}
-  - component: {fileID: 3138382419656602055}
   - component: {fileID: 4782717347727233081}
+  - component: {fileID: 6235172402323645346}
   m_Layer: 0
   m_Name: CNVRPlayer
   m_TagString: Trigger
@@ -255,29 +255,6 @@ MonoBehaviour:
   syncDirection: 0
   syncMode: 0
   syncInterval: 0
---- !u!114 &3138382419656602055
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1734799815635286640}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 751ca42a42855bb49b2290c6a5d0eac2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  syncDirection: 0
-  syncMode: 0
-  syncInterval: 0
-  matchID: 
-  playerIndex: 0
-  currentMatch:
-    matchID: 
-    inMatch: 0
-    matchFull: 0
-    players: []
-  playerLobbyUI: {fileID: 0}
 --- !u!114 &4782717347727233081
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -301,6 +278,29 @@ MonoBehaviour:
   m_LHandModel: {fileID: 465529162033633478}
   m_RHandModel: {fileID: 4938878741849134738}
   textPlayerName: {fileID: 3069002722878179239}
+--- !u!114 &6235172402323645346
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1734799815635286640}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 751ca42a42855bb49b2290c6a5d0eac2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncDirection: 0
+  syncMode: 0
+  syncInterval: 0
+  matchID: 
+  playerIndex: 0
+  currentMatch:
+    matchID: 
+    inMatch: 0
+    matchFull: 0
+    players: []
+  playerLobbyUI: {fileID: 0}
 --- !u!1 &2319475652799005014
 GameObject:
   m_ObjectHideFlags: 0
@@ -728,8 +728,11 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedComponents:
+    - {fileID: 6601950853451629760, guid: c37c99100405d47a4834aa05bacd5554, type: 3}
+    m_RemovedGameObjects:
+    - {fileID: 1641038862298055217, guid: c37c99100405d47a4834aa05bacd5554, type: 3}
+    - {fileID: 1251372816237616134, guid: c37c99100405d47a4834aa05bacd5554, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c37c99100405d47a4834aa05bacd5554, type: 3}
@@ -751,6 +754,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 41987923829919899}
     m_Modifications:
+    - target: {fileID: 1108843563982302594, guid: 701438eedae6f428e8f4bebd41d13476, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8129811722673939050, guid: 701438eedae6f428e8f4bebd41d13476, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -808,7 +815,8 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 2305010794356864655, guid: 701438eedae6f428e8f4bebd41d13476, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 701438eedae6f428e8f4bebd41d13476, type: 3}

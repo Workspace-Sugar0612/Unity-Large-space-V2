@@ -7,7 +7,7 @@ using UnityEngine;
 public class CNAutoClient : MonoBehaviour
 {
     // 用来连接网络
-    [SerializeField] NetworkManager networkManager;
+    // [SerializeField] NetworkManager networkManager;
 
     // 用来查找局域网IP
     [SerializeField] CNNetworkDiscovery cnNetworkDiscovery;

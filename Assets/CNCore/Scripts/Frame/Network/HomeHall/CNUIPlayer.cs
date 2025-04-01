@@ -4,7 +4,7 @@ using Mirror;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class CNUIPlayer : NetworkBehaviour
+public class CNUIPlayer : MonoBehaviour
 {
     [Tooltip("房间玩家UI")]
     [SerializeField] Text playerName;
