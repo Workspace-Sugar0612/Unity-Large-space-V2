@@ -1,6 +1,9 @@
 using Mirror;
 using System;
+using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 [RequireComponent(typeof(NetworkMatch))]
 public class CNPlayer : NetworkBehaviour
@@ -22,6 +25,7 @@ public class CNPlayer : NetworkBehaviour
     [SerializeField] GameObject playerLobbyUI;
 
     Guid netIDGuid;
+    List<string> matchIDs = new List<string>();
 
     void Awake()
     {
@@ -206,5 +210,57 @@ public class CNPlayer : NetworkBehaviour
                 playerLobbyUI.SetActive(false);
             }
         }
+    }
+
+
+    /// <summary>
+    /// 搜索房间行为
+    /// </summary>
+    public void SearchGame()
+    {
+        CmdSearchGame();
+    }
+
+    [Command]
+    private void CmdSearchGame()
+    {
+        List<string> matchIDs;
+        if (CNMatchMaker.instance.SearchGame(out matchIDs))
+        {
+            TargetSearchGame(true, matchIDs);
+        }
+    }
+
+    [TargetRpc]
+    void TargetSearchGame (bool success, List<string> _matchIDs)
+    {
+        matchIDs = _matchIDs;
+        CNUILobby.instance.SearchGameSuccess(success, matchIDs);
+    }
+
+    /// <summary>
+    /// 开始游戏行为
+    /// </summary>
+    public void BeginGame()
+    {
+        CmdBeginGame();
+    }
+
+    [Command]
+    void CmdBeginGame()
+    {
+        CNMatchMaker.instance.BeginGame(matchID);
+    }
+
+    public void StartGame()
+    {
+        TargetBeginGame();
+    }
+
+    [TargetRpc]
+    void TargetBeginGame () 
+    {
+        //SceneManager.LoadScene("Game");
+        //NetworkManager.singleton.ServerChangeScene("Game");
     }
 }

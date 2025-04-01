@@ -81,7 +81,7 @@ public class CNMatchMaker : NetworkBehaviour
                         matches[i].players[0].PlayerCountUpdated(matches[i].players.Count);
                         if (matches[i].players.Count == maxMatchPlayers)
                         {
-                            matches[i].matchFull = true; // ???????
+                            matches[i].matchFull = true; // 房间满员
                         }
                         break;
                     }
@@ -148,6 +148,41 @@ public class CNMatchMaker : NetworkBehaviour
                 else
                 {
                     CNPlayer.localPlayer.PlayerCountUpdated(matches[i].players.Count);
+                }
+                break;
+            }
+        }
+    }
+
+    /// <summary>
+    /// 搜索房间
+    /// </summary>
+    /// <param name="matchIDs"></param>
+    /// <returns></returns>
+    /// <exception cref="NotImplementedException"></exception>
+    public bool SearchGame(out List<string> matchIDs)
+    {
+        matchIDs = new List<string>();
+        for (int i = 0; i < matches.Count; ++i)
+        {
+            if (!matches[i].inMatch && !matches[i].matchFull)
+            {
+                matchIDs.Add(matches[i].matchID);
+            }
+        }
+        return matchIDs.Count > 0;
+    }
+
+    internal void BeginGame(string _matchID)
+    {
+        for (int i = 0; i < matches.Count; i++) 
+        {
+            if (matches[i].matchID == _matchID) 
+            {
+                matches[i].inMatch = true;
+                foreach (var player in matches[i].players) 
+                {
+                    player.StartGame ();
                 }
                 break;
             }

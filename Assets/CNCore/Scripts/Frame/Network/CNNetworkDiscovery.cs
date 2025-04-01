@@ -13,6 +13,7 @@ using UnityEngine;
 public class CNNetworkDiscovery : NetworkDiscoveryBase<ServerRequest, ServerResponse>
 {
     private CNAutoClient cnAutoClient;
+    private CNNetworkLauncher _luncher;
 
     #region Server
 
@@ -105,11 +106,11 @@ public class CNNetworkDiscovery : NetworkDiscoveryBase<ServerRequest, ServerResp
         response.uri = realUri.Uri;
 
         //OnServerFound.Invoke(response);
-        //if (_luncher == null)
-        //{
-        //    _luncher = GameObject.FindObjectOfType<MyNetworkLauncher>();
-        //    _luncher.OnDiscoveredServer(response);
-        //}
+        if (_luncher == null)
+        {
+           _luncher = FindObjectOfType<CNNetworkLauncher>();
+           _luncher.OnDiscoveredServer(response);
+        }
 
         if (cnAutoClient == null)
         {

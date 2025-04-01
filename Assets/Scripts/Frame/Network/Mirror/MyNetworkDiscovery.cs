@@ -41,10 +41,10 @@ public class MyNetworkDiscovery : NetworkDiscoveryBase<ServerRequest, ServerResp
     /// <returns>A message containing information about this server</returns>
     protected override ServerResponse ProcessRequest(ServerRequest request, IPEndPoint endpoint) 
     {
-        //ÔÚÕâÖÖÇé¿öÏÂ£¬ÎÒÃÇ¶ÔÇëÇó²»×öÈÎºÎ´¦Àí
-        //µ«ÊÇÆäËû·¢ÏÖÊµÏÖ¿ÉÄÜÏëÒªÊ¹ÓÃ¸ÃÊı¾İ
-        //ÔÚÕâÀï£¬ÕâÑù¿Í»§¶Ë¿ÉÒÔÇëÇó
-        //ÌØ¶¨µÄÓÎÏ·Ä£Ê½Ö®ÀàµÄ
+        //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Â£ï¿½ï¿½ï¿½ï¿½Ç¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÎºÎ´ï¿½ï¿½ï¿½
+        //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Êµï¿½Ö¿ï¿½ï¿½ï¿½ï¿½ï¿½ÒªÊ¹ï¿½Ã¸ï¿½ï¿½ï¿½ï¿½ï¿½
+        //ï¿½ï¿½ï¿½ï¿½ï¿½ï£¬ï¿½ï¿½ï¿½ï¿½ï¿½Í»ï¿½ï¿½Ë¿ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+        //ï¿½Ø¶ï¿½ï¿½ï¿½ï¿½ï¿½Ï·Ä£Ê½Ö®ï¿½ï¿½ï¿½
         // In this case we don't do anything with the request
         // but other discovery implementations might want to use the data
         // in there,  This way the client can ask for
@@ -52,8 +52,8 @@ public class MyNetworkDiscovery : NetworkDiscoveryBase<ServerRequest, ServerResp
 
         try
         {
-            // this is an example reply message,  return your own /ÕâÊÇÒ»¸ö»Ø¸´ÏûÏ¢µÄÀı×Ó£¬·µ»ØÄã×Ô¼ºµÄ
-            // to include whatever is relevant for your game / Ìí¼ÓÓëÓÎÏ·Ïà¹ØµÄÄÚÈİ
+            // this is an example reply message,  return your own /ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½Ø¸ï¿½ï¿½ï¿½Ï¢ï¿½ï¿½ï¿½ï¿½ï¿½Ó£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô¼ï¿½ï¿½ï¿½
+            // to include whatever is relevant for your game / ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï·ï¿½ï¿½Øµï¿½ï¿½ï¿½ï¿½ï¿½
             return new ServerResponse
             {
                 serverId = ServerId,
