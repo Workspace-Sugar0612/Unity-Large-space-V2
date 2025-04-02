@@ -187,8 +187,7 @@ public class CNPlayer : NetworkBehaviour
 
     void ServerDisconnect () {
         CNMatchMaker.instance.PlayerDisconnected(this, matchID);
-        RpcDisconnectGame();
-        networkMatch.matchId = netIDGuid; // 重置matchId
+        RpcDisconnectGame();   
     }
 
     [ClientRpc]
@@ -199,6 +198,7 @@ public class CNPlayer : NetworkBehaviour
 
     void ClientDisconnect () 
     {
+        networkMatch.matchId = netIDGuid; // 重置matchId
         if (playerLobbyUI != null)
         {
             if (!isServer)
@@ -260,7 +260,8 @@ public class CNPlayer : NetworkBehaviour
     [TargetRpc]
     void TargetBeginGame () 
     {
-        SceneManager.LoadSceneAsync("Game", LoadSceneMode.Additive);
-        //NetworkManager.singleton.ServerChangeScene("Game");
+        SceneManager.LoadSceneAsync("Game", new LoadSceneParameters { loadSceneMode = LoadSceneMode.Additive, localPhysicsMode = LocalPhysicsMode.Physics3D });
+        // SceneManager.GetSceneAt(index);
+        // CNNetworkManager.singleton.ServerChangeScene("Game");
     }
 }

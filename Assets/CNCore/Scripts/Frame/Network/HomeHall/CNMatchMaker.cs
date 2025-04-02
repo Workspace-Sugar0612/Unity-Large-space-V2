@@ -52,7 +52,7 @@ public class CNMatchMaker : NetworkBehaviour
         }
         else
         {
-            Log.input("match ID already exists.");
+            Log.cinput("red", "match ID already exists.");
             return false;
         }
     }
