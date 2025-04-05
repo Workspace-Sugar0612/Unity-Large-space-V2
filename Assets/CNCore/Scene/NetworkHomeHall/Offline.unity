@@ -833,7 +833,7 @@ MonoBehaviour:
   minPlayers: 1
   roomPlayerPrefab: {fileID: -8724823366751183803, guid: 333a010619d98aa4ba4ddb7a3b379435, type: 3}
   RoomScene: Assets/CNCore/Scene/NetworkHomeHall/Room.unity
-  GameplayScene: Assets/CNCore/Scene/NetworkHomeHall/Game.unity
+  GameplayScene: Assets/CNCore/Scene/NetworkHomeHall/Game_1.unity
   _allPlayersReady: 0
   roomSlots: []
   clientIndex: 0

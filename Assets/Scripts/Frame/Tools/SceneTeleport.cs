@@ -14,7 +14,7 @@ public class SceneTeleport : NetworkBehaviour
     [Tooltip("teleport target location.")]
     public Transform teleportTarget;
 
-    [Tooltip("¿ÉÒÔ¼¤»îteleportÆ½Ì¨µÄÍæ¼Ò£¬ÈÃÍæ¼Ò¿ÉÒÔ¸úËæteleportÒÆ¶¯")]
+    [Tooltip("Player")]
     public Transform player;
 
     /// <summary>
@@ -75,18 +75,18 @@ public class SceneTeleport : NetworkBehaviour
         StartCoroutine(m_VRSceneController.SwitchScene(m_ScreenFade.gradientTime));
     }
 
-    public void OnTriggerEnter(Collider other)//ÓĞÅö×²Ìå½øÈë¸ÃÎïÌåÊ±µ÷ÓÃ
+    public void OnTriggerEnter(Collider other)//ï¿½ï¿½ï¿½ï¿½×²ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½
     {
         //Debug.Log($"other name: {other.name} and other tag: {other.tag}");
-        if (other.CompareTag("Trigger"))//ÅĞ¶Ï½øÈëÎïÌåµÄÅö×²ÌåµÄTagÊÇPlayer
+        if (other.CompareTag("Trigger"))//ï¿½Ğ¶Ï½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½×²ï¿½ï¿½ï¿½Tagï¿½ï¿½Player
         {
             CmdSetPersonCount(1);
         }
     }
 
-    public void OnTriggerExit(Collider other)//ÓĞÅö×²ÌåÍË³ö¸ÃÎïÌåÊ±µ÷ÓÃ
+    public void OnTriggerExit(Collider other)//ï¿½ï¿½ï¿½ï¿½×²ï¿½ï¿½ï¿½Ë³ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½
     {
-        if (other.CompareTag("Trigger"))//ÅĞ¶Ï½øÈëÎïÌåµÄÅö×²ÌåµÄTagÊÇPlayer
+        if (other.CompareTag("Trigger"))//ï¿½Ğ¶Ï½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½×²ï¿½ï¿½ï¿½Tagï¿½ï¿½Player
         {
             if (isServer)
             {
@@ -97,8 +97,8 @@ public class SceneTeleport : NetworkBehaviour
     }
 
     /// <summary>
-    /// ÉèÖÃÍæ¼Òµ±Ç°µÄ¸¸ÎïÌå
-    /// Ö÷ÒªÓÃÓÚÍæ¼Ò¿ÉÒÔ¸úËæÆ½Ì¨Ò»ÆğÒÆ¶¯
+    /// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Òµï¿½Ç°ï¿½Ä¸ï¿½ï¿½ï¿½ï¿½ï¿½
+    /// ï¿½ï¿½Òªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò¿ï¿½ï¿½Ô¸ï¿½ï¿½ï¿½Æ½Ì¨Ò»ï¿½ï¿½ï¿½Æ¶ï¿½
     /// </summary>
     /// <param name="parent"></param>
     [ClientRpc]
@@ -108,7 +108,7 @@ public class SceneTeleport : NetworkBehaviour
     }
 
     /// <summary>
-    /// Æ½Ì¨ÒÆ¶¯
+    /// Æ½Ì¨ï¿½Æ¶ï¿½
     /// </summary>
     /// <returns></returns>
     public IEnumerator TeleportRise()
