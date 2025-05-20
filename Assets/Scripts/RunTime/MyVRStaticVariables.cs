@@ -9,5 +9,5 @@ public class MyVRStaticVariables
 
     /// <summary> Join in PlayGame Player Number. </summary>
     [SyncVar]
-    public static int personCount = 0;  
+    public static int personCount = -1;  
 }

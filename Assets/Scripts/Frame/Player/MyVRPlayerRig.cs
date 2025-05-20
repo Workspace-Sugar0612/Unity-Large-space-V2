@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.XR;
 
-public class MyVRPlayerRig : NetworkBehaviour
+public class MyVRPlayerRig : MonoBehaviour
 {
     [Header("Model Transform")]
 
@@ -60,7 +60,7 @@ public class MyVRPlayerRig : NetworkBehaviour
         set => m_VRPlayerController = value;
     }
     
-    /// <summary> ½øÈë³¡¾°/ÍË³ö³¡¾°Ê±µÄ½¥±äÐ§¹û </summary>
+    /// <summary> ï¿½ï¿½ï¿½ë³¡ï¿½ï¿½/ï¿½Ë³ï¿½ï¿½ï¿½ï¿½ï¿½Ê±ï¿½Ä½ï¿½ï¿½ï¿½Ð§ï¿½ï¿½ </summary>
     private VRScreenFade vrScreenFade;
 
     public void Awake()

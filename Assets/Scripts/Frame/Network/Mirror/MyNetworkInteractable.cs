@@ -12,7 +12,7 @@ public class MyNetworkInteractable : NetworkBehaviour
     private Rigidbody m_Rigidbody;
     private void Start()
     {
-        if (m_Rigidbody == null) 
+        if (m_Rigidbody == null)
             m_Rigidbody = GetComponent<Rigidbody>();
     }
 

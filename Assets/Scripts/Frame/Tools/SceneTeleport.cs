@@ -14,7 +14,7 @@ public class SceneTeleport : NetworkBehaviour
     [Tooltip("teleport target location.")]
     public Transform teleportTarget;
 
-    [Tooltip("Player")]
+    [Tooltip("���Լ���teleportƽ̨����ң�����ҿ��Ը���teleport�ƶ�")]
     public Transform player;
 
     /// <summary>

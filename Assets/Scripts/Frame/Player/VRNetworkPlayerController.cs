@@ -105,7 +105,8 @@ public class VRNetworkPlayerController : NetworkBehaviour
 
     public void Start()
     {
-
+        if (isServer && isLocalPlayer)
+            gameObject.SetActive(false);
     }
 
     public void OnNameChangedHook(string _old, string _new)

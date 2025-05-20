@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Net;
 using Mirror;
 using Mirror.Discovery;
@@ -39,7 +40,7 @@ public class MyNetworkDiscovery : NetworkDiscoveryBase<ServerRequest, ServerResp
     /// <param name="request">Request coming from client</param>
     /// <param name="endpoint">Address of the client that sent the request</param>
     /// <returns>A message containing information about this server</returns>
-    protected override ServerResponse ProcessRequest(ServerRequest request, IPEndPoint endpoint) 
+    protected override ServerResponse ProcessRequest(ServerRequest request, IPEndPoint endpoint)
     {
         //����������£����Ƕ��������κδ���
         //������������ʵ�ֿ�����Ҫʹ�ø�����
@@ -92,7 +93,7 @@ public class MyNetworkDiscovery : NetworkDiscoveryBase<ServerRequest, ServerResp
     /// </remarks>
     /// <param name="response">Response that came from the server</param>
     /// <param name="endpoint">Address of the server that replied</param>
-    protected override void ProcessResponse(ServerResponse response, IPEndPoint endpoint) 
+    protected override void ProcessResponse(ServerResponse response, IPEndPoint endpoint)
     {
         // we received a message from the remote endpoint
         response.EndPoint = endpoint;
@@ -108,11 +109,31 @@ public class MyNetworkDiscovery : NetworkDiscoveryBase<ServerRequest, ServerResp
         response.uri = realUri.Uri;
 
         //OnServerFound.Invoke(response);
-        if (_luncher == null)
-        {
-            _luncher = GameObject.FindObjectOfType<MyNetworkLauncher>();
-            _luncher.OnDiscoveredServer(response);
-        }
+        // if (_luncher == null)
+        // {
+        //     _luncher = GameObject.FindObjectOfType<MyNetworkLauncher>();
+        //     _luncher.OnDiscoveredServer(response);
+        // }
+
+        DiscoveryReturn(response);
+    }
+    
+    public IEnumerator IEStartDiscovery()
+    {
+        StartDiscovery(); 
+        yield return new WaitForSeconds(2.0f);
+    }
+
+    /// <summary>
+    /// 找到IP地址后，连接到主机
+    /// </summary>
+    /// <param name="response"></param>
+    public void DiscoveryReturn(ServerResponse response)
+    {
+        Log.cinput("green", $"Connected to: {response.serverId}");
+        StopDiscovery(); //停止查找主机
+        NetworkManager.singleton.StartClient(response.uri);
+        UIController.Get().HidePanel(); //隐藏UI面板
     }
 
     #endregion

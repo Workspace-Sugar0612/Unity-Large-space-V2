@@ -31,7 +31,7 @@ public class MyNetworkManager : NetworkManager
             m_AnimManager = (AnimManager)FindObjectOfType(typeof(AnimManager));
     }
 
-    // ÖØÐ´NetworkManagerµÄSceneLoaded·½·¨
+    // ï¿½ï¿½Ð´NetworkManagerï¿½ï¿½SceneLoadedï¿½ï¿½ï¿½ï¿½
     public void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         // ServerChangeScene("");
@@ -53,7 +53,7 @@ public class MyNetworkManager : NetworkManager
     public override void Start()
     {
         base.Start();
-     }
+    }
 
     /// <summary>
     /// Runs on both Server and Client
@@ -149,6 +149,7 @@ public class MyNetworkManager : NetworkManager
     public override void OnServerConnect(NetworkConnectionToClient conn) 
     {
         MyVRStaticVariables.personCount += 1;
+        UIController.Get().ChangedpersonCountText(MyVRStaticVariables.personCount);
         Log.input($"A client connected! {MyVRStaticVariables.personCount}");
     }
 
@@ -180,6 +181,7 @@ public class MyNetworkManager : NetworkManager
     public override void OnServerDisconnect(NetworkConnectionToClient conn)
     {
         MyVRStaticVariables.personCount -= 1;
+        UIController.Get().ChangedpersonCountText(MyVRStaticVariables.personCount);
         base.OnServerDisconnect(conn);
         Log.input($"A client disconnected! {MyVRStaticVariables.personCount}");
     }
