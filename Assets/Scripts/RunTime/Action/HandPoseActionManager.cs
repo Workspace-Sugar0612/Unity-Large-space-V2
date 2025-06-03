@@ -8,7 +8,7 @@ public class HandPosActionManager : MonoBehaviour
 {
     private MyVRHUD m_MyVRHud;
 
-    /// <summary> 目前HandPose的名字 </summary>
+    /// <summary> ĿǰHandPose������ </summary>
     private string m_CurrHandPoseName;
 
     public void Awake()
@@ -18,20 +18,20 @@ public class HandPosActionManager : MonoBehaviour
     }
 
     /// <summary>
-    /// 自定义手势识别执行
+    /// �Զ�������ʶ��ִ��
     /// </summary>
     /// <param name="handPoseAction"></param>
     public void HandPosePerformed(string poseName)
     {
         m_CurrHandPoseName = poseName;
-        m_MyVRHud.InputLog($"检测识别到{m_CurrHandPoseName}手势! ");
+        m_MyVRHud.InputLog($"This is {m_CurrHandPoseName} hand pose! ");
     }
 
     /// <summary>
-    /// 自定义手势退出事件
+    /// �Զ��������˳��¼�
     /// </summary>
     public void EndHandPoseAction()
     {
-        m_MyVRHud.InputLog($"{m_CurrHandPoseName}手势退出！");
+        m_MyVRHud.InputLog($"{m_CurrHandPoseName} hand pose ended!");
     }
 }
