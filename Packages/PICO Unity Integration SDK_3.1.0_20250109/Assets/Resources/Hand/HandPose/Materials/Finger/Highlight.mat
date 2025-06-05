@@ -29,7 +29,7 @@ Material:
     - _Smooth: 1.27
     - _smooth: 1
     m_Colors:
-    - _BlendPower: {r: 0, g: 0, b: 0, a: 0}
+    - _BlendPower: {r: 0, g: 1, b: 1, a: 0}
     - _FingerIndex: {r: 0.28, g: 0.84, b: 0.035, a: 0.3}
     - _FingerMiddle: {r: 0.38, g: 0.83, b: 0.035, a: 0.3}
     - _FingerRing: {r: 0.47, g: 0.82, b: 0.04, a: 0.3}

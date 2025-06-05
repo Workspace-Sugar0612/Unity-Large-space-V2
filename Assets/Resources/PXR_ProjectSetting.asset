@@ -39,7 +39,7 @@ MonoBehaviour:
   qualitySharpening: 0
   fixedFoveatedSharpening: 0
   selfAdaptiveSharpening: 0
-  handTrackingSupportType: 0
+  handTrackingSupportType: 1
   arFoundation: 0
   mrSafeguard: 0
   enableRecommendMSAA: 1

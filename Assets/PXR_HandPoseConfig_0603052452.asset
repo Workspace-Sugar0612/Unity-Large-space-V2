@@ -51,36 +51,36 @@ MonoBehaviour:
       handFinger: 2
       flexion: 2
       curl: 2
-      abduction: 0
+      abduction: 2
       fingerConfigs:
         flexionConfigs:
           min: 90
           max: 126
-          width: 10
+          width: 90
         curlConfigs:
           min: 0
           max: 73
           width: 20
         abductionConfigs:
           mid: 10
-          width: 6
+          width: 20
     ring:
       handFinger: 3
       flexion: 2
       curl: 2
-      abduction: 0
+      abduction: 2
       fingerConfigs:
         flexionConfigs:
           min: 90
           max: 126
-          width: 10
+          width: 90
         curlConfigs:
           min: 0
           max: 73
           width: 20
         abductionConfigs:
           mid: 10
-          width: 6
+          width: 10
     pinky:
       handFinger: 4
       flexion: 2
@@ -90,7 +90,7 @@ MonoBehaviour:
         flexionConfigs:
           min: 90
           max: 126
-          width: 10
+          width: 90
         curlConfigs:
           min: 0
           max: 73
